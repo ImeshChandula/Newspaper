@@ -68,7 +68,35 @@ const login = async (req, res) => {
   }
 };
 
+// @desc Get all Admins
+// @route GET /api/auth/admin/allAdmins
+const getAllAdmins = async (req, res) => {
+  try {
+    const admins = await Admin.find({}, "-password");
+    res.json(admins);
+  } catch (error) {
+    console.error("Error fetching Admins:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// @desc Delete Admin by name
+// @route DELETE /api/auth/admin/deleteAdmin/:name
+const deleteAdmin = async (req, res) => {
+  try {
+    const { adminName } = req.params;
+    const deletedAdmin = await Admin.findOneAndDelete({ adminName });
+
+    if (!deletedAdmin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    res.json({ message: "Admin deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting admin:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 
-
-module.exports = { register, login };
+module.exports = { register, login, getAllAdmins, deleteAdmin };

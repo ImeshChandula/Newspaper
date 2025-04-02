@@ -1,6 +1,6 @@
 const express = require("express");
 const { check } = require("express-validator");
-const { register, login } = require("../controllers/authController");
+const { register, login, getAllAdmins, deleteAdmin } = require("../controllers/authController");
 
 const router = express.Router();
 
@@ -23,6 +23,11 @@ router.post(
   login
 );
 
+// Get all Admins
+router.get("/allAdmins", getAllAdmins);
+
+// Delete Admin by ID
+router.delete("/deleteAdmin/:name", deleteAdmin);
 
 
 module.exports = router;
