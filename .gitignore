@@ -1,0 +1,13 @@
+# Node.js
+newspaper-backend/node_modules/
+newspaper-backend/uploads/
+newspaper-backend/.env
+newspaper-backend/.env.local
+newspaper-backend/.env.development
+newspaper-backend/.env.test
+newspaper-backend/.env.production
+
+# React/Vite/Angular
+newspaper-frontend/node_modules/
+newspaper-frontend/.env
+newspaper-frontend/build/
