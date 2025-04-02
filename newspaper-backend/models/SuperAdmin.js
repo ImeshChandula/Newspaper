@@ -5,4 +5,4 @@ const superAdminSchema = new mongoose.Schema({
   password: { type: String, required: true },
 });
 
-module.exports = mongoose.model("Admin", superAdminSchema);
+module.exports = mongoose.model("SuperAdmin", superAdminSchema);
