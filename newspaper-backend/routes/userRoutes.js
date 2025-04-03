@@ -16,6 +16,8 @@ const {
 
 const router = express.Router();
 
+// Routes
+// http://localhost:5000/api/users"
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 
