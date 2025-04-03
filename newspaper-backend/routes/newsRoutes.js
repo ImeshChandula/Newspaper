@@ -1,3 +1,38 @@
+//updated code when newsController.js was created
+// This code defines the routes for managing news articles in a newspaper application.
+const express = require("express");
+const { createNews, getAllNews, updateNews, deleteNews } = require("../controllers/newsController");
+const authMiddleware = require("../middlewares/authMiddleware");
+
+const router = express.Router();
+
+const app = express();
+app.use(express.json());
+
+connectDB();
+
+app.use("/api/news", newsRoutes);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+// Define routes for news articles
+
+router.post("/", authMiddleware, createNews);
+router.get("/", getAllNews);
+router.put("/:id", authMiddleware, updateNews);
+router.delete("/:id", authMiddleware, deleteNews);
+
+module.exports = router;
+
+
+
+
+
+//previous code: This code defines the routes for managing news articles in a newspaper application.(before createNewsController.js was created)
+// This code defines the routes for managing news articles in a newspaper application.
+// It includes routes for creating, retrieving, updating, and deleting news articles.
+/*
 const express = require('express');
 const News = require('../models/newsModel');
 const { verifyToken, checkRole } = require('../middleware/authMiddleware');
@@ -9,6 +44,7 @@ const router = express.Router();
  * @desc    Create a news article
  * @access  Reporter, Admin, Super Admin
  */
+/*
 router.post('/', verifyToken, checkRole(['superAdmin', 'Admin', 'reporter']), async (req, res) => {
     try {
         const { title, media, content } = req.body;
@@ -30,6 +66,7 @@ router.post('/', verifyToken, checkRole(['superAdmin', 'Admin', 'reporter']), as
  * @desc    Get all news articles
  * @access  Public
  */
+/*
 router.get('/', async (req, res) => {
     try {
         const newsArticles = await News.find().populate('author', 'username email');
@@ -44,6 +81,7 @@ router.get('/', async (req, res) => {
  * @desc    Get a single news article by ID
  * @access  Public
  */
+/*
 router.get('/:id', async (req, res) => {
     try {
         const newsArticle = await News.findById(req.params.id).populate('author', 'username email');
@@ -61,6 +99,7 @@ router.get('/:id', async (req, res) => {
  * @desc    Update a news article
  * @access  Admin, Super Admin
  */
+/*
 router.put('/:id', verifyToken, checkRole(['superAdmin', 'Admin']), async (req, res) => {
     try {
         const { title, media, content } = req.body;
@@ -85,6 +124,7 @@ router.put('/:id', verifyToken, checkRole(['superAdmin', 'Admin']), async (req, 
  * @desc    Delete a news article
  * @access  Admin, Super Admin
  */
+/*
 router.delete('/:id', verifyToken, checkRole(['superAdmin', 'Admin']), async (req, res) => {
     try {
         const newsArticle = await News.findByIdAndDelete(req.params.id);
@@ -101,4 +141,4 @@ router.delete('/:id', verifyToken, checkRole(['superAdmin', 'Admin']), async (re
 
 module.exports = router;
 // This code defines the routes for managing news articles in a newspaper application.
-// It includes routes for creating, retrieving, updating, and deleting news articles.
+// It includes routes for creating, retrieving, updating, and deleting news articles.*/
