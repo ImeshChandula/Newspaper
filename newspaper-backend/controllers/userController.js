@@ -38,6 +38,43 @@ const registerUser = async (req, res) => {
   }
 };
 
+
+// @desc Register Admin
+// @route POST /api/users/registerAdmin
+const registerAdmin = async (req, res) => {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+const { username, password, role } = req.body;
+
+try {
+  let user = await User.findOne({ username });
+  if (user) {
+    return res.status(400).json({ msg: "Admin already exists" });
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  user = new User({
+    username,
+    password: hashedPassword,
+    role: role || "admin", // Default role
+  });
+
+  await user.save();
+
+  res.status(201).json({ msg: "Admin registered successfully" });
+} catch (err) {
+  console.error(err.message);
+  res.status(500).send("Server Error");
+}
+};
+
+
+
 // @desc Login User
 // @route POST /api/users/login
 const loginUser = async (req, res) => {
@@ -226,6 +263,7 @@ const promoteToAdmin = async (req, res) => {
 
 module.exports = {
   registerUser,
+  registerAdmin,
   loginUser,
   getAllUsers,
   updateUser,

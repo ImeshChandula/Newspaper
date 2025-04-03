@@ -2,6 +2,7 @@ const express = require("express");
 const { authenticateUser, authorizeRoles } = require("../middleware/authMiddleware");
 const {
   registerUser,
+  registerAdmin,
   loginUser,
   getAllUsers,
   updateUser,
@@ -19,6 +20,7 @@ const router = express.Router();
 // Routes
 // http://localhost:5000/api/users"
 router.post("/register", registerUser);
+router.post("/registerAdmin", authenticateUser, authorizeRoles("super_admin"), registerAdmin);
 router.post("/login", loginUser);
 
 router.get("/getAllUsers", authenticateUser, authorizeRoles("super_admin"), getAllUsers);
