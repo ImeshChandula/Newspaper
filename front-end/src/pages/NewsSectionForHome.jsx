@@ -1,13 +1,13 @@
 import React from "react";
 import NewsCard from "../components/NewsCard.jsx";
 
-const NewsSection = ({ title, news, highlight }) => {
+const NewsSectionForHome = ({ title, news, highlight }) => {
   return (
     <div className="container my-4">
       <h2 className="border-bottom pb-2">{title}</h2>
       <div className="row g-4">
         {news.map((item, index) => (
-          <div key={index} className={`col-12 col-md-6 col-lg-4 ${highlight ? "highlight-card" : ""}`}>
+          <div key={index} className={`${highlight && "highlight-card"}`}>
             <NewsCard {...item} />
           </div>
         ))}
@@ -16,4 +16,4 @@ const NewsSection = ({ title, news, highlight }) => {
   );
 };
 
-export default NewsSection;
+export default NewsSectionForHome;
