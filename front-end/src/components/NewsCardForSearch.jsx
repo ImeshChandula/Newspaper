@@ -1,7 +1,9 @@
 import React from "react";
 import "./css/NewsCard.css";
 
-const NewsCard = ({ title, image, description, timestamp }) => {
+const NewsCard = ({ news, showDetails = false }) => {
+    const { title, image, description, timestamp, tags } = news;
+
     const getTimeAgo = (timestamp) => {
         const now = new Date().getTime();
         const diff = now - timestamp;
@@ -27,24 +29,22 @@ const NewsCard = ({ title, image, description, timestamp }) => {
 
     return (
         <div className="card news-card">
-            <div className="row g-0">
-                <div className="row">
-                    <div className="col-4">
-                        <img src={image} className="news-image" alt={title} />
-                    </div>
-                    <div className="col-8">
-                        <div className="card-body">
-                            <h5 className="card-title">{title}</h5>
-                            {isLatest && <span className="badge bg-danger latest-badge">Latest</span>}
-                        </div>
+            <div className="row">
+                <div className="col-4">
+                    <img src={image} className="card-img-top news-image" alt={title} />
+                </div>
+                <div className="col-8">
+                    <div className="card-body">
+                        <h5 className="card-title">{title}</h5>
+                        {isLatest && <span className="badge bg-danger latest-badge">Latest</span>}
                     </div>
                 </div>
-                <div className="row">
-                    <div className="card-body">
-                        <p className="card-text">{description}</p>
-                        <a className="btn btn-link p-0">View more &gt;&gt;</a>
-                        <div className="text-muted small mt-1">{getTimeAgo(timestamp)}</div>
-                    </div>
+            </div>
+            <div className="row">
+                <div className="card-body">
+                    <p className="card-text">{description}</p>
+                    <a className="btn btn-link p-0">View more &gt;&gt;</a>
+                    <div className="text-muted small mt-1">{getTimeAgo(timestamp)}</div>
                 </div>
             </div>
         </div>
