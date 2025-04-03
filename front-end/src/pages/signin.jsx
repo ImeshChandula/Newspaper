@@ -3,12 +3,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Backpic from './rm218-bb-07.jpg';
 import userpic from './R-removebg-preview.png';
 import partpic from './looped-animation-3d-rendering-with-a-metallic-texture-and-gradient-wavy-background-free-video.jpg';
+import { Link } from 'react-router-dom';
 
-function Signin() {
+function Signin({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(""); 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setLoading(true); 
+    setError(""); 
+
+   
+    if (username === 'admin' && password === 'password') {
+      setTimeout(() => {
+        onLogin(); 
+        setLoading(false); 
+      }, 1000); 
+    } else {
+      setLoading(false); 
+      setError("Invalid username or password."); 
+    }
+  };
+
   return (
     <div className="d-flex justify-content-center align-items-center vh-100" style={{
       backgroundImage: `url(${Backpic})`,
@@ -29,7 +49,7 @@ function Signin() {
           <div className="text-center mb-3">
             <img src={userpic} alt="User" className="rounded-circle" style={{ width: '80px', height: '80px' }} />
           </div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <input 
                 type="text" 
@@ -50,21 +70,35 @@ function Signin() {
                 style={{ fontSize: '18px', padding: '12px' }}
               />
             </div>
-            <button type="submit" className="btn w-100 text-light rounded-pill" style={{
-              fontSize: '20px',
-              padding: '12px',
-              background: 'linear-gradient(45deg, #6a11cb, #2575fc)',
-              border: 'none',
-              transition: '0.3s'
-            }}>Sign In</button>
+            <button 
+              type="submit" 
+              className="btn w-100 text-light rounded-pill" 
+              style={{
+                fontSize: '20px',
+                padding: '12px',
+                background: 'linear-gradient(45deg, #6a11cb, #2575fc)',
+                border: 'none',
+                transition: '0.3s',
+              }}
+              disabled={loading} 
+            >
+              {loading ? 'Logging in...' : 'Sign In'}
+            </button>
             
-            {/* Remember Me and Forgot Password */}
+           
+            {error && <div className="text-danger mt-3">{error}</div>}
+            
+            
             <div className="d-flex justify-content-between align-items-center mt-3">
               <div className="form-check">
                 <input type="checkbox" className="form-check-input" id="rememberMe" />
                 <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
               </div>
-              <a href="#" className="text-light text-decoration-none">Forgot Password?</a>
+              <a href="" className="text-light text-decoration-none">Forgot Password?</a>
+            </div>
+            
+            <div className="text-center mt-3">
+              <Link to="/signup" className="text-light text-decoration-none">Create an Account</Link>
             </div>
           </form>
         </div>
@@ -91,7 +125,7 @@ function Signin() {
             padding: '40px'
           }}>
             <h1 className="fw-bold" style={{ fontSize: '2.5rem' }}>Welcome</h1>
-            <p style={{ fontSize: '1.2rem' }}>about the campany</p>
+            <p style={{ fontSize: '1.2rem' }}>about the company</p>
           </div>
         </div>
       </div>
