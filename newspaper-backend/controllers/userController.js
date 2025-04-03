@@ -70,8 +70,9 @@ const loginUser = async (req, res) => {
   }
 };
 
+
 // @desc Get All Users
-// @route GET /api/users/getAll
+// @route GET /api/users/getAllUsers
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({}, "-password");
@@ -82,6 +83,44 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// @desc Get All Editors
+// @route GET /api/users/getAllEditors
+const getAllEditors = async (req, res) => {
+    try {
+      const admins = await User.find({ role: "editor" }, "-password");
+      res.json(admins);
+    } catch (error) {
+      console.error("Error fetching editors:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
+
+
+// @desc Get All Admins
+// @route GET /api/users/getAllAdmins
+const getAllAdmins = async (req, res) => {
+    try {
+      const admins = await User.find({ role: "admin" }, "-password");
+      res.json(admins);
+    } catch (error) {
+      console.error("Error fetching admins:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
+
+
+  // @desc Get All Admins
+// @route GET /api/users/getAllSuperAdmins
+const getAllSuperAdmins = async (req, res) => {
+    try {
+      const admins = await User.find({ role: "super_admin" }, "-password");
+      res.json(admins);
+    } catch (error) {
+      console.error("Error fetching super admin:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
+  
 
 
 // @desc Update User (Only Admin or Super Admin)
@@ -108,23 +147,32 @@ const updateUser = async (req, res) => {
   }
 };
 
-// @desc Delete User (Only Admin or Super Admin)
-// @route DELETE /api/users/deleteUser:name
+
+// @desc Delete User (Only Admin or Super Admin, but they can't delete themselves)
+// @route DELETE /api/users/deleteUser/:username
 const deleteUser = async (req, res) => {
-  try {
-    const { username } = req.params;
-    const deletedAdmin = await User.findOneAndDelete({ username });
-
-    if (!deletedAdmin) {
-      return res.status(404).json({ message: "User not found" });
+    try {
+      const { username } = req.params;
+  
+      // Prevent a user from deleting themselves
+      if (req.user.username === username) {
+        return res.status(403).json({ message: "You cannot delete your own account" });
+      }
+  
+      const deletedUser = await User.findOneAndDelete({ username });
+  
+      if (!deletedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      res.json({ message: `User '${username}' deleted successfully` });
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      res.status(500).json({ message: "Server error" });
     }
+  };
 
-    res.json({ message: "User deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting admin:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-};
+  
 
 // @desc Promote an Admin to Super Admin
 // @route PATCH /api/users/promoteToSuperAdmin/:username
@@ -184,4 +232,7 @@ module.exports = {
   deleteUser,
   promoteToSuperAdmin,
   promoteToAdmin,
+  getAllSuperAdmins,
+  getAllAdmins,
+  getAllEditors,
 };
