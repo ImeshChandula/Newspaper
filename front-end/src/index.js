@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Signup from './pages/signup';
-import Signin from './pages/signin';
+
+import App from './App.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render( <
     React.StrictMode >
     <
-    Signin / >
+    App / >
     <
     /React.StrictMode>
 );
