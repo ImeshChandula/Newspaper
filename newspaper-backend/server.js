@@ -2,9 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
 const connectDB = require("./config/db");
-const SuperAdmin = require("./models/SuperAdmin");
+const User = require("./models/User");
 
 dotenv.config();
 connectDB();
@@ -12,11 +11,12 @@ connectDB();
 // Create a default Super Admin
 const createDefaultSuperAdmin = async () => {
   try {
-      const existingSuperAdmin = await SuperAdmin.findOne({ username: "superAdmin" });
+      const existingSuperAdmin = await User.findOne({ username: "superAdmin" });
       if (!existingSuperAdmin) {
-          const defaultSuperAdmin = new SuperAdmin({
+          const defaultSuperAdmin = new User({
               username: "superAdmin",
               password: "super123", 
+              role: "super_admin",
           });
           await defaultSuperAdmin.save();
           console.log("Default Super Admin created: superAdmin / super123");
@@ -40,18 +40,9 @@ createDefaultSuperAdmin();
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 
-app.use(
-  session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-
 
 // Routes
-app.use("/api/auth/admin", require("./routes/authRoutes"));
-app.use("/api/auth/superAdmin", require("./routes/authRoutesSuper"));
+app.use("/api/users", require("./routes/userRoutes"));
 
 
 // Default Route 
