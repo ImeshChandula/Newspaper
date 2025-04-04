@@ -29,10 +29,10 @@ router.get("/getAllEditors", authenticateUser, authorizeRoles("admin", "super_ad
 router.get("/getAllAdmins", authenticateUser, authorizeRoles("super_admin"), getAllAdmins);
 router.get("/getAllSuperAdmins", authenticateUser, authorizeRoles("super_admin"), getAllSuperAdmins);
 
-router.delete("/deleteUser:name", authenticateUser, authorizeRoles("super_admin"), deleteUser);
-router.patch("/updateUser:id", authenticateUser, authorizeRoles("super_admin"), updateUser);
-router.patch("/promoteToAdmin:username", authenticateUser, authorizeRoles("super_admin"), promoteToAdmin);
-router.patch("/promoteToSuperAdmin:username", authenticateUser, authorizeRoles("super_admin"), promoteToSuperAdmin);
+router.delete("/deleteUser/:name", authenticateUser, authorizeRoles("super_admin"), deleteUser);
+router.patch("/updateUser/:id", authenticateUser, authorizeRoles("super_admin"), updateUser);
+router.patch("/promoteToAdmin/:username", authenticateUser, authorizeRoles("super_admin"), promoteToAdmin);
+router.patch("/promoteToSuperAdmin/:username", authenticateUser, authorizeRoles("super_admin"), promoteToSuperAdmin);
 
 
 
