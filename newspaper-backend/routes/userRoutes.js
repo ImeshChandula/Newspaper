@@ -20,8 +20,9 @@ const router = express.Router();
 // Routes
 // http://localhost:5000/api/users"
 router.post("/register", registerUser);
-router.post("/registerAdmin", authenticateUser, authorizeRoles("super_admin"), registerAdmin);
 router.post("/login", loginUser);
+router.post("/registerAdmin", authenticateUser, authorizeRoles("super_admin"), registerAdmin);
+
 
 router.get("/getAllUsers", authenticateUser, authorizeRoles("super_admin"), getAllUsers);
 router.get("/getAllEditors", authenticateUser, authorizeRoles("admin", "super_admin"), getAllEditors);

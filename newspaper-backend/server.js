@@ -43,6 +43,7 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/news", require("./routes/newsRoutes"));
 
 
 // Default Route 
