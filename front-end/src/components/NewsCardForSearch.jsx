@@ -1,8 +1,9 @@
 import React from "react";
 import "./css/NewsCard.css";
+import { Link } from "react-router-dom";
 
-const NewsCard = ({ news, showDetails = false }) => {
-    const { title, image, description, timestamp, tags } = news;
+const NewsCard = ({ news = false }) => {
+    const { title, image, description, timestamp } = news;
 
     const getTimeAgo = (timestamp) => {
         const now = new Date().getTime();
@@ -43,7 +44,9 @@ const NewsCard = ({ news, showDetails = false }) => {
             <div className="row">
                 <div className="card-body">
                     <p className="card-text">{description}</p>
-                    <a className="btn btn-link p-0">View more &gt;&gt;</a>
+                    <Link to={`/news/${encodeURIComponent(title)}`} className="btn btn-link p-0">
+                        View more &gt;&gt;
+                    </Link>
                     <div className="text-muted small mt-1">{getTimeAgo(timestamp)}</div>
                 </div>
             </div>
