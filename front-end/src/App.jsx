@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Router, Route, Routes } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.js";
 import newsData from "./data/data.js";
@@ -10,6 +10,8 @@ import EducationPage from "./pages/Education.jsx";
 import PoliticsPage from "./pages/Politics.jsx";
 import SearchResults from "./pages/SearchResults.jsx";
 import Footer from "./components/Footer.jsx";
+import Home from "./routes/Home.jsx";
+import Login from "./routes/Login.jsx";
 
 const App = () => {
   const [latestNews, setLatestNews] = useState([]);
@@ -22,6 +24,7 @@ const App = () => {
   }, []);
 
   return (
+    /*
     <Router>
       <div className="bg-light">
         <Navbar />
@@ -37,6 +40,13 @@ const App = () => {
       </div>
       <Footer/>
     </Router>
+    */
+   <>
+    <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+    </Routes>
+   </>
   );
 };
 
