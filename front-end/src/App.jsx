@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Router, Route, Routes } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.js";
 import newsData from "./data/data.js";
@@ -14,6 +14,10 @@ import Signin from "./components/signin.jsx";
 import Signup from "./components/signup.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import NewsDetails from "./components/NewsDetails.jsx";
+
+import Home from "./routes/Home.jsx";
+import Login from "./routes/Login.jsx";
+
 
 const App = () => {
   const [latestNews, setLatestNews] = useState([]);
@@ -42,6 +46,7 @@ const App = () => {
   };
 
   return (
+    /*
     <Router>
       <div className="bg-light">
       <ScrollToTop />
@@ -61,6 +66,13 @@ const App = () => {
       </div>
       <Footer />
     </Router>
+    */
+   <>
+    <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+    </Routes>
+   </>
   );
 };
 
