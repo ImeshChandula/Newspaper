@@ -191,11 +191,16 @@ const deleteUser = async (req, res) => {
     try {
       const { username } = req.params;
   
+      console.log("Username received:", username);
+
       // Prevent a user from deleting themselves
       if (req.user.username === username) {
         return res.status(403).json({ message: "You cannot delete your own account" });
       }
   
+      const userExists = await User.findOne({ username });
+      console.log("User found in DB:", userExists);
+
       const deletedUser = await User.findOneAndDelete({ username });
   
       if (!deletedUser) {
