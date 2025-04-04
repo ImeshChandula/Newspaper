@@ -4,12 +4,14 @@ import Backpic from './rm218-bb-07.jpg';
 import userpic from './R-removebg-preview.png';
 import partpic from './looped-animation-3d-rendering-with-a-metallic-texture-and-gradient-wavy-background-free-video.jpg';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Signin({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false); 
   const [error, setError] = useState(""); 
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,11 +22,12 @@ function Signin({ onLogin }) {
    
     if (username === 'admin' && password === 'password') {
       setTimeout(() => {
-        onLogin(); 
-        setLoading(false); 
-      }, 1000); 
+        localStorage.setItem('isLoggedIn', 'true');  // Save login state
+        localStorage.setItem('username', username); // Store username
+        onLogin(true); 
+        navigate('/'); // Redirect to home after login
+      }, 1000);
     } else {
-      setLoading(false); 
       setError("Invalid username or password."); 
     }
   };
