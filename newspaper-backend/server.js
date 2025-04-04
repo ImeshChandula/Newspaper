@@ -13,10 +13,17 @@ const createDefaultSuperAdmin = async () => {
   try {
       const existingSuperAdmin = await User.findOne({ username: "superAdmin" });
       if (!existingSuperAdmin) {
+        const defaultUsername = "superAdmin";
+        const defaultPassword = "super123";
+        const defaultRole = "super_admin";
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(defaultPassword, salt);
+
           const defaultSuperAdmin = new User({
-              username: "superAdmin",
-              password: "super123", 
-              role: "super_admin",
+              username: defaultUsername,
+              password: hashedPassword, 
+              role: defaultRole,
           });
           await defaultSuperAdmin.save();
           console.log("Default Super Admin created: superAdmin / super123");

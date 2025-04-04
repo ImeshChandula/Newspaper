@@ -161,7 +161,7 @@ const getAllSuperAdmins = async (req, res) => {
 
 
 // @desc Update User (Only Admin or Super Admin)
-// @route PUT /api/users/updateUser:id
+// @route PATCH /api/users/updateUser/:id
 const updateUser = async (req, res) => {
   try {
     const { username, password, role } = req.body;
