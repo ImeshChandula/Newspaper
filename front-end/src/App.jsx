@@ -1,50 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { Router, Route, Routes } from "react-router-dom";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.js";
-import newsData from "./data/data.js";
-import Navbar from "./components/Navbar.jsx";
-import HomePage from "./pages/Home.jsx";
-import SportPage from "./pages/Sport.jsx";
-import EducationPage from "./pages/Education.jsx";
-import PoliticsPage from "./pages/Politics.jsx";
-import SearchResults from "./pages/SearchResults.jsx";
-import Footer from "./components/Footer.jsx";
 import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
+import Unauthorized from "./routes/Unauthorized.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.js";
+import DashboardEditor from "./routes/DashboardEditor.jsx";
+import DashboardAdmin from "./routes/DashboardAdmin.jsx";
+import DashboardSuperAdmin from "./routes/DashboardSuperAdmin.jsx";
 
 const App = () => {
-  const [latestNews, setLatestNews] = useState([]);
-
-  useEffect(() => {
-    const now = new Date().getTime();
-    const TEN_MINUTES = 10 * 60 * 1000;
-    const recentNews = newsData.filter(news => now - news.timestamp <= TEN_MINUTES);
-    setLatestNews(recentNews);
-  }, []);
+  
 
   return (
-    /*
-    <Router>
-      <div className="bg-light">
-        <Navbar />
-        <div className="container mt-4">
-          <Routes>
-            <Route path="/" element={<HomePage latestNews={latestNews} />} />
-            <Route path="/sport" element={<SportPage />} />
-            <Route path="/education" element={<EducationPage />} />
-            <Route path="/politics" element={<PoliticsPage />} />
-            <Route path="/search" element={<SearchResults />} />
-          </Routes>
-        </div>
-      </div>
-      <Footer/>
-    </Router>
-    */
    <>
     <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+
+        <Route 
+            path="/dashboard/editor" 
+            element={
+              <ProtectedRoute allowedRoles={["editor"]}>
+                <DashboardEditor />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dashboard/admin" 
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <DashboardAdmin />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dashboard/super-admin" 
+            element={
+              <ProtectedRoute allowedRoles={["super_admin"]}>
+                <DashboardSuperAdmin />
+              </ProtectedRoute>
+            } 
+          />
     </Routes>
    </>
   );
