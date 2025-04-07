@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../components/css/Login.css";
 
 const Login = () => {
@@ -64,6 +64,11 @@ const Login = () => {
         <div className='login_buttons'>
           <button type="submit" className="login_button">Login</button>
           <button className="login_Back_button" onClick={()=> {logout();}}>Back</button>
+        </div>
+
+        <div>
+          <p>Do not have an Account? </p>
+          <Link to="/register">Click Me.!</Link>
         </div>
       </form>
 

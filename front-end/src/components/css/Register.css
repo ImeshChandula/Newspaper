@@ -1,5 +1,5 @@
 /* Container */
-.login_container {
+.register_content {
     max-width: 400px;
     margin: 80px auto;
     padding: 2rem;
@@ -11,7 +11,7 @@
   }
   
   /* Heading */
-  .login_heading {
+  .register_header {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -19,15 +19,25 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
+  /* Message Box */
+  .message_box {
+    margin-bottom: 1rem;
+    color: #10b981;
+    background-color: #ecfdf5;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+  
   /* Form */
-  .login_form {
+  .register_form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
   
   /* Inputs */
-  .login_input {
+  .register_input {
     padding: 12px 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -36,14 +46,14 @@
     width: 100%;
   }
   
-  .login_input:focus {
+  .register_input:focus {
     border-color: #3b82f6;
     outline: none;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
   }
   
-  /* Button Group */
-  .login_buttons {
+  /* Buttons Container */
+  .register_buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -51,8 +61,8 @@
     margin-top: 1rem;
   }
   
-  /* Login Button */
-  .login_button {
+  /* Submit Button */
+  .register_submit_button {
     flex: 1;
     padding: 10px;
     background-color: #3b82f6;
@@ -64,12 +74,12 @@
     transition: background-color 0.3s ease;
   }
   
-  .login_button:hover {
+  .register_submit_button:hover {
     background-color: #2563eb;
   }
   
   /* Back Button */
-  .login_Back_button {
+  .register_Back_button {
     flex: 1;
     padding: 10px;
     background-color: #e5e7eb;
@@ -81,44 +91,33 @@
     transition: background-color 0.3s ease;
   }
   
-  .login_Back_button:hover {
+  .register_Back_button:hover {
     background-color: #d1d5db;
   }
-
-  a {
-    color: #3b82f6;
-    font-weight: 600;
-    text-decoration: none;
-  }
   
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  
-  /* Fade In Animation */
+  /* Animation */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
   
-  /* Responsive Styles */
-  @media (max-width: 540px) {
-    .login_container {
+  /* Responsive Design */
+  @media (max-width: 500px) {
+    .register_content {
       margin: 40px 16px;
       padding: 1.5rem;
     }
   
-    .login_heading {
+    .register_header {
       font-size: 1.5rem;
     }
   
-    .login_buttons {
+    .register_buttons {
       flex-direction: column;
     }
   
-    .login_button,
-    .login_Back_button {
+    .register_submit_button,
+    .register_Back_button {
       width: 100%;
     }
   }
