@@ -6,6 +6,11 @@ import "../node_modules/bootstrap/dist/js/bootstrap.js";
 
 import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
+import DashboardEditor from "./routes/DashboardEditor.jsx";
+import DashboardAdmin from "./routes/DashboardAdmin.jsx";
+import DashboardSuperAdmin from "./routes/DashboardSuperAdmin.jsx";
+import Unauthorized from "./routes/Unauthorized.jsx";
+
 
 
 const App = () => {
