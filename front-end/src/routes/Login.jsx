@@ -20,7 +20,19 @@ const Login = () => {
   
         if (result.success) {
           console.log("Login Successful!");
+          switch (result.role) {
+            case "editor":
+              navigate("/dashboard/editor");
+              break;
+            case "admin":
+              navigate("/dashboard/admin");
+              break;
+            case "super_admin":
+              navigate("/dashboard/super-admin");
+              break;
+            default:
               navigate("/");
+          }
         } else {
           alert(result.message);
         }
