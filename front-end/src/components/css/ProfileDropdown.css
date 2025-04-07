@@ -1,0 +1,34 @@
+.profile-dropdown .profile-toggle {
+    border-radius: 50px;
+    padding: 6px 12px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.profile-dropdown .profile-toggle:hover {
+    background-color: #474747;
+}
+
+.profile-menu {
+    min-width: 200px;
+    border-radius: 10px;
+    padding: 10px 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-menu .dropdown-item {
+    padding: 10px 16px;
+    transition: background-color 0.2s;
+}
+
+.profile-menu .dropdown-item:hover {
+    background-color: #f1f1f1;
+    color: #212529;
+}
+
+.profile-menu .btn-dashboard {
+    color: #0d6efd;
+}
+
+.profile-menu .btn-dashboard:hover {
+    background-color: #e9f2ff;
+}

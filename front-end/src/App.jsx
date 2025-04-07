@@ -12,44 +12,54 @@ import DashboardAdmin from "./routes/DashboardAdmin.jsx";
 import DashboardSuperAdmin from "./routes/DashboardSuperAdmin.jsx";
 import Unauthorized from "./routes/Unauthorized.jsx";
 import ProtectedRoute from "./context/ProtectedRoute.js";
+import Footer from "./components/Footer.jsx"
+import Navbar from "./components/Navbar.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx"
 
 
 const App = () => {
-  
+
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route path="register" element={<Register />} />
+      <div className="bg-light">
+        <ScrollToTop />
+        <Navbar />
+        <div className="container mt-4">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="/register" element={<Register />} />
 
-        <Route 
-            path="/dashboard/editor" 
-            element={
-              <ProtectedRoute allowedRoles={["editor"]}>
-                <DashboardEditor />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/dashboard/admin" 
-            element={
-              <ProtectedRoute allowedRoles={["admin"]}>
-                <DashboardAdmin />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/dashboard/super-admin" 
-            element={
-              <ProtectedRoute allowedRoles={["super_admin"]}>
-                <DashboardSuperAdmin />
-              </ProtectedRoute>
-            } 
-          />
-    </Routes>
+            <Route
+              path="/dashboard/editor"
+              element={
+                <ProtectedRoute allowedRoles={["editor"]}>
+                  <DashboardEditor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/admin"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <DashboardAdmin />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/super-admin"
+              element={
+                <ProtectedRoute allowedRoles={["super_admin"]}>
+                  <DashboardSuperAdmin />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </div>
+      </div >
+      <Footer />
     </>
   );
 };
