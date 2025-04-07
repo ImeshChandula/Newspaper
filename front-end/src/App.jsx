@@ -10,7 +10,7 @@ import DashboardEditor from "./routes/DashboardEditor.jsx";
 import DashboardAdmin from "./routes/DashboardAdmin.jsx";
 import DashboardSuperAdmin from "./routes/DashboardSuperAdmin.jsx";
 import Unauthorized from "./routes/Unauthorized.jsx";
-
+import ProtectedRoute from "./context/ProtectedRoute.js";
 
 
 const App = () => {
