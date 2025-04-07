@@ -1,0 +1,114 @@
+/* Container */
+.login_container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  /* Heading */
+  .login_heading {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Form */
+  .login_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Inputs */
+  .login_input {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+  }
+  
+  .login_input:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  }
+  
+  /* Button Group */
+  .login_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+  
+  /* Login Button */
+  .login_button {
+    flex: 1;
+    padding: 10px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login_button:hover {
+    background-color: #2563eb;
+  }
+  
+  /* Back Button */
+  .login_Back_button {
+    flex: 1;
+    padding: 10px;
+    background-color: #e5e7eb;
+    color: #111827;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login_Back_button:hover {
+    background-color: #d1d5db;
+  }
+  
+  /* Fade In Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 540px) {
+    .login_container {
+      margin: 40px 16px;
+      padding: 1.5rem;
+    }
+  
+    .login_heading {
+      font-size: 1.5rem;
+    }
+  
+    .login_buttons {
+      flex-direction: column;
+    }
+  
+    .login_button,
+    .login_Back_button {
+      width: 100%;
+    }
+  }
+  
