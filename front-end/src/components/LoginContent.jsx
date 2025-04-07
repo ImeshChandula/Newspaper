@@ -15,6 +15,7 @@ export const LoginContent = () => {
   const handleSubmit = async (e) => {
       e.preventDefault();
       const result = await login(credentials); 
+      console.log("Login result:", result);
 
       if (result.success) {
         console.log("Login Successful!");
