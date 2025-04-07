@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/login`, credentials);
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL_USERS}/login`, credentials);
       localStorage.setItem("token", res.data.token);
       setUser(jwtDecode(res.data.token));
       return true;// Indicate successful login
