@@ -30,13 +30,22 @@ const handleSubmit = async (e) => {
       headers: { "Content-Type": "application/json" },
     });
 
-    setMessage("Admin added successfully!");
+    setMessage("User added successfully!");
     setUser({ username: "", password: "" });
 
     setTimeout(() => navigate("/"), 2000);
   } catch (error) {
-    console.error("Error adding Admin:", error);
-    setMessage("Failed to add Admin.");
+    console.error("Error adding User:", error);
+    
+    if (error.response && error.response.status === 400) {
+      // 400 is returned by backend for already registered users
+      setMessage("User already registered!");
+    } else if (error.response?.data?.message) {
+      // If backend sends a custom error message
+      setMessage(error.response.data.message);
+    } else {
+      setMessage("Failed to add User.");
+    }
   }
 };
 
