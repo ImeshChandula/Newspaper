@@ -82,7 +82,7 @@ const Navbar = ({ isLoggedIn, username, onLogout }) => {
           {!isLoggedIn ? (
             <div className="d-flex">
               <Link to="/login" className="btn btn-outline-primary me-2">Sign In</Link>
-              <Link to="/signup" className="btn btn-outline-secondary">Sign Up</Link>
+              <Link to="/register" className="btn btn-outline-secondary">Sign Up</Link>
             </div>
           ) : (
             <div className="d-flex align-items-center">

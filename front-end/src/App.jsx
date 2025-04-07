@@ -6,6 +6,7 @@ import "../node_modules/bootstrap/dist/js/bootstrap.js";
 
 import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
+import Register from './routes/Register.jsx';
 import DashboardEditor from "./routes/DashboardEditor.jsx";
 import DashboardAdmin from "./routes/DashboardAdmin.jsx";
 import DashboardSuperAdmin from "./routes/DashboardSuperAdmin.jsx";
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="register" element={<Register />} />
 
         <Route 
             path="/dashboard/editor" 
