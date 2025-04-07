@@ -33,6 +33,7 @@ const ProfileDropdown = () => {
                 id="profileDropdown"
             >
                 <FaUserCircle className="me-2" size={22} />
+                {user ? user.username : "Guest"}
             </button>
 
             <ul className="dropdown-menu dropdown-menu-end profile-menu" aria-labelledby="profileDropdown">
