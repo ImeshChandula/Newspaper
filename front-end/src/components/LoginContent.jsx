@@ -14,13 +14,25 @@ export const LoginContent = () => {
   
   const handleSubmit = async (e) => {
       e.preventDefault();
-      const success = await login(credentials); 
-      if (success) {
-        console.log("Login Success.!");
-        navigate("/dashboard");
+      const result = await login(credentials); 
+
+      if (result.success) {
+        console.log("Login Successful!");
+        switch (result.role) {
+          case "editor":
+            navigate("/dashboard/editor");
+            break;
+          case "admin":
+            navigate("/dashboard/admin");
+            break;
+          case "super_admin":
+            navigate("/dashboard/super-admin");
+            break;
+          default:
+            navigate("/");
+        }
       } else {
-        console.log("Login Fail.!");
-        alert("Invalid Username or Password. Please try again.");
+        alert(result.message);
       }
   };
 
