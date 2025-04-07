@@ -26,7 +26,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/login`, user, {
+    await axios.post(`${process.env.REACT_APP_API_BASE_URL_USERS}/register`, user, {
       headers: { "Content-Type": "application/json" },
     });
 
