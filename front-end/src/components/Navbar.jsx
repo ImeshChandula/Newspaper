@@ -7,11 +7,13 @@ import "./css/Navbar.css";
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(new Date());
   const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
+      setCurrentDate(new Date());
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -22,6 +24,15 @@ const Navbar = () => {
       minute: "2-digit",
       second: "2-digit",
       hour12: true,
+    });
+  };
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -38,7 +49,14 @@ const Navbar = () => {
       <div className="container-fluid px-4">
         <Link className="navbar-brand fw-bold me-4" to="/">Logo</Link>
 
-        <p className="live-time d-lg-none text-end fw-bold mb-0">{formatTime(currentTime)}</p>
+        <div>
+          <p className="live-date d-lg-none text-end fw-light mb-0">
+            {formatDate(currentDate)}
+          </p>
+          <p className="live-time d-lg-none text-end fw-bold mb-0">
+            {formatTime(currentTime)}
+          </p>
+        </div>
 
         <button
           className="navbar-toggler"
@@ -90,8 +108,10 @@ const Navbar = () => {
           </form>
 
           <ProfileDropdown />
-          
-          <p className="live-time text-end fw-bold mb-0">{formatTime(currentTime)}</p>
+          <div>
+            <p className="live-date text-end fw-light mb-0">{formatDate(currentDate)}</p>
+            <p className="live-time text-end fw-bold mb-0">{formatTime(currentTime)}</p>
+          </div>
         </div>
       </div>
     </nav>

@@ -22,12 +22,18 @@
     color: #6c757d;
 }
 
+.live-date {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
 @media (min-width: 992px) {
     .navbar-nav {
         gap: 1rem;
     }
 
-    .live-time {
+    .live-time,
+    .live-date {
         min-width: 120px;
         text-align: right;
     }
