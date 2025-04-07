@@ -81,7 +81,7 @@ const Navbar = ({ isLoggedIn, username, onLogout }) => {
         <div className="ms-auto">
           {!isLoggedIn ? (
             <div className="d-flex">
-              <Link to="/signin" className="btn btn-outline-primary me-2">Sign In</Link>
+              <Link to="/login" className="btn btn-outline-primary me-2">Sign In</Link>
               <Link to="/signup" className="btn btn-outline-secondary">Sign Up</Link>
             </div>
           ) : (
