@@ -16,6 +16,7 @@ import Footer from "./components/Footer.jsx"
 import Navbar from "./components/Navbar.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx"
 import NewsDetail from "./components/NewsDetails.jsx";
+import ManageUsers from "./routes/ManageUsers.jsx"
 
 
 const App = () => {
@@ -54,6 +55,14 @@ const App = () => {
             element={
               <ProtectedRoute allowedRoles={["super_admin"]}>
                 <DashboardSuperAdmin />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/userManagement"
+            element={
+              <ProtectedRoute allowedRoles={["super_admin"]}>
+                <ManageUsers />
               </ProtectedRoute>
             }
           />
