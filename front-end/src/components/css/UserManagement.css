@@ -1,0 +1,141 @@
+/* Main container styles */
+.user_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+  
+  .user_heading {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #3498db;
+  }
+  
+  /* Loading and error states */
+  .loading_users {
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+  }
+  
+  .loading_users_error {
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #e74c3c;
+    background-color: #fadbd8;
+    border-radius: 4px;
+    border-left: 4px solid #c0392b;
+  }
+  
+  /* Table styles */
+  .user {
+    overflow-x: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user_table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  .user_table_head {
+    background-color: #f8f9fa;
+  }
+  
+  .user_table_head_data {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #e9ecef;
+  }
+  
+  .user_table_row {
+    transition: background-color 0.2s ease;
+  }
+  
+  .user_table_row:hover {
+    background-color: #f1f5f9;
+  }
+  
+  .user_table_row_data {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .user_table_row_data_action {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  /* Button styles */
+  .promote_to_admin_button,
+  .promote_to_super_admin_button,
+  .delete_user_button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+  }
+  
+  .promote_to_admin_button {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .promote_to_admin_button:hover {
+    background-color: #2980b9;
+  }
+  
+  .promote_to_super_admin_button {
+    background-color: #9b59b6;
+    color: white;
+  }
+  
+  .promote_to_super_admin_button:hover {
+    background-color: #8e44ad;
+  }
+  
+  .delete_user_button {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .delete_user_button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .user_container {
+      padding: 1rem;
+    }
+    
+    .user_table_row_data_action {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .promote_to_admin_button,
+    .promote_to_super_admin_button,
+    .delete_user_button {
+      width: 100%;
+    }
+  }
