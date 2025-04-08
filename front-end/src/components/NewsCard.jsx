@@ -18,7 +18,7 @@ const NewsCard = ({ news }) => {
         <div className="row g-4">
             {news.map((item) => (
                 <div key={item._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div className="card h-auto shadow-sm border-1 bg-light news-card">
+                    <div className="card news-card h-100 shadow-sm">
                         {item.media && (
                             <img
                                 src={item.media}
@@ -26,11 +26,11 @@ const NewsCard = ({ news }) => {
                                 alt={item.title}
                             />
                         )}
-                        <div className="card-body">
+                        <div className="card-body d-flex flex-column">
                             <h5 className="card-title">{item.title}</h5>
-                            <p className="card-text">{item.content.slice(0, 100)}...</p>
-                            <Link to={`/news/${item._id}`} className="btn btn-link">
-                                View more &gt;&gt;
+                            <p className="card-text flex-grow-1">{item.content.slice(0, 100)}...</p>
+                            <Link to={`/news/${item._id}`} className="btn btn-outline-primary mt-auto">
+                                View More &raquo;
                             </Link>
                         </div>
                         <div className="card-footer d-flex justify-content-between small text-muted">
