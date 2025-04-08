@@ -31,17 +31,248 @@ const createNewsArticle = async (req, res) => {
 };
 
 
-//@route   GET /api/news/getAllNews
-//@desc    Get all news articles
+//@route   GET /api/news/education/pending
+//@desc    Get all pending news articles in Education category, sorted by latest
 //@access  Public
-const getAllNews = async (req, res) => {
+const getEducationPendingNews = async (req, res) => {
     try {
-        const newsArticles = await News.find().populate('author', 'username email');
+        const newsArticles = await News.find({
+            category: "Education",
+            status: "pending"
+        })
+        .sort({ date: -1 }) // Descending
+        .populate('author', 'username email');
+
         res.status(200).json(newsArticles);
     } catch (error) {
-        res.status(500).json({ message: 'Error retrieving news articles', error });
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
     }
 };
+
+
+//@route   GET /api/news/education/accept
+//@desc    Get all accept news articles in Education category, sorted by latest
+//@access  Public
+const getEducationAcceptNews = async (req, res) => {
+    try {
+        const newsArticles = await News.find({
+            category: "Education",
+            status: "accept"
+        })
+        .sort({ date: -1 }) // Descending
+        .populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
+
+//@route   GET /api/news/education/reject
+//@desc    Get all reject news articles in Education category, sorted by latest
+//@access  Public
+const getEducationRejectNews = async (req, res) => {
+    try {
+        const newsArticles = await News.find({
+            category: "Education",
+            status: "reject"
+        })
+        .sort({ date: -1 }) // Descending
+        .populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
+
+
+//@route   GET /api/news/politics/pending
+//@desc    Get all pending news articles in Politics category, sorted by latest
+//@access  Public
+const getPoliticsPendingNews = async (req, res) => {
+    try {
+        const newsArticles = await News.find({
+            category: "Politics",
+            status: "pending"
+        })
+        .sort({ date: -1 }) // Descending
+        .populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
+
+
+//@route   GET /api/news/politics/accept
+//@desc    Get all accept news articles in Politics category, sorted by latest
+//@access  Public
+const getPoliticsAcceptNews = async (req, res) => {
+    try {
+        const newsArticles = await News.find({
+            category: "Politics",
+            status: "accept"
+        })
+        .sort({ date: -1 }) // Descending
+        .populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
+
+//@route   GET /api/news/politics/reject
+//@desc    Get all reject news articles in Politics category, sorted by latest
+//@access  Public
+const getPoliticsRejectNews = async (req, res) => {
+    try {
+        const newsArticles = await News.find({
+            category: "Politics",
+            status: "reject"
+        })
+        .sort({ date: -1 }) // Descending
+        .populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
+
+//@route   GET /api/news/sports/pending
+//@desc    Get all pending news articles in Sports category, sorted by latest
+//@access  Public
+const getSportsPendingNews = async (req, res) => {
+    try {
+        const newsArticles = await News.find({
+            category: "Sports",
+            status: "pending"
+        })
+        .sort({ date: -1 }) // Descending
+        .populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
+
+
+//@route   GET /api/news/sports/accept
+//@desc    Get all accept news articles in Sports category, sorted by latest
+//@access  Public
+const getSportsAcceptNews = async (req, res) => {
+    try {
+        const newsArticles = await News.find({
+            category: "Sports",
+            status: "accept"
+        })
+        .sort({ date: -1 }) // Descending
+        .populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
+
+//@route   GET /api/news/sports/reject
+//@desc    Get all reject news articles in Sports category, sorted by latest
+//@access  Public
+const getSportsRejectNews = async (req, res) => {
+    try {
+        const newsArticles = await News.find({
+            category: "Sports",
+            status: "reject"
+        })
+        .sort({ date: -1 }) // Descending
+        .populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
+
+
+//@route   GET /api/news/pending
+//@desc    Get all pending news articles
+//@access  Admins, Moderators
+const getAllPendingNews = async (req, res) => {
+    try {
+      const pendingNews = await News.find({ status: "pending" })
+        .sort({ date: -1 })
+        .populate('author', 'username email');
+  
+      res.status(200).json(pendingNews);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching pending news', error: error.message });
+    }
+  };
+  
+
+//@route   GET /api/news/accept
+//@desc    Get all accept news articles
+//@access  Admins, Moderators
+const getAllAcceptNews = async (req, res) => {
+    try {
+      const pendingNews = await News.find({ status: "accept" })
+        .sort({ date: -1 })
+        .populate('author', 'username email');
+  
+      res.status(200).json(pendingNews);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching accept news', error: error.message });
+    }
+  };
+
+
+//@route   GET /api/news/reject
+//@desc    Get all reject news articles
+//@access  Admins, Moderators
+const getAllRejectNews = async (req, res) => {
+    try {
+      const pendingNews = await News.find({ status: "reject" })
+        .sort({ date: -1 })
+        .populate('author', 'username email');
+  
+      res.status(200).json(pendingNews);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching reject news', error: error.message });
+    }
+  };
+
+
+//@route   PATCH /api/news/updateStatus/:id
+//@desc    Update status of a news article (accept/reject)
+//@access  Admins, Moderators
+const updateNewsStatus = async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+  
+    if (!['accept', 'reject'].includes(status)) {
+      return res.status(400).json({ message: 'Invalid status value' });
+    }
+  
+    try {
+      const updatedNews = await News.findByIdAndUpdate(
+        id,
+        { status },
+        { new: true }
+      );
+  
+      if (!updatedNews) {
+        return res.status(404).json({ message: 'News article not found' });
+      }
+  
+      res.status(200).json({ message: `News article ${status}ed successfully`, updatedNews });
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating status', error: error.message });
+    }
+  };
 
 
 //@route   GET /api/news/getNewsArticleByID/:id
@@ -105,7 +336,19 @@ const deleteNewsArticle = async (req, res) => {
 
 module.exports = {
     createNewsArticle,
-    getAllNews,
+    getEducationPendingNews,
+    getEducationAcceptNews,
+    getEducationRejectNews,
+    getPoliticsAcceptNews,
+    getPoliticsPendingNews,
+    getPoliticsRejectNews,
+    getSportsAcceptNews,
+    getSportsPendingNews,
+    getSportsRejectNews,
+    getAllPendingNews,
+    getAllAcceptNews,
+    getAllRejectNews,
+    updateNewsStatus,
     getNewsArticleByID,
     updateNewsArticle,
     deleteNewsArticle,

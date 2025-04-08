@@ -33,6 +33,7 @@ const CreateNewsArticle = () => {
               },
             }
           );
+          console.log("News article created successfully!");
           setMessage('News article created successfully!');
           setFormData({ category: '', title: '', media: '', content: '' });
         } catch (error) {
