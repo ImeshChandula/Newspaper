@@ -10,7 +10,17 @@ const ProfileDropdown = () => {
 
     const goToDashboard = () => {
         if (!user) return;
-        navigate("/userManagement")
+        switch (user.role) {
+            case "editor":
+                navigate("/dashboard/editor");
+                break;
+            case "admin":
+                navigate("/dashboard/admin");
+                break;
+            case "super_admin":
+                navigate("/dashboard/super-admin");
+                break;
+        }
     };
 
     return (
@@ -38,7 +48,7 @@ const ProfileDropdown = () => {
                 {user && (
                     <li>
                         <button className="dropdown-item btn-dashboard" onClick={goToDashboard}>
-                            User Management
+                            Dash Board
                         </button>
                     </li>
                 )}
@@ -51,7 +61,7 @@ const ProfileDropdown = () => {
                     </li>
                 ) : (
                     <li>
-                        <button className="dropdown-item text-danger" onClick={()=> {logout(); navigate("/");}}>
+                        <button className="dropdown-item text-danger" onClick={() => { logout(); navigate("/"); }}>
                             Logout
                         </button>
                     </li>
