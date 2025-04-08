@@ -97,7 +97,7 @@ const CreateNewsArticle = () => {
         >
           {loading ? 'Submitting...' : 'Submit'}
         </button>
-  
+
       </form>
 
       {message && (
