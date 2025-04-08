@@ -1,8 +1,12 @@
 import React from 'react'
+import PendingNewsModeration from '../components/PendingNewsModeration '
+
 
 const DashboardSuperAdmin = () => {
   return (
-    <div>DashboardSuperAdmin</div>
+    <div>
+     <PendingNewsModeration />
+    </div>
   )
 }
 
