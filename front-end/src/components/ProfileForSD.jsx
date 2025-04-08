@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FaUserCircle } from "react-icons/fa";
 
-const ProfilForSD = () => {
+const ProfilForSD = ({ closeNavbar }) => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -20,6 +20,12 @@ const ProfilForSD = () => {
         navigate("/dashboard/super-admin");
         break;
     }
+    closeNavbar();
+  };
+
+  const handleLogout = () => {
+    logout();
+    closeNavbar();
   };
 
   return (
@@ -35,7 +41,7 @@ const ProfilForSD = () => {
       <ul className="list-unstyled mb-0">
         {!user ? (
           <li>
-            <Link to="/login" className="btn btn-outline-primary w-100">
+            <Link to="/login" className="btn btn-outline-primary w-100" onClick={closeNavbar}>
               Login
             </Link>
           </li>
@@ -47,7 +53,7 @@ const ProfilForSD = () => {
               </button>
             </li>
             <li>
-              <button className="btn btn-outline-danger w-100" onClick={logout}>
+              <button className="btn btn-outline-danger w-100" onClick={handleLogout}>
                 Logout
               </button>
             </li>

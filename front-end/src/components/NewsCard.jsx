@@ -1,52 +1,45 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./css/NewsCard.css";
 
-const NewsCard = ({ title, image, description, timestamp }) => {
-    const getTimeAgo = (timestamp) => {
-        const now = new Date().getTime();
-        const diff = now - timestamp;
-
-        const seconds = Math.floor(diff / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const hours = Math.floor(minutes / 60);
-        const days = Math.floor(hours / 24);
-        const weeks = Math.floor(days / 7);
-        const months = Math.floor(days / 30);
-
-        if (seconds < 60) return "Just now";
-        if (minutes < 60) return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
-        if (hours < 24) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-        if (days < 7) return `${days} day${days > 1 ? "s" : ""} ago`;
-        if (weeks < 4) return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
-        if (months < 12) return `${months} month${months > 1 ? "s" : ""} ago`;
-
-        return "Over a year ago";
+const NewsCard = ({ news }) => {
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate);
+        return date.toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
     };
 
-    const isLatest = new Date().getTime() - timestamp <= 10 * 60 * 1000; // Within 10 minutes
-
     return (
-        <div className="card news-card">
-            <div className="row g-0">
-                <div className="row">
-                    <div className="col-4">
-                        <img src={image} className="news-image" alt={title} />
-                    </div>
-                    <div className="col-8">
+        <div className="row g-4">
+            {news.slice(0, 6).map((item) => (
+                <div key={item._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div className="card h-auto shadow-sm border-1 bg-light news-card">
+                        {item.media && (
+                            <img
+                                src={item.media}
+                                className="card-img-top news-image"
+                                alt={item.title}
+                            />
+                        )}
                         <div className="card-body">
-                            <h5 className="card-title">{title}</h5>
-                            {isLatest && <span className="badge bg-danger latest-badge">Latest</span>}
+                            <h5 className="card-title">{item.title}</h5>
+                            <p className="card-text">{item.content.slice(0, 100)}...</p>
+                            <a className="btn btn-link">
+                                View more &gt;&gt;
+                            </a>
+                        </div>
+                        <div className="card-footer d-flex justify-content-between small text-muted">
+                            <span>By {item?.author?.username ?? "Unknown"}</span>
+                            <span>{formatDate(item.date)}</span>
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="card-body">
-                        <p className="card-text">{description}</p>
-                        <a className="btn btn-link p-0">View more &gt;&gt;</a>
-                        <div className="text-muted small mt-1">{getTimeAgo(timestamp)}</div>
-                    </div>
-                </div>
-            </div>
+            ))}
         </div>
     );
 };

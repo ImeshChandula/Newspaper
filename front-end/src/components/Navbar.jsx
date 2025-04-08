@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ProfileDropdown from "./ProfileDropDown";
 import ProfilForSD from "./ProfileForSD";
@@ -44,6 +44,13 @@ const Navbar = () => {
     }
   };
 
+  const closeNavbar = () => {
+    const navbarToggler = document.getElementById("navbarNav");
+    if (navbarToggler.classList.contains("show")) {
+      navbarToggler.classList.remove("show");
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top custom-navbar">
       <div className="container-fluid px-4">
@@ -74,13 +81,21 @@ const Navbar = () => {
         <div className="collapse navbar-collapse overflow-auto mt-3 mt-lg-0" id="navbarNav">
           <ul className="navbar-nav ms-auto align-items-lg-center gap-2">
             <div className="nav-item d-lg-none w-100 mb-3">
-              <ProfilForSD />
+              <ProfilForSD closeNavbar={closeNavbar} />
             </div>
 
-            <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="/sport">Sport</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="/education">Education</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="/politics">Politics</Link></li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/" onClick={closeNavbar}>Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/sport" onClick={closeNavbar}>Sport</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/education" onClick={closeNavbar}>Education</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/politics" onClick={closeNavbar}>Politics</Link>
+            </li>
 
             <li className="nav-item d-lg-none w-100 mt-2">
               <form className="d-flex" onSubmit={handleSearch}>

@@ -79,12 +79,6 @@ const Footer = () => {
           <p className="mb-0">
             &copy; {new Date().getFullYear()} NewsHub. All Rights Reserved.
           </p>
-          <div className="live-time-and-date mb-0">
-            <p className="live-date mb-0">{formatDate(currentDate)}</p>
-            <p className="live-time mb-0">
-              Current Time: {formatTime(currentTime)}
-            </p>
-          </div>
         </div>
       </div>
     </footer>
