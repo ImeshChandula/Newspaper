@@ -26,6 +26,7 @@ const ProfilForSD = ({ closeNavbar }) => {
   const handleLogout = () => {
     logout();
     closeNavbar();
+    navigate("/")
   };
 
   return (

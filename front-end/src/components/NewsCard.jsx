@@ -29,9 +29,9 @@ const NewsCard = ({ news }) => {
                         <div className="card-body">
                             <h5 className="card-title">{item.title}</h5>
                             <p className="card-text">{item.content.slice(0, 100)}...</p>
-                            <a className="btn btn-link">
+                            <Link to={`/news/${item._id}`} className="btn btn-link">
                                 View more &gt;&gt;
-                            </a>
+                            </Link>
                         </div>
                         <div className="card-footer d-flex justify-content-between small text-muted">
                             <span>By {item?.author?.username ?? "Unknown"}</span>
