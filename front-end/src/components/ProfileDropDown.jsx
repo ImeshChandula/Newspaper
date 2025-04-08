@@ -10,17 +10,7 @@ const ProfileDropdown = () => {
 
     const goToDashboard = () => {
         if (!user) return;
-        switch (user.role) {
-            case "editor":
-                navigate("/dashboard/editor");
-                break;
-            case "admin":
-                navigate("/dashboard/admin");
-                break;
-            case "super_admin":
-                navigate("/dashboard/super-admin");
-                break;
-        }
+        navigate("/userManagement")
     };
 
     return (
@@ -48,7 +38,7 @@ const ProfileDropdown = () => {
                 {user && (
                     <li>
                         <button className="dropdown-item btn-dashboard" onClick={goToDashboard}>
-                            Dashboard
+                            User Management
                         </button>
                     </li>
                 )}

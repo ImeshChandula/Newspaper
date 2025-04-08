@@ -9,17 +9,6 @@ const ProfilForSD = ({ closeNavbar }) => {
 
   const goToDashboard = () => {
     if (!user) return;
-    switch (user.role) {
-      case "editor":
-        navigate("/dashboard/editor");
-        break;
-      case "admin":
-        navigate("/dashboard/admin");
-        break;
-      case "super_admin":
-        navigate("/dashboard/super-admin");
-        break;
-    }
     closeNavbar();
   };
 
