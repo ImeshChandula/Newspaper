@@ -4,45 +4,45 @@ import '../components/css/CreateNewsArticle.css';
 
 const CreateNewsArticle = () => {
 
-    const [formData, setFormData] = useState({
-        category: '',
-        title: '',
-        media: '',
-        content: '',
-      });
-    
-      const [message, setMessage] = useState('');
-      const [loading, setLoading] = useState(false);
-    
-      const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setMessage('');
-    
-        try {
-          const token = localStorage.getItem('token'); // or wherever you store it
-          await axios.post(`${process.env.REACT_APP_API_BASE_URL_NEWS}/createNewsArticle`, formData,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-              },
-            }
-          );
-          setMessage('News article created successfully!');
-          setFormData({ category: '', title: '', media: '', content: '' });
-        } catch (error) {
-          setMessage(error.response?.data?.message || 'Something went wrong.');
-        } finally {
-          setLoading(false);
+  const [formData, setFormData] = useState({
+    category: '',
+    title: '',
+    media: '',
+    content: '',
+  });
+
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const token = localStorage.getItem('token'); // or wherever you store it
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL_NEWS}/createNewsArticle`, formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         }
-      };
-    
-    
+      );
+      setMessage('News article created successfully!');
+      setFormData({ category: '', title: '', media: '', content: '' });
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'Something went wrong.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   return (
     <div className="create_news_container">
       <h2 className="create_news_header">Create News Article</h2>
@@ -96,7 +96,7 @@ const CreateNewsArticle = () => {
         >
           {loading ? 'Submitting...' : 'Submit'}
         </button>
-  
+
       </form>
 
       {message && (

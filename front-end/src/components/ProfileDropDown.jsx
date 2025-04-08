@@ -8,6 +8,21 @@ const ProfileDropdown = () => {
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const goToDashboard = () => {
+        if (!user) return;
+        switch (user.role) {
+            case "editor":
+                navigate("/dashboard/editor");
+                break;
+            case "admin":
+                navigate("/dashboard/admin");
+                break;
+            case "super_admin":
+                navigate("/dashboard/super-admin");
+                break;
+        }
+    };
+
     return (
         <div className="dropdown profile-dropdown">
             <button
@@ -29,6 +44,14 @@ const ProfileDropdown = () => {
                     {user ? user.role : "Visitor"}
                 </li>
                 <li><hr className="dropdown-divider" /></li>
+
+                {user && (
+                    <li>
+                        <button className="dropdown-item btn-dashboard" onClick={goToDashboard}>
+                            Dashboard
+                        </button>
+                    </li>
+                )}
 
                 {!user ? (
                     <li>

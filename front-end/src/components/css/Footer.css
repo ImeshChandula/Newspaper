@@ -1,46 +1,75 @@
+/* Main Footer Styling */
 .footer {
   border-top: 2px solid rgba(0, 0, 0, 0.096);
   padding-bottom: 10px;
+  background-color: #f8f9fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Headings */
 .footer .text-uppercase {
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #343a40;
+  margin-bottom: 10px;
 }
 
+/* Quick Links */
 .footer-link {
-  color: #333;
+  color: #343a40;
   text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
 .footer-link:hover {
-  color: #007bff;
+  color: #0d6efd;
   text-decoration: underline;
 }
 
 /* Social Media Icons */
 .social-icons a {
-  display: inline-block;
-  color: #808080;
-  font-size: 20px;
-  margin-right: 15px;
-  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e9ecef;
+  color: #495057;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .social-icons a:hover {
-  color: #007bff;
+  background-color: #0d6efd;
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 /* Footer Bottom Section */
 .footer-bottom {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding-top: 10px;
+  padding-top: 12px;
   font-size: 14px;
+  color: #6c757d;
 }
 
-/* Align items on large screens */
+/* Live Time & Date */
+.live-time-and-date {
+  text-align: right;
+}
+
+.live-time-and-date p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Responsive: Align items on large screens */
 @media (min-width: 768px) {
   .footer-bottom {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 }
