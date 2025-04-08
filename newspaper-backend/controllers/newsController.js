@@ -3,20 +3,30 @@ const News = require("../models/newsModel");
 
 //@route   POST /api/news/createNewsArticle
 //@desc    Create a news article
-//@access  Reporter, Admin, Super Admin
+//@access  Editor, Admin
 const createNewsArticle = async (req, res) => {
     try {
-        const { title, media, content } = req.body;
+        const { category, title, media, content } = req.body;
+
+        // Basic input validation (optional but recommended)
+        if (!category || !title || !content) {
+            return res.status(400).json({ message: 'Category, title, and content are required.' });
+        }
+
         const newsArticle = new News({
+            category,
             title,
             media,
             content,
-            author: req.user.id
+            author: req.user.id, // middleware that sets req.user
+            // status defaults to "pending", so no need to manually add it unless overriding
         });
+
         await newsArticle.save();
+
         res.status(201).json({ message: 'News article created successfully', newsArticle });
     } catch (error) {
-        res.status(500).json({ message: 'Error creating news', error });
+        res.status(500).json({ message: 'Error creating news', error: error.message });
     }
 };
 

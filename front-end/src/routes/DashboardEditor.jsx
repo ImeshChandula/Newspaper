@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import CreateNewsArticle from "../components/CreateNewsArticle"
 
 const DashboardEditor = () => {
   return (
-    <div>DashboardEditor</div>
+    <div>
+      <CreateNewsArticle />
+    </div>
   )
 }
 

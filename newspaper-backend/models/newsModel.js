@@ -7,7 +7,7 @@ const newsSchema = new mongoose.Schema({
         required: true,
       },
     title: { type: String, required: true },
-    media: { type: String, required: false }, // URL for image or video
+    media: { type: String }, // URL for image or video
     content: { type: String, required: true },
     date: { type: Date, default: Date.now },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
