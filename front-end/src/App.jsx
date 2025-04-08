@@ -16,6 +16,9 @@ import Footer from "./components/Footer.jsx"
 import Navbar from "./components/Navbar.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx"
 import NewsDetail from "./components/NewsDetails.jsx";
+import SportPage from "./pages/Sport.jsx"
+import EducationPage from "./pages/Education.jsx"
+import PoliticsPage from "./pages/Politics.jsx"
 
 
 const App = () => {
@@ -32,6 +35,9 @@ const App = () => {
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/register" element={<Register />} />
           <Route path="/news/:id" element={<NewsDetail />} />
+          <Route path="/sport" element={<SportPage />} />
+          <Route path="/education" element={<EducationPage />} />
+          <Route path="/politics" element={<PoliticsPage />} />
 
           <Route
             path="/dashboard/editor"
