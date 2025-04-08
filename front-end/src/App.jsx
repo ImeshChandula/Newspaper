@@ -32,6 +32,9 @@ const App = () => {
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/register" element={<Register />} />
           <Route path="/news/:id" element={<NewsDetail />} />
+          <Route path="/sport" element={<SportPage />} />
+          <Route path="/education" element={<EducationPage />} />
+          <Route path="/politics" element={<PoliticsPage />} />
 
           <Route
             path="/dashboard/editor"
