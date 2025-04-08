@@ -19,6 +19,10 @@ const ProfilForSD = ({ closeNavbar }) => {
       case "super_admin":
         navigate("/dashboard/super-admin");
         break;
+      default:
+        // Handle unexpected role or fallback
+        navigate("/unauthorized"); // Redirect to home or another appropriate page
+         break;
     }
     closeNavbar();
   };

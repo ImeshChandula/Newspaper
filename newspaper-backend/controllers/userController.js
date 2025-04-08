@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
+const ROLES = require("../config/roles");
 
 
 // @desc Register User
@@ -113,7 +114,22 @@ const loginUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({}, "-password");
-    res.json(users);
+    
+    // Define role priority (higher number = higher priority)
+    const rolePriority = {
+      [ROLES.SUPER_ADMIN]: 3,
+      [ROLES.ADMIN]: 2,
+      [ROLES.EDITOR]: 1
+    };
+    
+    // Sort users based on role priority (descending order)
+    const sortedUsers = users.sort((a, b) => {
+      const priorityA = rolePriority[a.role] || 0;
+      const priorityB = rolePriority[b.role] || 0;
+      return priorityB - priorityA;
+    });
+
+    res.json(sortedUsers);
   } catch (err) {
     console.error("Error fetching users:", err);
     res.status(500).json({ message: "Server error" });
