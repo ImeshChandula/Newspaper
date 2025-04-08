@@ -16,8 +16,8 @@ const {
     getAllRejectNews,
     updateNewsStatus,
     getNewsArticleByID,
-    updateNewsArticle,
-    deleteNewsArticle,
+    updateNewsArticleByID,
+    deleteNewsArticleByID,
 } = require("../controllers/newsController");
 
 
@@ -42,10 +42,11 @@ router.get("/pending",authenticateUser, authorizeRoles("super_admin", "admin"), 
 router.get("/reject",authenticateUser, authorizeRoles("super_admin", "admin"), getAllRejectNews);
 router.patch("/updateStatus/:id", authenticateUser, authorizeRoles("super_admin", "admin"), updateNewsStatus);
 
-router.get("/getNewsArticleByID/:id", getNewsArticleByID);
 router.post("/createNewsArticle", authenticateUser, authorizeRoles("editor", "admin"), createNewsArticle);
-router.post("/updateNewsArticle/:id", authenticateUser, authorizeRoles("super_admin", "admin"), updateNewsArticle);
-router.post("/deleteNewsArticle/:id", authenticateUser, authorizeRoles("super_admin", "admin"), deleteNewsArticle);
+
+router.get("/getNewsArticleByID/:id", getNewsArticleByID);
+router.patch("/updateNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin", "admin"), updateNewsArticleByID);
+router.delete("/deleteNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin", "admin"), deleteNewsArticleByID);
 
 
 module.exports = router;

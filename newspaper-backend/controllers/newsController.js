@@ -275,61 +275,66 @@ const updateNewsStatus = async (req, res) => {
   };
 
 
-//@route   GET /api/news/getNewsArticleByID/:id
-//@desc    Get a single news article by ID
-//@access  Public
+// @route   GET /api/news/getNewsArticleByID/:id
+// @desc    Get a single news article by ID
+// @access  Public
 const getNewsArticleByID = async (req, res) => {
     try {
-        const newsArticle = await News.findById(req.params.id).populate('author', 'username email');
-        if (!newsArticle) {
-            return res.status(404).json({ message: 'News article not found' });
-        }
-        res.status(200).json(newsArticle);
+      const newsArticle = await News.findById(req.params.id)
+        .populate('author', 'username email');
+  
+      if (!newsArticle) {
+        return res.status(404).json({ message: 'News article not found' });
+      }
+  
+      res.status(200).json(newsArticle);
     } catch (error) {
-        res.status(500).json({ message: 'Error retrieving news article', error });
+      res.status(500).json({ message: 'Error retrieving news article', error });
     }
-};
-
-
-//@route   PUT /api/news/updateNewsArticle/:id
-//@desc    Update a news article
-//@access  Admin, Super Admin
-const updateNewsArticle = async (req, res) => {
+  };
+  
+  // @route   PUT /api/news/updateNewsArticle/:id
+  // @desc    Update a news article
+  // @access  Admin, Super Admin
+  const updateNewsArticleByID = async (req, res) => {
     try {
-        const { title, media, content } = req.body;
-        const newsArticle = await News.findByIdAndUpdate(
-            req.params.id,
-            { title, media, content },
-            { new: true }
-        );
-
-        if (!newsArticle) {
-            return res.status(404).json({ message: 'News article not found' });
-        }
-
-        res.status(200).json({ message: 'News article updated successfully', newsArticle });
+      const { title, media, content, category } = req.body;
+  
+      const updatedNews = await News.findByIdAndUpdate(
+        req.params.id,
+        { title, media, content, category },
+        { new: true }
+      );
+  
+      if (!updatedNews) {
+        return res.status(404).json({ message: 'News article not found' });
+      }
+  
+      res.status(200).json({
+        message: 'News article updated successfully',
+        newsArticle: updatedNews
+      });
     } catch (error) {
-        res.status(500).json({ message: 'Error updating news article', error });
+      res.status(500).json({ message: 'Error updating news article', error });
     }
-};
-
-
-//@route   DELETE /api/news/deleteNewsArticle/:id
-//@desc    Delete a news article
-//@access  Admin, Super Admin
-const deleteNewsArticle = async (req, res) => {
+  };
+  
+  // @route   DELETE /api/news/deleteNewsArticle/:id
+  // @desc    Delete a news article
+  // @access  Admin, Super Admin
+  const deleteNewsArticleByID = async (req, res) => {
     try {
-        const newsArticle = await News.findByIdAndDelete(req.params.id);
-
-        if (!newsArticle) {
-            return res.status(404).json({ message: 'News article not found' });
-        }
-
-        res.status(200).json({ message: 'News article deleted successfully' });
+      const deletedNews = await News.findByIdAndDelete(req.params.id);
+  
+      if (!deletedNews) {
+        return res.status(404).json({ message: 'News article not found' });
+      }
+  
+      res.status(200).json({ message: 'News article deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: 'Error deleting news article', error });
+      res.status(500).json({ message: 'Error deleting news article', error });
     }
-};
+  };
 
 
 
@@ -350,6 +355,6 @@ module.exports = {
     getAllRejectNews,
     updateNewsStatus,
     getNewsArticleByID,
-    updateNewsArticle,
-    deleteNewsArticle,
+    updateNewsArticleByID,
+    deleteNewsArticleByID,
 };
