@@ -16,6 +16,10 @@ import Footer from "./components/Footer.jsx"
 import Navbar from "./components/Navbar.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx"
 import NewsDetail from "./components/NewsDetails.jsx";
+import SportPage from "./pages/Sport.jsx"
+import EducationPage from "./pages/Education.jsx"
+import PoliticsPage from "./pages/Politics.jsx"
+import ManageUsers from "./components/UserManagement.jsx"
 
 
 const App = () => {
