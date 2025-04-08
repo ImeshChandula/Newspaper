@@ -1,0 +1,215 @@
+/* Main container styling */
+.news_card_container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+  }
+  
+  /* Header styling */
+  .news_head {
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 0.75rem;
+  }
+  
+  /* News card grid layout */
+  .news_card_ {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+  
+  /* Individual news card styling */
+  .news {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .news:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Sub header with category and date */
+  .news_sub {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem 0;
+    align-items: center;
+  }
+  
+  /* Category label */
+  .news_span_1 {
+    background-color: #3498db;
+    color: white;
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  
+  /* Date styling */
+  .news_span_2 {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+  }
+  
+  /* News title */
+  .news_title {
+    padding: 1rem 1.5rem;
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  /* Media image */
+  .news_media {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top: 1px solid #ecf0f1;
+    border-bottom: 1px solid #ecf0f1;
+  }
+  
+  /* News content preview */
+  .news_content {
+    padding: 1rem 1.5rem;
+    color: #34495e;
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+  
+  /* Author information */
+  .news_author {
+    padding: 0 1.5rem;
+    color: #7f8c8d;
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Buttons container */
+  .news_buttons {
+    display: flex;
+    padding: 1rem 1.5rem 1.5rem;
+    gap: 1rem;
+  }
+  
+  /* Common button styles */
+  .news_accept_button,
+  .news_reject_button {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Accept button specific */
+  .news_accept_button {
+    background-color: #2ecc71;
+    color: white;
+  }
+  
+  .news_accept_button:hover {
+    background-color: #27ae60;
+  }
+  
+  /* Reject button specific */
+  .news_reject_button {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .news_reject_button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Disabled state */
+  .news_accept_button:disabled,
+  .news_reject_button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+  }
+  
+  /* Loading/empty state message */
+  .news_text {
+    text-align: center;
+    padding: 2rem;
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px dashed #bdc3c7;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .news_card_container {
+      padding: 1rem;
+      margin: 1rem;
+    }
+    
+    .news_card_ {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .news_head {
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .news_sub {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    
+    .news_title {
+      font-size: 1.3rem;
+      padding: 0.75rem 1.25rem;
+    }
+    
+    .news_media {
+      height: 180px;
+    }
+    
+    .news_buttons {
+      flex-direction: column;
+    }
+    
+    .news_head {
+      font-size: 1.5rem;
+    }
+  }
+  
+  /* Make sure the page accounts for fixed navbars */
+  @media (min-width: 769px) {
+    .news_card_container {
+      margin-top: 80px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .news_card_container {
+      margin-top: 70px;
+    }
+  }
