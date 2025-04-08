@@ -15,6 +15,7 @@ import ProtectedRoute from "./context/ProtectedRoute.js";
 import Footer from "./components/Footer.jsx"
 import Navbar from "./components/Navbar.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx"
+import NewsDetail from "./components/NewsDetails.jsx";
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/news/:id" element={<NewsDetail />} />
 
           <Route
             path="/dashboard/editor"
