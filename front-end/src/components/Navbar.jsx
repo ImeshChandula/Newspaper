@@ -72,7 +72,7 @@ const Navbar = () => {
     >
       <div className="container-fluid px-4">
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link className="navbar-brand fw-bold me-4" to="/">Logo</Link>
+          <Link className="navbar-brand fw-bold me-4" to="/">News Paper</Link>
         </motion.div>
 
         <div>

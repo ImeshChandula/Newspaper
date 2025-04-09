@@ -40,7 +40,7 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <motion.div className="col-md-4" variants={itemVariants}>
-            <h5 className="text-uppercase">NewsHub</h5>
+            <h5 className="text-uppercase">NewsPaper</h5>
             <p>
               Stay updated with the latest news, trends, and insights from
               around the world.
@@ -87,7 +87,7 @@ const Footer = () => {
           variants={itemVariants}
         >
           <p className="mb-0">
-            &copy; {new Date().getFullYear()} NewsHub. All Rights Reserved.
+            &copy; {new Date().getFullYear()} NewsPaper. All Rights Reserved.
           </p>
         </motion.div>
       </div>
