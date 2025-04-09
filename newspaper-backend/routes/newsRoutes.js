@@ -46,7 +46,7 @@ router.post("/createNewsArticle", authenticateUser, authorizeRoles("editor", "ad
 
 router.get("/getNewsArticleByID/:id", getNewsArticleByID);
 router.patch("/updateNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin", "admin"), updateNewsArticleByID);
-router.delete("/deleteNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin", "admin"), deleteNewsArticleByID);
+router.delete("/deleteNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin"), deleteNewsArticleByID);
 
 
 module.exports = router;
