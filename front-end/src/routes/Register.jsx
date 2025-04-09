@@ -1,14 +1,12 @@
-import React, {useContext, useState } from 'react'
+import React, { useState } from 'react'
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
 import '../components/css/Register.css';
 
 
 
 const Register = () => {
 
-const { logout } = useContext(AuthContext);
 const navigate = useNavigate();
 const [user, setUser] = useState({
     username: "",
@@ -80,7 +78,7 @@ const handleSubmit = async (e) => {
 
         <div className="register_buttons">
           <button type="submit" className="register_submit_button">Submit</button>
-          <button className="register_Back_button" onClick={()=> {logout();}}>Back</button>
+          <button className="register_Back_button" onClick={()=> {navigate("/");}}>Back</button>
         </div>
 
         <div>

@@ -107,6 +107,7 @@
   }
   
   /* Common button styles */
+  .news_edit_button,
   .news_accept_button,
   .news_reject_button {
     padding: 0.75rem 1rem;
@@ -118,6 +119,16 @@
     flex: 1;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+  }
+
+  /* Accept button specific */
+  .news_edit_button {
+    background-color: #597cd4;
+    color: white;
+  }
+  
+  .news_edit_button:hover {
+    background-color: #154a78;
   }
   
   /* Accept button specific */
@@ -141,6 +152,7 @@
   }
   
   /* Disabled state */
+  .news_edit_button:disabled,
   .news_accept_button:disabled,
   .news_reject_button:disabled {
     background-color: #95a5a6;

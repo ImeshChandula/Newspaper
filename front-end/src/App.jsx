@@ -19,6 +19,7 @@ import NewsDetail from "./components/NewsDetails.jsx";
 import SportPage from "./pages/Sport.jsx"
 import EducationPage from "./pages/Education.jsx"
 import PoliticsPage from "./pages/Politics.jsx"
+import EditNewsContent from "./routes/EditNewsContent.jsx";
 
 
 const App = () => {
@@ -63,7 +64,14 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          
+          <Route 
+            path="/editNews"
+            element={
+              <ProtectedRoute allowedRoles={["super_admin", "admin"]}>
+                <EditNewsContent />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
       <Footer />

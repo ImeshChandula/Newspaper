@@ -3,17 +3,17 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import '../components/css/PendingNewsModeration.css';
 
-const PendingNewsModeration  = () => {
+const AcceptNewsModeration = () => {
 
   const navigate = useNavigate();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(null);
 
-  const fetchPendingNews = async () => {
+  const fetchNews = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get('http://localhost:5000/api/news/pending', {
+      const res = await axios.get('http://localhost:5000/api/news/accept', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -21,59 +21,58 @@ const PendingNewsModeration  = () => {
       console.log("API Response:", res.data); 
       setNews(res.data);
     } catch (error) {
-      console.error('Error fetching Pending news:', error);
+      console.error('Error fetching Accept news:', error);
     } finally {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
-    fetchPendingNews();
+    fetchNews();
   }, []);
 
   useEffect(() => {
-    console.log("Pending news loaded:", news);
+    console.log("Accept news loaded:", news);
   }, [news]);
 
-
   const updateStatus = async (id, status) => {
-  try {
-    setActionLoading(id);
-    const token = localStorage.getItem("token");
-    await axios.patch(`http://localhost:5000/api/news/updateStatus/${id}`, 
-      { status },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
+    try {
+      setActionLoading(id);
+      const token = localStorage.getItem("token");
+      await axios.patch(`http://localhost:5000/api/news/updateStatus/${id}`, 
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      }
-    );
-    setNews(news.filter(article => article._id !== id));
-  } catch (error) {
-    console.error(`Failed to ${status} article:`, error);
-  } finally {
-    setActionLoading(null);
-  }
-};
+      );
+      setNews(news.filter(article => article._id !== id));
+    } catch (error) {
+      console.error(`Failed to ${status} article:`, error);
+    } finally {
+      setActionLoading(null);
+    }
+  };
 
-const handleEditNews = (articleId) => {
-  // Store the ID in localStorage as a fallback
-  localStorage.setItem("editNewsId", articleId);
-  
-  // Navigate to the edit page with the article ID in state
-  navigate('/editNews', { state: { articleId } });
-};
+  const handleEditNews = (articleId) => {
+    // Store the ID in localStorage as a fallback
+    localStorage.setItem("editNewsId", articleId);
+    
+    // Navigate to the edit page with the article ID in state
+    navigate('/editNews', { state: { articleId } });
+  };
+
 
 
 
   return (
     <div className="news_card_container">
-      <h2 className="news_head">Pending News Moderation</h2>
+      <h2 className="news_head">Accept News Moderation</h2>
       {loading ? (
         <p className="news_text">Loading...</p>
       ) : news.length === 0 ? (
-        <p className="news_text">No pending articles to review.</p>
+        <p className="news_text">No accept articles to review.</p>
       ) : (
         <div className="news_card_">
           {news.map((article) => (
@@ -99,18 +98,11 @@ const handleEditNews = (articleId) => {
                   Edit content
                 </button>
                 <button
-                  onClick={() => updateStatus(article._id, 'accept')}
-                  className="news_accept_button"
-                  disabled={actionLoading === article._id}
-                >
-                  {actionLoading === article._id ? 'Accepting article...' : 'Accept'}
-                </button>
-                <button
                   onClick={() => updateStatus(article._id, 'reject')}
                   className="news_reject_button"
                   disabled={actionLoading === article._id}
                 >
-                  {actionLoading === article._id ? 'Rejecting article...' : 'Reject'}
+                  {actionLoading === article._id ? 'Stop news showing...' : 'Stop Showing'}
                 </button>
               </div>
             </div>
@@ -121,4 +113,4 @@ const handleEditNews = (articleId) => {
   )
 }
 
-export default PendingNewsModeration 
+export default AcceptNewsModeration

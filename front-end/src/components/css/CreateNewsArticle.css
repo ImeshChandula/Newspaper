@@ -54,6 +54,15 @@
   min-height: 150px;
 }
 
+/* Edit News Buttons Container */
+.edit_news_buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
 /* Submit button styling */
 .create_news_submit_button {
   background-color: #3498db;
@@ -65,10 +74,9 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  width: 100%;
+  flex: 1;
 }
 
 .create_news_submit_button:hover {
@@ -78,6 +86,36 @@
 }
 
 .create_news_submit_button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* Cancel Button - matching styling but different color */
+.edit_news_cancel_button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex: 1;
+}
+
+.edit_news_cancel_button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.edit_news_cancel_button:disabled {
   background-color: #95a5a6;
   cursor: not-allowed;
   transform: none;
@@ -130,6 +168,11 @@
     margin: 1rem;
     /* Adjust top margin for mobile */
     margin-top: 70px;
+  }
+
+  /* For single button layouts, ensure full width */
+  .create_news_form .create_news_submit_button:only-child {
+    width: 100%;
   }
   
   /* Ensure form is scrollable on smaller screens */
