@@ -3,6 +3,8 @@ import PendingNewsModeration from '../components/PendingNewsModeration '
 import UserManagement from "../components/UserManagement";
 import AcceptNewsModeration from '../components/AcceptNewsModeration';
 import RejectNewsModeration from '../components/RejectNewsModeration';
+import CreateNewsArticle from '../components/CreateNewsArticle';
+import CreateNewUser from '../components/CreateNewUser';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const DashboardSuperAdmin = () => {
@@ -20,6 +22,10 @@ const DashboardSuperAdmin = () => {
         return <AcceptNewsModeration />
       case 'RejectNewsModeration':
         return <RejectNewsModeration />
+      case 'CreateNewsArticle':
+        return <CreateNewsArticle />
+      case 'CreateUser':
+        return <CreateNewUser />
       default:
         return <PendingNewsModeration />
     }
@@ -54,6 +60,18 @@ const DashboardSuperAdmin = () => {
             onClick={() => setActiveComponent('RejectNewsModeration')}
           >
             Rejected News
+          </button>
+          <button 
+            className={`btn ${activeComponent === 'CreateNewsArticle' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('CreateNewsArticle')}
+          >
+            Create Article
+          </button>
+          <button 
+            className={`btn ${activeComponent === 'CreateUser' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('CreateUser')}
+          >
+            Create User
           </button>
         </div>
       </div>

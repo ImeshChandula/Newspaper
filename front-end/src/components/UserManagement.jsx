@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/css/UserManagement.css';
 
 const UserManagement = () => {
@@ -7,11 +8,18 @@ const UserManagement = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({
+    title: '',
+    message: '',
+    action: null,
+    type: 'info' // 'info', 'success', 'danger', 'confirm'
+  });
 
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token'); // Assuming you store the auth token in localStorage
+      const token = localStorage.getItem('token');
       const response = await axios.get('http://localhost:5000/api/users/getAllUsers', {
         headers: {
           Authorization: `Bearer ${token}`
@@ -31,6 +39,47 @@ const UserManagement = () => {
     fetchUsers();
   }, []);
 
+  const showConfirmModal = (title, message, actionCallback) => {
+    setModalContent({
+      title,
+      message,
+      action: actionCallback,
+      type: 'confirm'
+    });
+    setShowModal(true);
+  };
+
+  const showSuccessModal = (title, message) => {
+    setModalContent({
+      title,
+      message,
+      action: null,
+      type: 'success'
+    });
+    setShowModal(true);
+  };
+
+  const showErrorModal = (title, message) => {
+    setModalContent({
+      title,
+      message,
+      action: null,
+      type: 'danger'
+    });
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleConfirmAction = () => {
+    if (modalContent.action) {
+      modalContent.action();
+    }
+    setShowModal(false);
+  };
+
   const handlePromoteToAdmin = async (username) => {
     try {
       const token = localStorage.getItem('token');
@@ -39,11 +88,10 @@ const UserManagement = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      // Refresh user list after successful promotion
       fetchUsers();
-      alert(`User ${username} has been promoted to Admin successfully!`);
+      showSuccessModal('Success', `User ${username} has been promoted to Admin successfully!`);
     } catch (err) {
-      setError('Failed to promote user to Admin.');
+      showErrorModal('Error', 'Failed to promote user to Admin.');
       console.error('Error promoting user to Admin:', err);
     }
   };
@@ -56,86 +104,144 @@ const UserManagement = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      // Refresh user list after successful promotion
       fetchUsers();
-      alert(`User ${username} has been promoted to Super Admin successfully!`);
+      showSuccessModal('Success', `User ${username} has been promoted to Super Admin successfully!`);
     } catch (err) {
-      setError('Failed to promote user to Super Admin.');
+      showErrorModal('Error', 'Failed to promote user to Super Admin.');
       console.error('Error promoting user to Super Admin:', err);
     }
   };
 
   const handleDeleteUser = async (username) => {
-    if (window.confirm(`Are you sure you want to delete user ${username}?`)) {
-      try {
-        const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/users/deleteUser/${username}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        // Refresh user list after successful deletion
-        fetchUsers();
-        alert(`User ${username} has been deleted successfully!`);
-      } catch (err) {
-        setError('Failed to delete user.');
-        console.error('Error deleting user:', err);
+    showConfirmModal(
+      'Confirm Delete',
+      `Are you sure you want to delete user ${username}?`,
+      async () => {
+        try {
+          const token = localStorage.getItem('token');
+          await axios.delete(`http://localhost:5000/api/users/deleteUser/${username}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          fetchUsers();
+          showSuccessModal('Success', `User ${username} has been deleted successfully!`);
+        } catch (err) {
+          showErrorModal('Error', 'Failed to delete user.');
+          console.error('Error deleting user:', err);
+        }
       }
-    }
+    );
   };
 
-  if (loading) return <div className="loading_users">Loading users...</div>;
-  if (error) return <div className="loading_users_error">{error}</div>;
+  if (loading) return (
+    <div className="d-flex justify-content-center my-5">
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading users...</span>
+      </div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="alert alert-danger m-3" role="alert">
+      {error}
+    </div>
+  );
 
   return (
-    <div className="user_container">
-      <h2 className="user_heading">User Management</h2>
+    <div className="container mt-4">
+      <h2 className="mb-4 text-center">User Management</h2>
       
       {users.length === 0 ? (
-        <p>No users found.</p>
+        <div className="alert alert-info" role="alert">
+          No users found.
+        </div>
       ) : (
-        <div className="user">
-          <table className="user_table">
-            <thead className="user_table_head">
+        <div className="table-responsive">
+          <table className="table table-striped table-hover">
+            <thead className="table-dark">
               <tr>
-                <th className="user_table_head_data">Username</th>
-                <th className="user_table_head_data">Role</th>
-                <th className="user_table_head_data">Actions</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user._id} className="user_table_row">
-                  <td className="user_table_row_data">{user.username}</td>
-                  <td className="user_table_row_data">{user.role}</td>
-                  <td className="user_table_row_data_action">
-                    {user.role !== 'admin' && user.role !== 'super_admin' && (
+                <tr key={user._id}>
+                  <td>{user.username}</td>
+                  <td>
+                    <span className={`badge ${
+                      user.role === 'super_admin' ? 'bg-danger' : 
+                      user.role === 'admin' ? 'bg-warning' : 'bg-secondary'
+                    }`}>
+                      {user.role}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="d-flex flex-wrap gap-2">
+                      {user.role !== 'admin' && user.role !== 'super_admin' && (
+                        <button
+                          onClick={() => handlePromoteToAdmin(user.username)}
+                          className="btn btn-sm btn-outline-primary"
+                          title="Promote to Admin"
+                        >
+                          Promote to Admin
+                        </button>
+                      )}
+                      {user.role !== 'super_admin' && (
+                        <button
+                          onClick={() => handlePromoteToSuperAdmin(user.username)}
+                          className="btn btn-sm btn-outline-warning"
+                          title="Promote to Super Admin"
+                        >
+                          Promote to Super Admin
+                        </button>
+                      )}
                       <button
-                        onClick={() => handlePromoteToAdmin(user.username)}
-                        className="promote_to_admin_button"
+                        onClick={() => handleDeleteUser(user.username)}
+                        className="btn btn-sm btn-outline-danger"
+                        title="Delete User"
                       >
-                        Promote to Admin
+                        Delete
                       </button>
-                    )}
-                    {user.role !== 'super_admin' && (
-                      <button
-                        onClick={() => handlePromoteToSuperAdmin(user.username)}
-                        className="promote_to_super_admin_button"
-                      >
-                        Promote to Super Admin
-                      </button>
-                    )}
-                    <button
-                      onClick={() => handleDeleteUser(user.username)}
-                      className="delete_user_button"
-                    >
-                      Delete
-                    </button>
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Bootstrap Modal */}
+      {showModal && (
+        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className={`modal-header ${
+                modalContent.type === 'success' ? 'bg-success text-white' : 
+                modalContent.type === 'danger' ? 'bg-danger text-white' : 
+                modalContent.type === 'confirm' ? 'bg-warning' : 'bg-primary text-white'
+              }`}>
+                <h5 className="modal-title">{modalContent.title}</h5>
+                <button type="button" className="btn-close" onClick={handleCloseModal} aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <p>{modalContent.message}</p>
+              </div>
+              <div className="modal-footer">
+                {modalContent.type === 'confirm' ? (
+                  <>
+                    <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancel</button>
+                    <button type="button" className="btn btn-danger" onClick={handleConfirmAction}>Confirm</button>
+                  </>
+                ) : (
+                  <button type="button" className="btn btn-primary" onClick={handleCloseModal}>Close</button>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

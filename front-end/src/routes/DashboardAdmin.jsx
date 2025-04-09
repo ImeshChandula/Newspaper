@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import PendingNewsModeration from '../components/PendingNewsModeration '
 import AcceptNewsModeration from '../components/AcceptNewsModeration';
 import RejectNewsModeration from '../components/RejectNewsModeration';
+import CreateNewsArticle from '../components/CreateNewsArticle';
+import CreateNewUser from '../components/CreateNewUser';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const DashboardAdmin = () => {
@@ -17,6 +19,10 @@ const DashboardAdmin = () => {
         return <AcceptNewsModeration />
       case 'RejectNewsModeration':
         return <RejectNewsModeration />
+      case 'CreateNewsArticle':
+        return <CreateNewsArticle />
+      case 'CreateUser':
+        return <CreateNewUser />
       default:
         return <PendingNewsModeration />
     }
@@ -44,6 +50,18 @@ const DashboardAdmin = () => {
             onClick={() => setActiveComponent('RejectNewsModeration')}
           >
             Rejected News
+          </button>
+          <button 
+            className={`btn ${activeComponent === 'CreateNewsArticle' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('CreateNewsArticle')}
+          >
+            Create News Article
+          </button>
+          <button 
+            className={`btn ${activeComponent === 'CreateUser' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('CreateUser')}
+          >
+            Create User
           </button>
         </div>
       </div>
