@@ -5,7 +5,7 @@ import NewsCard from "../components/NewsCard";
 const NewsSection = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [visibleNewsCount, setVisibleNewsCount] = useState(4); // Initially show 4 news items
+  const [visibleNewsCount, setVisibleNewsCount] = useState(4);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -23,12 +23,12 @@ const NewsSection = () => {
   }, []);
 
   const handleShowMore = () => {
-    setVisibleNewsCount(news.length); // Set visible count to show all news
+    setVisibleNewsCount(news.length);
   };
 
   return (
     <div className="container">
-      <h2 className="border-bottom pb-2">Latest News</h2>
+      <h2 className="border-bottom pb-2">Recently Published</h2>
       <div className="row g-4">
         {loading ? (
           <div className="text-center">
