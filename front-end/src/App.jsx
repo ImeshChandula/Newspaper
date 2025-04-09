@@ -14,7 +14,6 @@ import Unauthorized from "./routes/Unauthorized.jsx";
 import ProtectedRoute from "./context/ProtectedRoute.js";
 import Footer from "./components/Footer.jsx"
 import Navbar from "./components/Navbar.jsx";
-import ScrollToTop from "./components/ScrollToTop.jsx"
 import NewsDetail from "./components/NewsDetails.jsx";
 import SportPage from "./pages/Sport.jsx"
 import EducationPage from "./pages/Education.jsx"
@@ -27,7 +26,6 @@ const App = () => {
 
   return (
     <div className="bg-white">
-      <ScrollToTop />
       <Navbar />
       <div className="container mt-4">
         <Routes>
