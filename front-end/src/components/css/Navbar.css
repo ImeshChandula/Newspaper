@@ -1,10 +1,9 @@
-
 .navbar-toggler {
     border: none;
 }
 
 .custom-navbar {
-    padding: 12px 0;
+    padding: 10px 0;
     z-index: 1050;
 }
 
@@ -36,7 +35,6 @@
     .navbar-nav {
         gap: 1rem;
     }
-
     .live-time,
     .live-date {
         min-width: 120px;
