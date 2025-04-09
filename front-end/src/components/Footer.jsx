@@ -1,51 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin, } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { motion } from "framer-motion";
 import "./css/Footer.css";
 
 const Footer = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [currentDate, setCurrentDate] = useState(new Date());
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-      setCurrentDate(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const formatTime = (date) => {
-    return date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true,
-    });
+  const fadeUpVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+        when: "beforeChildren",
+        staggerChildren: 0.2,
+      },
+    },
   };
 
-  const formatDate = (date) => {
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const iconHover = {
+    whileHover: { scale: 1.15, rotate: 3 },
+    whileTap: { scale: 0.95 },
   };
 
   return (
-    <footer className="footer bg-light py-4 mt-5">
+    <motion.footer
+      className="footer bg-light py-4 mt-5"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUpVariants}
+    >
       <div className="container">
         <div className="row">
-          <div className="col-md-4">
+          <motion.div className="col-md-4" variants={itemVariants}>
             <h5 className="text-uppercase">NewsHub</h5>
             <p>
               Stay updated with the latest news, trends, and insights from
               around the world.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="col-md-4">
+          <motion.div className="col-md-4" variants={itemVariants}>
             <h5 className="text-uppercase">Quick Links</h5>
             <ul className="list-unstyled">
               <li><Link to="/" className="footer-link">Home</Link></li>
@@ -54,34 +56,42 @@ const Footer = () => {
               <li><Link to="/politics" className="footer-link">Politics</Link></li>
               <li><Link to="/contact" className="footer-link">Contact Us</Link></li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="col-md-4">
+          <motion.div className="col-md-4" variants={itemVariants}>
             <h5 className="text-uppercase">Follow Us</h5>
             <div className="social-icons d-flex gap-3 mt-2">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-decoration-none text-muted fs-5">
-                <FaFacebookF />
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-decoration-none text-muted fs-5">
-                <FaTwitter />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-decoration-none text-muted fs-5">
-                <FaInstagram />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-decoration-none text-muted fs-5">
-                <FaLinkedin />
-              </a>
+              {[
+                { icon: <FaFacebookF />, url: "https://facebook.com" },
+                { icon: <FaTwitter />, url: "https://twitter.com" },
+                { icon: <FaInstagram />, url: "https://instagram.com" },
+                { icon: <FaLinkedin />, url: "https://linkedin.com" },
+              ].map(({ icon, url }, idx) => (
+                <motion.a
+                  key={idx}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-decoration-none text-muted fs-5"
+                  {...iconHover}
+                >
+                  {icon}
+                </motion.a>
+              ))}
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
+        <motion.div
+          className="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center mt-3"
+          variants={itemVariants}
+        >
           <p className="mb-0">
             &copy; {new Date().getFullYear()} NewsHub. All Rights Reserved.
           </p>
-        </div>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

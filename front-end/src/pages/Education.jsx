@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NewsCard from "../components/NewsCard";
 
-const Home = () => {
+const EducationPage = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -10,7 +10,7 @@ const Home = () => {
     const fetchNews = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/education/accept`);
-        setNews(response.data.reverse());
+        setNews(response.data);
       } catch (error) {
         console.error("Failed to fetch news", error);
       } finally {
@@ -22,7 +22,8 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="home-page py-5">
+    <div className="home-page">
+      <h2 className="border-bottom pb-2">Education</h2>
       <div className="container">
         {loading ? (
           <div className="text-center">
@@ -40,4 +41,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default EducationPage;
