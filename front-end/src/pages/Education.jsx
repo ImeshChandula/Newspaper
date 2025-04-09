@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NewsCard from "../components/NewsCard";
 
-const Home = () => {
+const EducationPage = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -40,4 +40,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default EducationPage;
