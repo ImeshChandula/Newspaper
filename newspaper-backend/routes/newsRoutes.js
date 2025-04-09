@@ -42,7 +42,7 @@ router.get("/pending",authenticateUser, authorizeRoles("super_admin", "admin"), 
 router.get("/reject",authenticateUser, authorizeRoles("super_admin", "admin"), getAllRejectNews);
 router.patch("/updateStatus/:id", authenticateUser, authorizeRoles("super_admin", "admin"), updateNewsStatus);
 
-router.post("/createNewsArticle", authenticateUser, authorizeRoles("editor", "admin"), createNewsArticle);
+router.post("/createNewsArticle", authenticateUser, authorizeRoles("editor", "admin", "super_admin"), createNewsArticle);
 
 router.get("/getNewsArticleByID/:id", getNewsArticleByID);
 router.patch("/updateNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin", "admin"), updateNewsArticleByID);
