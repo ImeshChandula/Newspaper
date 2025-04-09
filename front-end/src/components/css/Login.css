@@ -85,13 +85,13 @@
     background-color: #d1d5db;
   }
 
-  a {
+  .login_container a, .register_content a {
     color: #3b82f6;
     font-weight: 600;
     text-decoration: none;
   }
   
-  a:hover {
+  .login_container a:hover , .register_content a:hover{
     text-decoration: underline;
   }
   

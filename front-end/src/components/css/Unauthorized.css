@@ -1,12 +1,10 @@
 /* Unauthorized.css */
 .unauthorized {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     padding: 20px;
-    background: linear-gradient(135deg, #f6f7fb, #e2e3e9);
     text-align: center;
   }
   
