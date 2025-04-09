@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NewsCard from "../components/NewsCard";
+import { motion } from "framer-motion";
 
-const SportPage = () => {
+const EducationPage = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -23,22 +24,48 @@ const SportPage = () => {
 
   return (
     <div className="home-page">
-     <h2 className="border-bottom pb-2">Sport</h2> 
+      <motion.h2
+        className="border-bottom pb-2"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        Sport
+      </motion.h2>
+
       <div className="container">
         {loading ? (
-          <div className="text-center">
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <div className="spinner-border text-primary" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
-          </div>
+          </motion.div>
         ) : news.length === 0 ? (
-          <p className="text-center">No news available.</p>
+          <motion.p
+            className="text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            No news available.
+          </motion.p>
         ) : (
-          <NewsCard news={news} />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <NewsCard news={news} />
+          </motion.div>
         )}
       </div>
     </div>
   );
 };
 
-export default SportPage;
+export default EducationPage;

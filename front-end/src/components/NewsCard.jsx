@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import "./css/NewsCard.css";
 
 const NewsCard = ({ news }) => {
@@ -17,18 +18,45 @@ const NewsCard = ({ news }) => {
     return (
         <div className="row g-4">
             {news.map((item) => (
-                <div key={item._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div className="card news-card h-100 shadow-sm">
+                <motion.div
+                    key={item._id}
+                    className="col-12 col-sm-6 col-md-4 col-lg-3"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                    <motion.div
+                        className="card news-card h-100 shadow-sm"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
+                    >
                         {item.media && (
-                            <img
+                            <motion.img
                                 src={item.media}
                                 className="card-img-top news-image"
                                 alt={item.title}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.4, delay: 0.2 }}
                             />
                         )}
                         <div className="card-body d-flex flex-column">
-                            <h5 className="card-title">{item.title}</h5>
-                            <p className="card-text flex-grow-1">{item.content.slice(0, 100)}...</p>
+                            <motion.h5
+                                className="card-title"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.3, delay: 0.3 }}
+                            >
+                                {item.title}
+                            </motion.h5>
+                            <motion.p
+                                className="card-text flex-grow-1"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.3, delay: 0.4 }}
+                            >
+                                {item.content.slice(0, 100)}...
+                            </motion.p>
                             <Link to={`/news/${item._id}`} className="btn btn-outline-primary mt-auto">
                                 View More &raquo;
                             </Link>
@@ -37,8 +65,8 @@ const NewsCard = ({ news }) => {
                             <span>By {item?.author?.username ?? "Unknown"}</span>
                             <span>{formatDate(item.date)}</span>
                         </div>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             ))}
         </div>
     );

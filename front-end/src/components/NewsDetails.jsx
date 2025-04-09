@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { Spinner } from "react-bootstrap";
@@ -8,6 +8,7 @@ const NewsDetail = () => {
     const { id } = useParams();
     const [newsItem, setNewsItem] = useState(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate(); // Hook to navigate to previous page
 
     useEffect(() => {
         const fetchNewsItem = async () => {
@@ -62,14 +63,22 @@ const NewsDetail = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <motion.h1
-                        className="mb-3 text-center"
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4, duration: 0.5 }}
-                    >
-                        {newsItem.title}
-                    </motion.h1>
+                    <div className="row">
+                        <div className="col-1">
+                            <button onClick={() => navigate(-1)} className="btn btn-secondary" > &lt; </button>
+                        </div>
+                        <div className="col-11">
+
+                            <motion.h1
+                                className="mb-3 text-center"
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4, duration: 0.5 }}
+                            >
+                                {newsItem.title}
+                            </motion.h1>
+                        </div>
+                    </div>
 
                     {newsItem.media && (
                         <motion.img

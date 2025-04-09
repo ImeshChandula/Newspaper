@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NewsCard from "../components/NewsCard";
+import { motion } from "framer-motion";
 
 const NewsSection = () => {
   const [news, setNews] = useState([]);
@@ -28,27 +29,52 @@ const NewsSection = () => {
 
   return (
     <div className="container">
-      <h2 className="border-bottom pb-2">Recently Published</h2>
+      <motion.h2
+        className="border-bottom pb-2"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        Recently Published
+      </motion.h2>
+
       <div className="row g-4">
         {loading ? (
-          <div className="text-center">
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <div className="spinner-border text-primary" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
-          </div>
+          </motion.div>
         ) : news.length === 0 ? (
-          <p className="text-center">No news available.</p>
+          <motion.p
+            className="text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            No news available.
+          </motion.p>
         ) : (
           <NewsCard news={news.slice(0, visibleNewsCount)} />
         )}
       </div>
-      
+
       {visibleNewsCount < news.length && (
-        <div className="text-end mt-4">
+        <motion.div
+          className="text-end mt-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
           <button className="btn btn-link" onClick={handleShowMore}>
             Show More
           </button>
-        </div>
+        </motion.div>
       )}
     </div>
   );
