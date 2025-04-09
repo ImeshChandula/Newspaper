@@ -22,7 +22,8 @@ const EducationPage = () => {
   }, []);
 
   return (
-    <div className="home-page py-5">
+    <div className="home-page">
+      <h2 className="border-bottom pb-2">Education</h2>
       <div className="container">
         {loading ? (
           <div className="text-center">

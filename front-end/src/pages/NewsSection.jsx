@@ -24,6 +24,7 @@ const NewsSection = () => {
 
   return (
     <div className="container">
+      <h2 className="border-bottom pb-2">Latest News</h2>
       <div className="row g-4">
         {loading ? (
           <div className="text-center">
@@ -34,7 +35,7 @@ const NewsSection = () => {
         ) : news.length === 0 ? (
           <p className="text-center">No news available.</p>
         ) : (
-          <NewsCard news={news} />
+          <NewsCard news={news.slice(0,4)} />
         )}
       </div>
     </div>

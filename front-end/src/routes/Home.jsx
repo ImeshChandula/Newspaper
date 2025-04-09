@@ -4,7 +4,7 @@ import NewsSection from "../pages/NewsSection";
 const Home = () => {
   
   return (
-    <div className="home-page py-5">
+    <div className="home-page">
       <div className="container">
         <NewsSection/>
       </div>
