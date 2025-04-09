@@ -96,35 +96,11 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/politics" onClick={closeNavbar}>Politics</Link>
             </li>
-
-            <li className="nav-item d-lg-none w-100 mt-2">
-              <form className="d-flex" onSubmit={handleSearch}>
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search by tag"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <button className="btn btn-outline-primary" type="submit">Search</button>
-              </form>
-            </li>
           </ul>
         </div>
 
         {/* Right Section for Larger Screens */}
         <div className="d-none d-lg-flex align-items-center ms-auto gap-3">
-          <form className="d-flex me-2" onSubmit={handleSearch}>
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search by tag"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button className="btn btn-outline-primary" type="submit">Search</button>
-          </form>
-
           <ProfileDropdown />
           <div>
             <p className="live-date text-end fw-light mb-0">{formatDate(currentDate)}</p>

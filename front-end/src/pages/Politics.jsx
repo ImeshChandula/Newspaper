@@ -10,7 +10,7 @@ const Home = () => {
     const fetchNews = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/politics/accept`);
-        setNews(response.data.reverse());
+        setNews(response.data);
       } catch (error) {
         console.error("Failed to fetch news", error);
       } finally {
