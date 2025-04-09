@@ -35,7 +35,7 @@ const NewsSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        Recently Published
+        🆕 Recently Published
       </motion.h2>
 
       <div className="row g-4">

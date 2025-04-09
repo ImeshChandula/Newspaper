@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NewsCard from "../components/NewsCard";
-import { motion } from "framer-motion"; // Import Framer Motion for animation
+import { motion } from "framer-motion";
 
 const PoliticsPage = () => {
   const [news, setNews] = useState([]);
@@ -30,7 +30,7 @@ const PoliticsPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        Politics
+        🏛️ Politics
       </motion.h2>
       
       <div className="container">

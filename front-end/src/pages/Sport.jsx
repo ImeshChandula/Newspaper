@@ -30,7 +30,7 @@ const EducationPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        Sport
+        🏅 Sports
       </motion.h2>
 
       <div className="container">
