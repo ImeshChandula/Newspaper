@@ -9,6 +9,7 @@ const RejectNewsModeration = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(null);
+  const [deleteLoading, setDeleteLoading] = useState(null);
 
   const fetchNews = async () => {
     try {
@@ -64,6 +65,30 @@ const RejectNewsModeration = () => {
   };
 
 
+  const handleDeletePermanent = async (id) => {
+    if (window.confirm("Are you sure you want to permanently delete this article? This action cannot be undone.")) {
+      try {
+        setDeleteLoading(id);
+        const token = localStorage.getItem("token");
+        await axios.delete(`http://localhost:5000/api/news/deleteNewsArticleByID/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        // Remove the deleted article from the state
+        setNews(news.filter(article => article._id !== id));
+        console.log("Article permanently deleted");
+      } catch (error) {
+        console.error("Failed to delete article permanently:", error);
+        alert("Failed to delete article. Please try again.");
+      } finally {
+        setDeleteLoading(null);
+      }
+    }
+  };
+
+
+
 
 
   return (
@@ -104,7 +129,13 @@ const RejectNewsModeration = () => {
                 >
                   {actionLoading === article._id ? 'Accepting article...' : 'Accept'}
                 </button>
-                <button className="news_reject_button">Delete permanent</button>
+                <button 
+                  onClick={() => handleDeletePermanent(article._id)}
+                  className="news_reject_button"
+                  disabled={deleteLoading === article._id}
+                >
+                  {deleteLoading === article._id ? 'Deleting...' : 'Delete permanent'}
+                </button>
               </div>
             </div>
           ))}
