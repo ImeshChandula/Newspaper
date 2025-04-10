@@ -5,14 +5,14 @@
 }
 
 .profile-dropdown .profile-toggle:hover {
-    background-color: #474747;
+    background-color: #5a5af8;
 }
 
 .profile-menu {
     min-width: 200px;
     border-radius: 10px;
     padding: 10px 0;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(85, 101, 220, 0.1);
 }
 
 .profile-menu .dropdown-item {

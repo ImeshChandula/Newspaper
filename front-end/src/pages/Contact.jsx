@@ -16,7 +16,7 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can add form submission logic here
+    
     console.log('Form submitted:', formData);
     alert("Thank you for contacting us!");
     setFormData({ name: '', email: '', message: '' });
@@ -90,7 +90,7 @@ const styles = {
   button: {
     padding: '12px',
     fontSize: '16px',
-    backgroundColor: '#28a745',
+    backgroundColor: '#1380D8FF',
     color: '#fff',
     border: 'none',
     borderRadius: '8px',
