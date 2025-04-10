@@ -19,7 +19,7 @@ import SportPage from "./pages/Sport.jsx"
 import EducationPage from "./pages/Education.jsx"
 import PoliticsPage from "./pages/Politics.jsx"
 import EditNewsContent from "./routes/EditNewsContent.jsx";
-
+import Contact from "./pages/Contact.jsx";
 
 const App = () => {
 
@@ -37,7 +37,7 @@ const App = () => {
           <Route path="/sport" element={<SportPage />} />
           <Route path="/education" element={<EducationPage />} />
           <Route path="/politics" element={<PoliticsPage />} />
-
+          <Route path="/contact" element={<Contact />}/>
           <Route
             path="/dashboard/editor"
             element={
