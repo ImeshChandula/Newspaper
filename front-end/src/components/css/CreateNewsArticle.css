@@ -1,82 +1,88 @@
-/* Main container styling with proper spacing for navbar */
+/* Combined CSS for DashboardEditor and CreateNewsArticle */
+
+/* DashboardEditor Styles */
+.dashboard-title {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin: 2rem 0;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 2rem;
+    margin: 1.5rem 0;
+  }
+}
+
+/* CreateNewsArticle Styles */
 .create_news_container {
   max-width: 800px;
-  margin: 2rem auto;
+  margin: 0 auto;
   padding: 2rem;
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  padding-top: 2rem;
-  margin-top: 80px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Page title styling */
 .create_news_header {
-  color: #2c3e50;
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid #3498db;
-  font-weight: 600;
+  color: #3498db;
   text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
 }
 
-/* Form styling */
 .create_news_form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.2rem;
 }
 
-/* Input fields styling */
-.create_news_input_text,
 .create_news_input_select,
+.create_news_input_text,
 .create_news_input_textarea {
-  padding: 0.75rem 1rem;
+  padding: 0.8rem 1rem;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  width: 100%;
-  font-family: inherit;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-.create_news_input_text:focus,
 .create_news_input_select:focus,
+.create_news_input_text:focus,
 .create_news_input_textarea:focus {
   outline: none;
   border-color: #3498db;
   box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  background-color: #fff;
 }
 
 .create_news_input_textarea {
+  min-height: 200px;
   resize: vertical;
-  min-height: 150px;
+  line-height: 1.5;
 }
 
-/* Edit News Buttons Container */
-.edit_news_buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
-  margin-top: 0.5rem;
-}
-
-/* Submit button styling */
 .create_news_submit_button {
   background-color: #3498db;
   color: white;
   border: none;
   border-radius: 6px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  padding: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 1rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  flex: 1;
+  letter-spacing: 1px;
 }
 
 .create_news_submit_button:hover {
@@ -92,107 +98,96 @@
   box-shadow: none;
 }
 
-
-/* Cancel Button - matching styling but different color */
-.edit_news_cancel_button {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  flex: 1;
-}
-
-.edit_news_cancel_button:hover {
-  background-color: #c0392b;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.edit_news_cancel_button:disabled {
-  background-color: #95a5a6;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-/* Message styling */
 .create_news_message {
   margin-top: 1.5rem;
-  padding: 0.75rem 1rem;
+  padding: 1rem;
   border-radius: 6px;
   text-align: center;
   font-weight: 500;
 }
 
-.create_news_message:contains("successfully") {
+.create_news_message:empty {
+  display: none;
+}
+
+/* Success message styling */
+.create_news_message:not(:empty) {
   background-color: #d4edda;
   color: #155724;
   border: 1px solid #c3e6cb;
 }
 
-.create_news_message:not(:contains("successfully")) {
+/* Error message styling - automatically applied based on content */
+.create_news_message:not(:empty):not([class*="success"]) {
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
 }
 
-/* Back button styling */
-.create_news_back_button {
-  background-color: #ecf0f1;
-  color: #2c3e50;
-  border: 1px solid #bdc3c7;
-  border-radius: 6px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
-  width: 100%;
-}
-
-.create_news_back_button:hover {
-  background-color: #dfe6e9;
+/* Category styling */
+.create_news_input_select option {
+  padding: 10px;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .create_news_container {
     padding: 1.5rem;
-    margin: 1rem;
-    /* Adjust top margin for mobile */
-    margin-top: 70px;
-  }
-
-  /* For single button layouts, ensure full width */
-  .create_news_form .create_news_submit_button:only-child {
-    width: 100%;
+    margin: 0 1rem;
   }
   
-  /* Ensure form is scrollable on smaller screens */
-  body {
-    padding-bottom: 2rem;
+  .create_news_header {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .create_news_input_select,
+  .create_news_input_text,
+  .create_news_input_textarea {
+    padding: 0.7rem;
+  }
+  
+  .create_news_submit_button {
+    padding: 0.8rem;
+    font-size: 1rem;
   }
 }
 
-/* Add this to ensure the page scrolls properly */
-html, body {
-  overflow-x: hidden;
+/* Custom placeholder styling */
+::placeholder {
+  color: #95a5a6;
+  opacity: 0.7;
 }
 
-/* Layout fixes for the navbar issue */
-body {
-  padding-top: 60px; /* Adjust based on your navbar height */
+/* Animation for form elements */
+.create_news_form > * {
+  transition: transform 0.2s ease;
 }
 
-@media (max-width: 576px) {
-  .create_news_container {
-    margin-top: 60px;
+.create_news_form > *:focus {
+  transform: scale(1.01);
+}
+
+/* Loading state animation */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.create_news_submit_button:disabled {
+  animation: pulse 1.5s infinite;
+}
+
+/* Additional styling for editor dashboard */
+.editor-dashboard {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .editor-dashboard {
+    padding: 1rem 0;
   }
 }

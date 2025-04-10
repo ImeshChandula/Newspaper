@@ -1,125 +1,161 @@
-/* Container */
+/* Login.css */
+
 .login_container {
-    max-width: 400px;
-    margin: 80px auto;
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
+  max-width: 450px;
+  margin: 5rem auto;
+  padding: 2.5rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login_heading {
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.login_heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 60px;
+  background-color: #3498db;
+  border-radius: 3px;
+}
+
+.login_form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.login_input {
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.login_input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  outline: none;
+  background-color: white;
+}
+
+.login_buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.login_button, .login_Back_button {
+  flex: 1;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.login_button {
+  background-color: #3498db;
+  color: white;
+}
+
+.login_button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login_Back_button {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.login_Back_button:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login_form p {
+  margin: 0.5rem 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.login_form a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.login_form a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .login_container {
+    margin: 3rem 1rem;
+    padding: 1.5rem;
   }
   
-  /* Heading */
   .login_heading {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    color: #333;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
-  /* Form */
-  .login_form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  /* Inputs */
   .login_input {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    padding: 0.8rem;
+  }
+  
+  .login_buttons {
+    flex-direction: column;
+  }
+  
+  .login_button, .login_Back_button {
     width: 100%;
   }
-  
-  .login_input:focus {
-    border-color: #3b82f6;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-  }
-  
-  /* Button Group */
-  .login_buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 1rem;
-  }
-  
-  /* Login Button */
-  .login_button {
-    flex: 1;
-    padding: 10px;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login_button:hover {
-    background-color: #2563eb;
-  }
-  
-  /* Back Button */
-  .login_Back_button {
-    flex: 1;
-    padding: 10px;
-    background-color: #e5e7eb;
-    color: #111827;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login_Back_button:hover {
-    background-color: #d1d5db;
-  }
+}
 
-  .login_container a, .register_content a {
-    color: #3b82f6;
-    font-weight: 600;
-    text-decoration: none;
-  }
-  
-  .login_container a:hover , .register_content a:hover{
-    text-decoration: underline;
-  }
-  
-  
-  /* Fade In Animation */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 540px) {
-    .login_container {
-      margin: 40px 16px;
-      padding: 1.5rem;
-    }
-  
-    .login_heading {
-      font-size: 1.5rem;
-    }
-  
-    .login_buttons {
-      flex-direction: column;
-    }
-  
-    .login_button,
-    .login_Back_button {
-      width: 100%;
-    }
-  }
-  
+/* Animation for form */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login_container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.login_input, .login_button, .login_Back_button {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.login_input:focus, .login_button:hover, .login_Back_button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Placeholder styling */
+.login_input::placeholder {
+  color: #95a5a6;
+  opacity: 0.7;
+}
