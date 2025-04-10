@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import '../components/css/PendingNewsModeration.css';
+import '../components/css/NewsModeration.css';
 import Modal from 'react-bootstrap/Modal';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
@@ -96,8 +96,8 @@ const PendingNewsModeration  = () => {
 
 
   return (
-    <div className="news_card_container">
-      <h2 className="news_head">Pending News Moderation</h2>
+    <div className="news-container">
+      <h2 className="news-head">Pending News Moderation</h2>
       
       {/* Toast notifications */}
       <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1060 }}>
@@ -148,24 +148,24 @@ const PendingNewsModeration  = () => {
           No pending articles to review.
         </div>
       ) : (
-        <div className="news_card_">
+        <div className="news-card-container">
           {news.map((article) => (
-            <div key={article._id} className="news shadow-sm">
-              <div className="news_sub">
-                <span className="badge bg-warning text-dark news_span_1">{article.category}</span>
-                <span className="news_span_2">
+            <div key={article._id} className="news-card">
+              <div className="news-metadata">
+                <span className="news-category">{article.category}</span>
+                <span className="news-date">
                   {new Date(article.date).toLocaleString()}
                 </span>
               </div>
-              <h3 className="news_title">{article.title}</h3>
+              <h3 className="news-title">{article.title}</h3>
               
               {/* Enhanced image display */}
               {article.media && (
-                <div className="position-relative mb-3">
+                <div className="news-media-container">
                   <img 
                     src={article.media} 
                     alt="Article media" 
-                    className="news_media img-fluid rounded shadow-sm cursor-pointer"
+                    className="news-media"
                     style={{ 
                       cursor: 'pointer', 
                       objectFit: 'cover',
@@ -183,19 +183,19 @@ const PendingNewsModeration  = () => {
                 </div>
               )}
               
-              <p className="news_content">{article.content.slice(0, 150)}...</p>
-              <p className="news_author">By: {article.author?.username} ({article.author?.email})</p>
+              <p className="news-content">{article.content.slice(0, 150)}...</p>
+              <p className="news-author">By: {article.author?.username} ({article.author?.email})</p>
 
-              <div className="news_buttons">
+              <div className="news-buttons">
                 <button 
                   onClick={() => handleEditNews(article._id)} 
-                  className="btn btn-outline-primary news_edit_button"
+                  className="btn btn-outline-primary news-edit-button"
                 >
                   <i className="bi bi-pencil-square"></i> Edit content
                 </button>
                 <button
                   onClick={() => updateStatus(article._id, 'accept')}
-                  className="btn btn-success news_accept_button"
+                  className="btn btn-success news-accept-button"
                   disabled={actionLoading === article._id}
                 >
                   {actionLoading === article._id ? (
@@ -211,7 +211,7 @@ const PendingNewsModeration  = () => {
                 </button>
                 <button
                   onClick={() => updateStatus(article._id, 'reject')}
-                  className="btn btn-danger news_reject_button"
+                  className="btn btn-danger news-reject-button"
                   disabled={actionLoading === article._id}
                 >
                   {actionLoading === article._id ? (
