@@ -189,13 +189,13 @@ const PendingNewsModeration  = () => {
               <div className="news-buttons">
                 <button 
                   onClick={() => handleEditNews(article._id)} 
-                  className="btn btn-outline-primary news_edit_button"
+                  className="btn btn-outline-primary news-edit-button"
                 >
                   <i className="bi bi-pencil-square"></i> Edit content
                 </button>
                 <button
                   onClick={() => updateStatus(article._id, 'accept')}
-                  className="btn btn-success news_accept_button"
+                  className="btn btn-success news-accept-button"
                   disabled={actionLoading === article._id}
                 >
                   {actionLoading === article._id ? (
@@ -211,7 +211,7 @@ const PendingNewsModeration  = () => {
                 </button>
                 <button
                   onClick={() => updateStatus(article._id, 'reject')}
-                  className="btn btn-danger news_reject_button"
+                  className="btn btn-danger news-reject-button"
                   disabled={actionLoading === article._id}
                 >
                   {actionLoading === article._id ? (

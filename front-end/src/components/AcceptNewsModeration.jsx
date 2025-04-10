@@ -196,7 +196,7 @@ const AcceptNewsModeration = () => {
                 </button>
                 <button
                   onClick={() => updateStatus(article._id, 'reject')}
-                  className="btn btn-warning news-reject-button"
+                  className="btn btn-danger news-reject-button"
                   disabled={actionLoading === article._id}
                 >
                   {actionLoading === article._id ? (
