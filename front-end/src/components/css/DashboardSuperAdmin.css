@@ -1,0 +1,153 @@
+/* Container padding and alignment */
+.dashboard-container {
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Dashboard title scaling */
+.dashboard-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Navigation controls - centered */
+.dashboard-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+/* Button styling */
+.nav-button {
+  flex: 1 0 auto;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Card styling */
+.dashboard-card {
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* For very small screens */
+@media (max-width: 575.98px) {
+  .dashboard-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .dashboard-nav {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .nav-button {
+    width: 100%;
+    margin-right: 0;
+    border-radius: 0.25rem !important;
+    text-align: center;
+  }
+  
+  /* Reset button group styling for mobile */
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px; /* Limit width on mobile for better proportions */
+  }
+  
+  .btn-group > .btn {
+    border-radius: 0.25rem !important;
+    margin-bottom: 5px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .btn-group > .btn:not(:last-child) {
+    border-bottom-right-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+  }
+  
+  .btn-group > .btn:not(:first-child) {
+    border-top-right-radius: 0.25rem !important;
+    border-top-left-radius: 0.25rem !important;
+    margin-left: 0;
+  }
+}
+
+/* Small screens (576px - 767px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .dashboard-title {
+    font-size: 1.75rem;
+  }
+  
+  .btn-group {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    max-width: 450px;
+  }
+  
+  .btn-group > .btn {
+    flex: 1 0 40%;
+    margin-bottom: 5px;
+    border-radius: 0.25rem !important;
+    margin-left: 0;
+    margin-right: 5px;
+  }
+}
+
+/* Medium screens (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .btn-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 600px;
+  }
+  
+  .btn-group > .btn {
+    flex: 1 0 30%;
+    margin-bottom: 5px;
+    border-radius: 0.25rem !important;
+    margin-right: 5px;
+  }
+}
+
+/* Large screens (992px and above) */
+@media (min-width: 992px) {
+  .dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .btn-group {
+    justify-content: center;
+  }
+}
+
+/* Active component container */
+.component-container {
+  padding: 1rem;
+}
+
+/* Button text truncation for medium screens */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .btn-text {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -6,6 +6,7 @@ import RejectNewsModeration from '../components/RejectNewsModeration';
 import CreateNewsArticle from '../components/CreateNewsArticle';
 import CreateNewUser from '../components/CreateNewUser';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../components/css/DashboardSuperAdmin.css';
 
 const DashboardSuperAdmin = () => {
 
@@ -34,50 +35,52 @@ const DashboardSuperAdmin = () => {
 
 
   return (
-    <div className="container mt-4">
-      <div className="mb-4">
+    <div className="container mt-4 dashboard-container">
+      <h1 className="dashboard-title">Super Admin Dashboard</h1>
+      
+      <div className="dashboard-nav">
         <div className="btn-group" role="group" aria-label="Dashboard Navigation">
           <button 
-            className={`btn ${activeComponent === 'UserManagement' ? 'btn-primary' : 'btn-outline-primary'}`}
+            className={`btn nav-button ${activeComponent === 'UserManagement' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => setActiveComponent('UserManagement')}
           >
-            User Management
+            <span className="btn-text">User Management</span>
           </button>
           <button 
-            className={`btn ${activeComponent === 'PendingNewsModeration' ? 'btn-primary' : 'btn-outline-primary'}`}
+            className={`btn nav-button ${activeComponent === 'PendingNewsModeration' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => setActiveComponent('PendingNewsModeration')}
           >
-            Pending News
+            <span className="btn-text">Pending News</span>
           </button>
           <button 
-            className={`btn ${activeComponent === 'AcceptNewsModeration' ? 'btn-primary' : 'btn-outline-primary'}`}
+            className={`btn nav-button ${activeComponent === 'AcceptNewsModeration' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => setActiveComponent('AcceptNewsModeration')}
           >
-            Accepted News
+            <span className="btn-text">Accepted News</span>
           </button>
           <button 
-            className={`btn ${activeComponent === 'RejectNewsModeration' ? 'btn-primary' : 'btn-outline-primary'}`}
+            className={`btn nav-button ${activeComponent === 'RejectNewsModeration' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => setActiveComponent('RejectNewsModeration')}
           >
-            Rejected News
+            <span className="btn-text">Rejected News</span>
           </button>
           <button 
-            className={`btn ${activeComponent === 'CreateNewsArticle' ? 'btn-primary' : 'btn-outline-primary'}`}
+            className={`btn nav-button ${activeComponent === 'CreateNewsArticle' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => setActiveComponent('CreateNewsArticle')}
           >
-            Create Article
+            <span className="btn-text">Create Article</span>
           </button>
           <button 
-            className={`btn ${activeComponent === 'CreateUser' ? 'btn-primary' : 'btn-outline-primary'}`}
+            className={`btn nav-button ${activeComponent === 'CreateUser' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => setActiveComponent('CreateUser')}
           >
-            Create User
+            <span className="btn-text">Create User</span>
           </button>
         </div>
       </div>
       
-      <div className="card">
-        <div className="card-body">
+      <div className="card dashboard-card">
+        <div className="card-body component-container">
           {renderComponent()}
         </div>
       </div>

@@ -135,7 +135,7 @@ const UserManagement = () => {
   };
 
   if (loading) return (
-    <div className="d-flex justify-content-center my-5">
+    <div className="loading-container">
       <div className="spinner-border text-primary" role="status">
         <span className="visually-hidden">Loading users...</span>
       </div>
@@ -143,7 +143,7 @@ const UserManagement = () => {
   );
   
   if (error) return (
-    <div className="alert alert-danger m-3" role="alert">
+    <div className="error-message alert-danger" role="alert">
       {error}
     </div>
   );
@@ -171,7 +171,7 @@ const UserManagement = () => {
                 <tr key={user._id}>
                   <td>{user.username}</td>
                   <td>
-                    <span className={`badge ${
+                    <span className={`role-badge ${
                       user.role === 'super_admin' ? 'bg-danger' : 
                       user.role === 'admin' ? 'bg-warning' : 'bg-secondary'
                     }`}>
@@ -179,7 +179,7 @@ const UserManagement = () => {
                     </span>
                   </td>
                   <td>
-                    <div className="d-flex flex-wrap gap-2">
+                    <div className="action-buttons">
                       {user.role !== 'admin' && user.role !== 'super_admin' && (
                         <button
                           onClick={() => handlePromoteToAdmin(user.username)}
