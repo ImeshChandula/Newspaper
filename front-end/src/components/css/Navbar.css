@@ -16,6 +16,7 @@
     font-weight: 500;
     transition: color 0.2s ease;
     max-width: 100px;
+    padding: 10px 0;
 }
 
 .navbar-nav .nav-link:hover {
