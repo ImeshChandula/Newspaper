@@ -59,27 +59,41 @@ const Footer = () => {
           </motion.div>
 
           <motion.div className="col-md-4" variants={itemVariants}>
-            <h5 className="text-uppercase">Follow Us</h5>
-            <div className="social-icons d-flex gap-3 mt-2">
-              {[
-                { icon: <FaFacebookF />, url: "https://facebook.com" },
-                { icon: <FaTwitter />, url: "https://twitter.com" },
-                { icon: <FaInstagram />, url: "https://instagram.com" },
-                { icon: <FaLinkedin />, url: "https://linkedin.com" },
-              ].map(({ icon, url }, idx) => (
-                <motion.a
-                  key={idx}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-decoration-none text-muted fs-5"
-                  {...iconHover}
-                >
-                  {icon}
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
+  <h5 className="text-uppercase">Follow Us</h5>
+  <motion.div
+    className="social-icons d-flex gap-3 mt-2"
+    variants={{
+      visible: {
+        transition: {
+          staggerChildren: 0.3,
+        },
+      },
+    }}
+  >
+    {[
+      { icon: <FaFacebookF />, url: "https://facebook.com" },
+      { icon: <FaTwitter />, url: "https://twitter.com" },
+      { icon: <FaInstagram />, url: "https://instagram.com" },
+      { icon: <FaLinkedin />, url: "https://linkedin.com" },
+    ].map(({ icon, url }, idx) => (
+      <motion.a
+        key={idx}
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-decoration-none text-muted fs-5"
+        variants={{
+          hidden: { opacity: 0, y: 10 },
+          visible: { opacity: 1, y: 0 },
+        }}
+        whileHover={{ scale: 1.15, rotate: 3 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        {icon}
+      </motion.a>
+    ))}
+  </motion.div>
+</motion.div>
         </div>
 
         <motion.div

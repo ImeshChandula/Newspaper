@@ -105,7 +105,7 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse overflow-auto mt-3 mt-lg-0" id="navbarNav">
+        <div className="collapse navbar-collapse mt-3 mt-lg-0" id="navbarNav">
           <ul className="navbar-nav ms-auto align-items-lg-center gap-2">
             <motion.div
               className="nav-item d-lg-none w-100 mb-3"
@@ -122,7 +122,7 @@ const Navbar = () => {
                 className="nav-item"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + index * 0.1 }}
+                transition={{ delay: 0.5 + index * 0.1 }}
               >
                 <Link className="nav-link" to={path} onClick={closeNavbar}>
                   {path === "/" ? "Home" : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
