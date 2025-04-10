@@ -11,10 +11,10 @@ const Footer = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.4,
+        duration: 0.6,
         ease: "easeOut",
         when: "beforeChildren",
-        staggerChildren: 0.1,
+        staggerChildren: 0.2,
       },
     },
   };
@@ -22,6 +22,11 @@ const Footer = () => {
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
+  };
+
+  const iconHover = {
+    whileHover: { scale: 1.15, rotate: 3 },
+    whileTap: { scale: 0.95 },
   };
 
   return (
@@ -34,54 +39,28 @@ const Footer = () => {
     >
       <div className="container">
         <div className="row">
-
-          {/* Column 1: About */}
-          <motion.div className="col-md-4" variants={fadeUpVariants}>
-            <motion.h5 className="text-uppercase" variants={itemVariants}>
-              NewsPaper
-            </motion.h5>
-            <motion.p variants={itemVariants}>
-              Stay updated with the latest news, trends, and insights from around the world.
-            </motion.p>
+          <motion.div className="col-md-4" variants={itemVariants}>
+            <h5 className="text-uppercase">NewsPaper</h5>
+            <p>
+              Stay updated with the latest news, trends, and insights from
+              around the world.
+            </p>
           </motion.div>
 
-          {/* Column 2: Quick Links */}
-          <motion.div className="col-md-4" variants={fadeUpVariants}>
-            <motion.h5 className="text-uppercase" variants={itemVariants}>
-              Quick Links
-            </motion.h5>
-            <motion.ul className="list-unstyled" variants={fadeUpVariants}>
-              {[
-                { to: "/", label: "Home" },
-                { to: "/sport", label: "Sport" },
-                { to: "/education", label: "Education" },
-                { to: "/politics", label: "Politics" },
-                { to: "/contact", label: "Contact Us" },
-              ].map((link, i) => (
-                <motion.li key={i} variants={itemVariants}>
-                  <Link to={link.to} className="footer-link">
-                    {link.label}
-                  </Link>
-                </motion.li>
-              ))}
-            </motion.ul>
+          <motion.div className="col-md-4" variants={itemVariants}>
+            <h5 className="text-uppercase">Quick Links</h5>
+            <ul className="list-unstyled">
+              <li><Link to="/" className="footer-link">Home</Link></li>
+              <li><Link to="/sport" className="footer-link">Sport</Link></li>
+              <li><Link to="/education" className="footer-link">Education</Link></li>
+              <li><Link to="/politics" className="footer-link">Politics</Link></li>
+              <li><Link to="/contact" className="footer-link">Contact Us</Link></li>
+            </ul>
           </motion.div>
 
-          {/* Column 3: Social Media */}
-          <motion.div className="col-md-4" variants={fadeUpVariants}>
-            <motion.h5 className="text-uppercase" variants={itemVariants}>
-              Follow Us
-            </motion.h5>
-            <motion.div
-              className="social-icons d-flex gap-3 mt-2"
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.3,
-                  },
-                },
-              }}
-            >
+          <motion.div className="col-md-4" variants={itemVariants}>
+            <h5 className="text-uppercase">Follow Us</h5>
+            <div className="social-icons d-flex gap-3 mt-2">
               {[
                 { icon: <FaFacebookF />, url: "https://facebook.com" },
                 { icon: <FaTwitter />, url: "https://twitter.com" },
@@ -94,25 +73,22 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-decoration-none text-muted fs-5"
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.15, rotate: 3 }}
-                  whileTap={{ scale: 0.95 }}
+                  {...iconHover}
                 >
                   {icon}
                 </motion.a>
               ))}
-            </motion.div>
+            </div>
           </motion.div>
         </div>
 
-        {/* Footer Bottom */}
         <motion.div
           className="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center mt-3"
-          variants={fadeUpVariants}
+          variants={itemVariants}
         >
-          <motion.p className="mb-0" variants={itemVariants}>
+          <p className="mb-0">
             &copy; {new Date().getFullYear()} NewsPaper. All Rights Reserved.
-          </motion.p>
+          </p>
         </motion.div>
       </div>
     </motion.footer>

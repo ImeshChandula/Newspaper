@@ -10,7 +10,7 @@ const Home = () => {
       <div className="container row mt-4">
         <NewsSection/>
       </div>
-      <div className="row">
+      <div className="row py-4">
         <div className="col-md-6">
           <PoliticsforHome/>
         </div>
