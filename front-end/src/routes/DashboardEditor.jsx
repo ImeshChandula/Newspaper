@@ -5,7 +5,7 @@ import '../components/css/DashboardSuperAdmin.css';
 
 const DashboardEditor = () => {
   return (
-    <div className="editor-dashboard"> 
+    <div className="editor-dashboard "> 
       <h1 className="dashboard-title">Author Dashboard</h1>
       
       <CreateNewsArticle />
