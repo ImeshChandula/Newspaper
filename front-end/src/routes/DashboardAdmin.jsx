@@ -31,7 +31,7 @@ const DashboardAdmin = () => {
 
 
   return (
-    <div className="container mt-4 dashboard-container">
+    <div className="container mt-4 dashboard-container py-4">
       <h1 className="dashboard-title">Admin Dashboard</h1>
       
       <div className="dashboard-nav">

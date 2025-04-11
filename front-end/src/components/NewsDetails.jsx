@@ -27,7 +27,7 @@ const NewsDetail = () => {
 
     if (loading) {
         return (
-            <div className="container mt-5 text-center">
+            <div className="container mt-5 text-center py-5">
                 <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
@@ -39,7 +39,7 @@ const NewsDetail = () => {
     if (!newsItem) {
         return (
             <motion.div
-                className="container mt-5 text-center"
+                className="container mt-5 text-center py-5"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -51,7 +51,7 @@ const NewsDetail = () => {
 
     return (
         <motion.div
-            className="container mt-4"
+            className="container mt-4 py-5"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
