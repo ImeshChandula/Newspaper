@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import '../components/css/Register.css';
+import { AuthContext } from "../context/AuthContext";
 
 const CreateNewUser = () => {
 
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [user, setUser] = useState({
+  const [editor, setEditor] = useState({
     username: "",
     password: "",
   });
@@ -15,21 +17,42 @@ const CreateNewUser = () => {
 
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setEditor({ ...editor, [e.target.name]: e.target.value });
   };
+
+  const goToNavigate = () => {
+    if(!user){
+      navigate("/");
+      return;
+    }
+    switch (user.role) {
+      case "editor":
+        navigate("/dashboard/editor");
+        break;
+      case "admin":
+        navigate("/dashboard/admin");
+        break;
+      case "super_admin":
+        navigate("/dashboard/super-admin");
+        break;
+      default:
+        // Handle unexpected role or fallback
+        navigate("/unauthorized"); // Redirect to home or another appropriate page
+         break;
+    }
+  } 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL_USERS}/register`, user, {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL_USERS}/register`, editor, {
         headers: { "Content-Type": "application/json" },
       });
 
       setMessage("User added successfully!");
-      setUser({ username: "", password: "" });
+      setEditor({ username: "", password: "" });
 
-      setTimeout(() => navigate("/"), 2000);
+      setTimeout(() => goToNavigate(), 2000);
     } catch (error) {
       console.error("Error adding User:", error);
 
@@ -58,7 +81,7 @@ const CreateNewUser = () => {
           type="text"
           name="username"
           placeholder="User Name"
-          value={user.username}
+          value={editor.username}
           onChange={handleChange}
           className="register_input"
           required
@@ -68,7 +91,7 @@ const CreateNewUser = () => {
           type="password"
           name="password"
           placeholder="Password"
-          value={user.password}
+          value={editor.password}
           onChange={handleChange}
           className="register_input"
           required
@@ -79,10 +102,15 @@ const CreateNewUser = () => {
           <button className="register_Back_button" onClick={() => { navigate("/"); }}>Back</button>
         </div>
 
-        <div>
-          <p>If you have an Account? </p>
-          <Link to="/login">Click Me.!</Link>
-        </div>
+        {!user ? (
+          <div>
+            <p>If you have an Account? </p>
+            <Link to="/login">Click Me.!</Link>
+          </div>
+        ) : (
+          <div></div>
+        )}
+        
 
       </form>
     </div>
