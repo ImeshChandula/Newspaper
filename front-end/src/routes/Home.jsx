@@ -3,6 +3,7 @@ import NewsSection from "../pages/NewsSection";
 import PoliticsforHome from "../components/PoliticsFroHome";
 import SportForHome from "../components/SportForHome";
 import "../components/css/Home.css"
+import EducationForHome from "../components/EducationForHome";
 const Home = () => {
   
   return (
@@ -13,6 +14,9 @@ const Home = () => {
       <div className="row py-4">
         <div className="col-md-6">
           <PoliticsforHome/>
+        </div>
+        <div className="col-md-6">
+          <EducationForHome />
         </div>
         <div className="col-md-6">
           <SportForHome/>
