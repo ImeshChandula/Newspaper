@@ -12,13 +12,13 @@ const Home = () => {
         <NewsSection/>
       </div>
       <div className="row py-4">
-        <div className="col-md-6">
+        <div className="col-md-4">
           <PoliticsforHome/>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-4">
           <EducationForHome />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-4">
           <SportForHome/>
         </div>
       </div>
