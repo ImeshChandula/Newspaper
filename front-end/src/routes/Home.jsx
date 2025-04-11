@@ -2,7 +2,7 @@ import React from "react";
 import NewsSection from "../pages/NewsSection";
 import PoliticsforHome from "../components/PoliticsFroHome";
 import SportForHome from "../components/SportForHome";
-
+import "../components/css/Home.css"
 const Home = () => {
   
   return (

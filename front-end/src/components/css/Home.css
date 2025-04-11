@@ -5,6 +5,11 @@
     font-family: 'Segoe UI', sans-serif;
 }
 
+.home-page {
+    margin: 6% 2% 0 2%;
+    justify-content: center;
+}
+
 .loading-container {
     text-align: center;
     padding: 60px 0;
