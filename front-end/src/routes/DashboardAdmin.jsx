@@ -4,6 +4,7 @@ import AcceptNewsModeration from '../components/AcceptNewsModeration';
 import RejectNewsModeration from '../components/RejectNewsModeration';
 import CreateNewsArticle from '../components/CreateNewsArticle';
 import CreateNewUser from '../components/CreateNewUser';
+import HistoryOfArticle from '../components/HistoryOfArticle';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/css/DashboardSuperAdmin.css'
 
@@ -24,6 +25,8 @@ const DashboardAdmin = () => {
         return <CreateNewsArticle />
       case 'CreateUser':
         return <CreateNewUser />
+        case 'HistoryOfArticles':
+        return <HistoryOfArticle />
       default:
         return <PendingNewsModeration />
     }
@@ -59,6 +62,12 @@ const DashboardAdmin = () => {
             onClick={() => setActiveComponent('CreateNewsArticle')}
           >
             <span className="btn-text">Create Article</span>
+          </button>
+          <button 
+            className={`btn nav-button ${activeComponent === 'HistoryOfArticles' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('HistoryOfArticles')}
+          >
+            <span className="btn-text">History Of Articles</span>
           </button>
           <button 
             className={`btn nav-button ${activeComponent === 'CreateUser' ? 'btn-primary' : 'btn-outline-primary'}`}

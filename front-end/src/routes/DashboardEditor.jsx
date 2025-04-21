@@ -1,14 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CreateNewsArticle from "../components/CreateNewsArticle";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../components/css/DashboardSuperAdmin.css';
+import HistoryOfArticle from '../components/HistoryOfArticle';
 
 const DashboardEditor = () => {
+  const [activeComponent, setActiveComponent] = useState('UserManagement')
+
+  // Function to render the active component
+  const renderComponent = () => {
+    switch (activeComponent) {
+      case 'PendingNewsModeration':
+        return <CreateNewsArticle />
+      case 'HistoryOfArticles':
+        return <HistoryOfArticle />
+      default:
+        return <CreateNewsArticle />
+    }
+  }
   return (
-    <div className="editor-dashboard "> 
+
+    <div className="container mt-4 dashboard-container py-4">
       <h1 className="dashboard-title">Author Dashboard</h1>
       
-      <CreateNewsArticle />
+      <div className="dashboard-nav">
+        <div className="btn-group" role="group" aria-label="Dashboard Navigation">
+          <button 
+            className={`btn nav-button ${activeComponent === 'CreateNewsArticle' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('CreateNewsArticle')}
+          >
+            <span className="btn-text">Create Article</span>
+          </button>
+          <button 
+            className={`btn nav-button ${activeComponent === 'HistoryOfArticles' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('HistoryOfArticles')}
+          >
+            <span className="btn-text">History Of Articles</span>
+          </button>
+        </div>
+      </div>
+      
+      <div className="card dashboard-card">
+        <div className="card-body component-container">
+          {renderComponent()}
+        </div>
+      </div>
     </div>
   )
 }

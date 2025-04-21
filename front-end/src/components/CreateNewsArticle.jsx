@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import '../components/css/CreateNewsArticle.css';
-import HistotyOfArticle from './HistoryOfArticle';
 
 const CreateNewsArticle = () => {
 
@@ -105,9 +104,6 @@ const CreateNewsArticle = () => {
         {message && (
           <p className="create_news_message">{message}</p>
         )}
-      </div>
-      <div>
-        <HistotyOfArticle/>
       </div>
     </>
   )

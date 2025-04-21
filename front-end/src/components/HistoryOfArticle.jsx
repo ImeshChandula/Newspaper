@@ -45,11 +45,11 @@ const HistoryOfArticle = () => {
   }, []);
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4 text-center">📰 My News Article History</h2>
+    <div className="container">
+      <h2 className="mb-5 text-center fw-bold text-decoration-underline">📰 My News Article History</h2>
 
       {loading ? (
-        <div className="text-center">
+        <div className="d-flex justify-content-center">
           <div className="spinner-border text-primary" role="status" />
         </div>
       ) : error ? (
@@ -57,29 +57,32 @@ const HistoryOfArticle = () => {
       ) : articles.length === 0 ? (
         <div className="alert alert-info text-center">No articles submitted yet.</div>
       ) : (
-        <div className="row">
+        <div className="row gy-4 gx-4 py-2">
           {articles.map((article) => (
-            <div key={article._id} className="col-md-6 col-lg-4 mb-4">
+            <div key={article._id} className="col-md-6 col-lg-4">
               <div className="card h-100 shadow-sm border-0">
-                {article.media && (
-                  <img
-                    src={article.media}
-                    className="card-img-top"
-                    alt={article.title}
-                    style={{ height: "200px", objectFit: "cover" }}
-                  />
-                )}
-                <div className="card-body d-flex flex-column">
-                  <h5 className="card-title">{article.title}</h5>
-                  <p className="card-text">
+                <img
+                  src={article.media || "https://via.placeholder.com/400x200?text=No+Image"}
+                  className="card-img-top"
+                  alt={article.title}
+                  style={{ height: "150px", objectFit: "contain" }}
+                />
+                <div className="card-body d-flex flex-column px-3 py-3">
+                  <h5 className="card-title fw-bold text-decoration-underline">{article.title}</h5>
+                  <p className="card-text mb-2">
                     <strong>Category:</strong> {article.category}
                   </p>
-                  <p className="card-text">
+                  <p className="card-text mb-2">
                     <strong>Status:</strong>{" "}
                     <span className={`badge bg-${getStatusBadgeColor(article.status)}`}>
                       {article.status.toUpperCase()}
                     </span>
                   </p>
+                  {article.description && (
+                    <p className="card-text mb-2">
+                      <strong>Description:</strong> {article.description}
+                    </p>
+                  )}
                   <p className="card-text mt-auto">
                     <small className="text-muted">
                       Submitted on {new Date(article.date).toLocaleString()}
