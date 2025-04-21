@@ -83,11 +83,9 @@ const HistoryOfArticle = () => {
                       <strong>Description:</strong> {article.description}
                     </p>
                   )}
-                  <p className="card-text mt-auto">
-                    <small className="text-muted">
-                      Submitted on {new Date(article.date).toLocaleString()}
-                    </small>
-                  </p>
+                  <div className="card-footer d-flex justify-content-between small text-muted">
+                    Submitted on {new Date(article.date).toLocaleString()}
+                  </div>
                 </div>
               </div>
             </div>
