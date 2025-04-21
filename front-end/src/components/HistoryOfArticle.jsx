@@ -46,7 +46,7 @@ const HistoryOfArticle = () => {
 
   return (
     <div className="container">
-      <h2 className="mb-5 text-center fw-bold text-decoration-underline">📰 My News Article History</h2>
+      <h2 className="news-head">📰 My News Article History</h2>
 
       {loading ? (
         <div className="d-flex justify-content-center">
