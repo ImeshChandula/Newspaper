@@ -20,6 +20,7 @@ import EducationPage from "./pages/Education.jsx"
 import PoliticsPage from "./pages/Politics.jsx"
 import EditNewsContent from "./routes/EditNewsContent.jsx";
 import Contact from "./pages/Contact.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 const App = () => {
 
@@ -27,6 +28,7 @@ const App = () => {
   return (
     <div className="bg-white">
       <Navbar />
+      <ScrollToTop/>
       <div className="container mt-4">
         <Routes>
           <Route path="/" element={<Home />} />
