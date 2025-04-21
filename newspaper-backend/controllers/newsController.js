@@ -31,6 +31,29 @@ const createNewsArticle = async (req, res) => {
 };
 
 
+//@route   GET /api/news/my-articles
+//@desc    Get all news articles created by the logged-in editor
+//@access  Editor, Admin
+const getMyNewsArticles = async (req, res) => {
+  try {
+      // Get the logged-in user's ID from the authentication middleware
+      const editorId = req.user.id;
+      
+      // Find all news articles where author matches the editor's ID
+      const myArticles = await News.find({ author: editorId })
+          .sort({ date: -1 }) 
+          .populate('author', 'username email'); 
+      
+      res.status(200).json(myArticles);
+  } catch (error) {
+      res.status(500).json({ 
+          message: 'Error retrieving your news articles', 
+          error: error.message 
+      });
+  }
+};
+
+
 //@route   GET /api/news/education/pending
 //@desc    Get all pending news articles in Education category, sorted by latest
 //@access  Public
@@ -357,4 +380,5 @@ module.exports = {
     getNewsArticleByID,
     updateNewsArticleByID,
     deleteNewsArticleByID,
+    getMyNewsArticles,
 };

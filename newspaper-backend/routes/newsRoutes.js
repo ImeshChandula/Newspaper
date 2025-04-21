@@ -18,13 +18,14 @@ const {
     getNewsArticleByID,
     updateNewsArticleByID,
     deleteNewsArticleByID,
+    getMyNewsArticles,
 } = require("../controllers/newsController");
 
 
 const router = express.Router();
 
 // Routes
-// http://localhost:5000/api/news"
+// http://localhost:5000/api/news
 router.get("/education/accept", getEducationAcceptNews);
 router.get("/education/pending",authenticateUser, authorizeRoles("super_admin", "admin"), getEducationPendingNews);
 router.get("/education/reject",authenticateUser, authorizeRoles("super_admin", "admin"), getEducationRejectNews);
@@ -43,6 +44,7 @@ router.get("/reject",authenticateUser, authorizeRoles("super_admin", "admin"), g
 router.patch("/updateStatus/:id", authenticateUser, authorizeRoles("super_admin", "admin"), updateNewsStatus);
 
 router.post("/createNewsArticle", authenticateUser, authorizeRoles("editor", "admin", "super_admin"), createNewsArticle);
+router.get("/myArticles", authenticateUser, authorizeRoles("editor", "admin", "super_admin"), getMyNewsArticles);
 
 router.get("/getNewsArticleByID/:id", getNewsArticleByID);
 router.patch("/updateNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin", "admin"), updateNewsArticleByID);
