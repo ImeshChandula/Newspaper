@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const newsSchema = new mongoose.Schema({
     category: {
         type: String,
-        enum: ["Education", "Politics", "Sports"],
+        enum: ["Education", "Politics", "Sports","Breaking News"],
         required: true,
       },
     title: { type: String, required: true },

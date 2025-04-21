@@ -60,6 +60,7 @@ const CreateNewsArticle = () => {
             <option value="Education">Education</option>
             <option value="Politics">Politics</option>
             <option value="Sports">Sports</option>
+            <option value="Breaking News">Breaking News</option>
           </select>
 
           <input

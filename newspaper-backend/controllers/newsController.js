@@ -221,6 +221,30 @@ const getSportsRejectNews = async (req, res) => {
 };
 
 
+//@route   GET /api/news/breaking
+//@desc    Get all breaking news from the last 24 hours
+//@access  Public
+const getBreakingNews = async (req, res) => {
+  try {
+      // Calculate the date 24 hours ago
+      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      
+      // Query for breaking news articles created in the last 24 hours
+      const breakingNews = await News.find({ 
+          category: "Breaking News",
+          status: "accept", // Only return approved articles
+          date: { $gte: twentyFourHoursAgo }
+      })
+      .sort({ date: -1 }) // Sort by newest first
+      .populate('author', 'username email');
+      
+      res.status(200).json(breakingNews);
+  } catch (error) {
+      res.status(500).json({ message: 'Error fetching breaking news', error: error.message });
+  }
+};
+
+
 //@route   GET /api/news/pending
 //@desc    Get all pending news articles
 //@access  Admins, Moderators
@@ -381,4 +405,5 @@ module.exports = {
     updateNewsArticleByID,
     deleteNewsArticleByID,
     getMyNewsArticles,
+    getBreakingNews,
 };

@@ -19,6 +19,7 @@ const {
     updateNewsArticleByID,
     deleteNewsArticleByID,
     getMyNewsArticles,
+    getBreakingNews,
 } = require("../controllers/newsController");
 
 
@@ -39,6 +40,7 @@ router.get("/sports/pending",authenticateUser, authorizeRoles("super_admin", "ad
 router.get("/sports/reject",authenticateUser, authorizeRoles("super_admin", "admin"), getSportsRejectNews);
 
 router.get('/accept', getAllAcceptNews);
+router.get('/breakingNews', getBreakingNews);
 router.get("/pending",authenticateUser, authorizeRoles("super_admin", "admin"), getAllPendingNews);
 router.get("/reject",authenticateUser, authorizeRoles("super_admin", "admin"), getAllRejectNews);
 router.patch("/updateStatus/:id", authenticateUser, authorizeRoles("super_admin", "admin"), updateNewsStatus);
