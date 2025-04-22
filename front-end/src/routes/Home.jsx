@@ -10,21 +10,18 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="container mt-4">
-        {/* Breaking News */}
         <div className="row mb-5">
           <div className="col-12">
             <BreakingNews />
           </div>
         </div>
 
-        {/* News Section */}
         <div className="row mb-2">
           <div className="col-12">
             <NewsSection />
           </div>
         </div>
 
-        {/* Other Sections */}
         <div className="row py-2">
           <div className="col-md-4">
             <PoliticsforHome />

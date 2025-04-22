@@ -1,4 +1,3 @@
-// src/components/BreakingNews.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NewsCard from "../components/NewsCard";
@@ -6,8 +5,8 @@ import { motion } from "framer-motion";
 
 const BreakingNews = () => {
   const [loading, setLoading] = useState(true);
-   const [news, setNews] = useState([]);
-    const [visibleNewsCount, setVisibleNewsCount] = useState(4);
+  const [news, setNews] = useState([]);
+  const [visibleNewsCount, setVisibleNewsCount] = useState(4);
 
   useEffect(() => {
     const fetchBreakingNews = async () => {

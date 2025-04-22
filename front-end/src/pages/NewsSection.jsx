@@ -11,8 +11,20 @@ const NewsSection = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/accept`);
-        setNews(response.data);
+        const [acceptRes, breakingRes] = await Promise.all([
+          axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/accept`),
+          axios.get("http://localhost:5000/api/news/breakingNews")
+        ]);
+
+        const acceptedNews = acceptRes.data;
+        const breakingNews = breakingRes.data;
+
+        const breakingNewsIds = new Set(breakingNews.map(item => item._id));
+
+        // Filter out breaking news from accepted news
+        const filteredNews = acceptedNews.filter(item => !breakingNewsIds.has(item._id));
+
+        setNews(filteredNews);
       } catch (error) {
         console.error("Failed to fetch news", error);
       } finally {
