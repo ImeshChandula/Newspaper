@@ -23,15 +23,19 @@ const Home = () => {
         </div>
 
         <div className="row py-2">
+
           <div className="col-md-4">
             <PoliticsforHome />
           </div>
+
           <div className="col-md-4">
             <EducationForHome />
           </div>
+
           <div className="col-md-4">
             <SportForHome />
           </div>
+
         </div>
       </div>
     </div>
