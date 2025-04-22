@@ -110,6 +110,26 @@
   text-decoration: underline;
 }
 
+.password_wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password_input {
+  width: 100%; /* space for the icon */
+}
+
+.toggle_password_icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.1rem;
+  user-select: none;
+  color: #888;
+}
+
 /* Responsive adjustments */
 @media (max-width: 576px) {
   .login_container {

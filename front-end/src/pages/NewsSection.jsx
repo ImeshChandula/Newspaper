@@ -7,6 +7,7 @@ const NewsSection = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visibleNewsCount, setVisibleNewsCount] = useState(4);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -20,8 +21,6 @@ const NewsSection = () => {
         const breakingNews = breakingRes.data;
 
         const breakingNewsIds = new Set(breakingNews.map(item => item._id));
-
-        // Filter out breaking news from accepted news
         const filteredNews = acceptedNews.filter(item => !breakingNewsIds.has(item._id));
 
         setNews(filteredNews);
@@ -35,8 +34,14 @@ const NewsSection = () => {
     fetchNews();
   }, []);
 
-  const handleShowMore = () => {
-    setVisibleNewsCount(news.length);
+  const handleToggle = () => {
+    if (isExpanded) {
+      setVisibleNewsCount(4);
+      setIsExpanded(false);
+    } else {
+      setVisibleNewsCount(news.length);
+      setIsExpanded(true);
+    }
   };
 
   return (
@@ -76,15 +81,15 @@ const NewsSection = () => {
         )}
       </div>
 
-      {visibleNewsCount < news.length && (
+      {news.length > 4 && (
         <motion.div
           className="text-end mt-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <button className="btn btn-link" onClick={handleShowMore}>
-            Show More
+          <button className="btn btn-link" onClick={handleToggle}>
+            {isExpanded ? "Hide" : "Show More"}
           </button>
         </motion.div>
       )}

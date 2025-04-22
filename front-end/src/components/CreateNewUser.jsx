@@ -5,7 +5,6 @@ import '../components/css/Register.css';
 import { AuthContext } from "../context/AuthContext";
 
 const CreateNewUser = () => {
-
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [editor, setEditor] = useState({
@@ -14,14 +13,14 @@ const CreateNewUser = () => {
   });
 
   const [message, setMessage] = useState("");
-
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setEditor({ ...editor, [e.target.name]: e.target.value });
   };
 
   const goToNavigate = () => {
-    if(!user){
+    if (!user) {
       navigate("/");
       return;
     }
@@ -36,11 +35,10 @@ const CreateNewUser = () => {
         navigate("/dashboard/super-admin");
         break;
       default:
-        // Handle unexpected role or fallback
-        navigate("/unauthorized"); // Redirect to home or another appropriate page
-         break;
+        navigate("/unauthorized");
+        break;
     }
-  } 
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,20 +53,15 @@ const CreateNewUser = () => {
       setTimeout(() => goToNavigate(), 2000);
     } catch (error) {
       console.error("Error adding User:", error);
-
       if (error.response && error.response.status === 400) {
-        // 400 is returned by backend for already registered users
         setMessage("User already registered!");
       } else if (error.response?.data?.message) {
-        // If backend sends a custom error message
         setMessage(error.response.data.message);
       } else {
         setMessage("Failed to add User.");
       }
     }
   };
-
-
 
   return (
     <div className="register_content">
@@ -87,34 +80,38 @@ const CreateNewUser = () => {
           required
         />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={editor.password}
-          onChange={handleChange}
-          className="register_input"
-          required
-        />
+        <div className="password_wrapper">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={editor.password}
+            onChange={handleChange}
+            className="register_input password_input"
+            required
+          />
+          <span
+            className="toggle_password_icon"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? "🙈" : "👁️"}
+          </span>
+        </div>
 
         <div className="register_buttons">
           <button type="submit" className="register_submit_button">Submit</button>
-          <button className="register_Back_button" onClick={() => { navigate("/"); }}>Back</button>
+          <button type="button" className="register_Back_button" onClick={() => { navigate("/"); }}>Back</button>
         </div>
 
-        {!user ? (
+        {!user && (
           <div>
-            <p>If you have an Account? </p>
+            <p>If you have an Account?</p>
             <Link to="/login">Click Me.!</Link>
           </div>
-        ) : (
-          <div></div>
         )}
-        
-
       </form>
     </div>
   )
 }
 
-export default CreateNewUser
+export default CreateNewUser;
