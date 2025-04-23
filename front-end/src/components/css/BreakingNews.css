@@ -1,46 +1,88 @@
-/* Add these styles to your CSS file */
+/* BreakingNews.css */
+
 .news-slider {
-    position: relative;
-    overflow: hidden;
-    margin: 0 -10px; /* Compensate for item padding */
+  position: relative;
+  overflow: hidden;
+  margin: 0 -10px; /* Compensate for item padding */
+}
+
+.slider-track {
+  display: flex;
+  width: 100%;
+  min-width: 100%;
+}
+
+.slider-item {
+  padding: 0 10px;
+  flex-shrink: 0;
+  transition: transform 0.5s ease;
+}
+
+.page-indicators {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.indicator-dot {
+  padding: 0;
+  margin: 0 5px;
+}
+
+.indicator-dot:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+}
+
+/* Ensure consistent card heights */
+.news-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-image {
+  height: 160px;
+  object-fit: cover;
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .news-image {
+    height: 140px;
   }
   
-  .slider-track {
-    display: flex;
-    width: 100%;
-    min-width: 100%;
+  .card-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
   }
   
-  .slider-item {
-    padding: 0 10px;
-    flex-shrink: 0;
-    transition: transform 0.5s ease;
+  .card-text {
+    font-size: 0.875rem;
   }
   
-  .page-indicators {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
+  .card-footer {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Touch-friendly targets */
+@media (max-width: 576px) {
+  .slider-controls button {
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
   }
   
   .indicator-dot {
-    padding: 0;
-    margin: 0 5px;
+    width: 8px !important;
+    height: 8px !important;
   }
-  
-  .indicator-dot:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+}
+
+/* Enable touch-scrolling on mobile */
+@media (pointer: coarse) {
+  .news-slider {
+    touch-action: pan-x;
   }
-  
-  /* Ensure consistent card heights */
-  .news-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .news-image {
-    height: 200px;
-    object-fit: cover;
-  }
+}
