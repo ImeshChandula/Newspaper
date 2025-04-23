@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { Spinner } from "react-bootstrap";
+import ShareButton from "./ShareButton";
 
 const NewsDetail = () => {
     const { id } = useParams();
@@ -67,7 +68,7 @@ const NewsDetail = () => {
                         <div className="col-1">
                             <button onClick={() => navigate(-1)} className="btn btn-secondary" > &lt; </button>
                         </div>
-                        <div className="col-11">
+                        <div className="col-10">
 
                             <motion.h1
                                 className="mb-3 text-center"
@@ -78,6 +79,14 @@ const NewsDetail = () => {
                                 {newsItem.title}
                             </motion.h1>
                         </div>
+
+                        <div className="col-1">
+                            <ShareButton
+                                url={window.location.href}
+                                title={newsItem.title}
+                            />
+                        </div>
+
                     </div>
 
                     {newsItem.media && (
