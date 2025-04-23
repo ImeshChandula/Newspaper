@@ -88,7 +88,6 @@ const NewsDetail = () => {
                         </div>
                     </div>
 
-
                     {/* Only visible on small displays. */}
                     <div className="d-block d-md-none">
                         <div className="d-flex flex-column flex-md-row align-items-center justify-content-between mb-4 gap-2">
