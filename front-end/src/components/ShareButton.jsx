@@ -10,6 +10,7 @@ import {
     EmailIcon,
 } from "react-share";
 import { FiShare2 } from "react-icons/fi";
+import { AnimatePresence, motion } from "framer-motion";
 
 const ShareButton = ({ url, title }) => {
     const [open, setOpen] = useState(false);
@@ -42,40 +43,50 @@ const ShareButton = ({ url, title }) => {
                 onClick={toggleDropdown}
             >
                 <FiShare2 size={18} />
-                <span className="d-none d-sm-inline">Share</span>
             </button>
 
-            {open && (
-                <div
-                    className="dropdown-menu p-3 show"
-                    style={{
-                        display: "block",
-                        minWidth: "200px",
-                        maxWidth: "90vw",
-                        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
-                        right: 0,
-                        left: "auto",
-                    }}
-                >
-                    <div className="d-flex flex-wrap gap-2 mb-2 justify-content-start">
-                        <FacebookShareButton url={url} quote={title}>
-                            <FacebookIcon size={32} round />
-                        </FacebookShareButton>
-                        <TwitterShareButton url={url} title={title}>
-                            <TwitterIcon size={32} round />
-                        </TwitterShareButton>
-                        <WhatsappShareButton url={url} title={title}>
-                            <WhatsappIcon size={32} round />
-                        </WhatsappShareButton>
-                        <EmailShareButton url={url} subject={title}>
-                            <EmailIcon size={32} round />
-                        </EmailShareButton>
-                    </div>
-                    <button onClick={copyToClipboard} className="btn btn-sm btn-outline-secondary w-100">
-                        {copied ? "Link Copied!" : "Copy Link"}
-                    </button>
-                </div>
-            )}
+            <AnimatePresence>
+                {open && (
+                    <motion.div
+                        className="dropdown-menu p-3 show"
+                        initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        style={{
+                            display: "block",
+                            minWidth: "200px",
+                            maxWidth: "90vw",
+                            boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
+                            right: 0,
+                            left: "auto",
+                            position: "absolute",
+                            zIndex: 1000,
+                        }}
+                    >
+                        <div className="d-flex flex-wrap gap-2 mb-2 justify-content-start">
+                            <FacebookShareButton url={url} quote={title}>
+                                <FacebookIcon size={32} round />
+                            </FacebookShareButton>
+                            <TwitterShareButton url={url} title={title}>
+                                <TwitterIcon size={32} round />
+                            </TwitterShareButton>
+                            <WhatsappShareButton url={url} title={title}>
+                                <WhatsappIcon size={32} round />
+                            </WhatsappShareButton>
+                            <EmailShareButton url={url} subject={title}>
+                                <EmailIcon size={32} round />
+                            </EmailShareButton>
+                        </div>
+                        <button
+                            onClick={copyToClipboard}
+                            className="btn btn-sm btn-outline-secondary w-100"
+                        >
+                            {copied ? "Link Copied!" : "Copy Link"}
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
