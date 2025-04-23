@@ -52,7 +52,7 @@ const NewsDetail = () => {
 
     return (
         <motion.div
-            className="container mt-4 py-5"
+            className="container mt-5 py-5"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -64,12 +64,15 @@ const NewsDetail = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <div className="row">
-                        <div className="col-1">
-                            <button onClick={() => navigate(-1)} className="btn btn-secondary" > &lt; </button>
+                    {/* Only visible on large displays. */}
+                    <div className="row d-none d-lg-flex align-items-center mb-4">
+                        <div className="col-lg-1 d-flex justify-content-start">
+                            <button onClick={() => navigate(-1)} className="btn btn-secondary">
+                                &lt;
+                            </button>
                         </div>
-                        <div className="col-10">
 
+                        <div className="col-lg-10">
                             <motion.h1
                                 className="mb-3 text-center"
                                 initial={{ opacity: 0, y: -20 }}
@@ -80,13 +83,34 @@ const NewsDetail = () => {
                             </motion.h1>
                         </div>
 
-                        <div className="col-1">
-                            <ShareButton
-                                url={window.location.href}
-                                title={newsItem.title}
-                            />
+                        <div className="col-lg-1 d-flex justify-content-end">
+                            <ShareButton url={window.location.href} title={newsItem.title} />
                         </div>
+                    </div>
 
+
+                    {/* Only visible on small displays. */}
+                    <div className="d-block d-md-none">
+                        <div className="d-flex flex-column flex-md-row align-items-center justify-content-between mb-4 gap-2">
+                            <div className="d-flex justify-content-between w-100 w-md-auto">
+                                <button
+                                    onClick={() => navigate(-1)}
+                                    className="btn btn-secondary"
+                                >
+                                    &lt;
+                                </button>
+                                <ShareButton url={window.location.href} title={newsItem.title} />
+                            </div>
+
+                            <motion.h1
+                                className="text-center flex-grow-1 mb-2"
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4, duration: 0.5 }}
+                            >
+                                {newsItem.title}
+                            </motion.h1>
+                        </div>
                     </div>
 
                     {newsItem.media && (
