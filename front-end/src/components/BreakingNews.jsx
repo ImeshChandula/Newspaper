@@ -23,13 +23,19 @@ const BreakingNews = () => {
     fetchBreakingNews();
   }, []);
 
+  const handleShowMore = () => {
+    setVisibleNewsCount(news.length);
+  };
+
   if (loading) {
     return <div className="breaking-news">Loading Breaking News...</div>;
   }
 
-  const handleShowMore = () => {
-    setVisibleNewsCount(news.length);
-  };
+  // If there's no news, return null to hide the entire section
+  if (news.length === 0) {
+    return null;
+  }
+  
 
   return (
     <div className="container">
