@@ -41,7 +41,7 @@ const BreakingNews = () => {
           // Loop back to the beginning when reaching the end
           return nextIndex < news.length - visibleItems + 1 ? nextIndex : 0;
         });
-      }, 3000); // Change slide every 10 seconds
+      }, 3000); // Change slide every 03 seconds
     };
     
     startAutoplay();
