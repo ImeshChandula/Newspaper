@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import ProfileDropdown from "./ProfileDropDown";
 import ProfilForSD from "./ProfileForSD";
 import "./css/Navbar.css";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
+  const { t } = useTranslation()
+
   const [currentTime, setCurrentTime] = useState(new Date());
   const [currentDate, setCurrentDate] = useState(new Date());
   useEffect(() => {
@@ -126,7 +129,7 @@ const Navbar = () => {
                 transition={{ delay: 0.5 + index * 0.1 }}
               >
                 <Link className="nav-link" to={path} onClick={closeNavbar}>
-                  {path === "/" ? "Home" : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
+                  {path === "/" ? t('Home') : t(path.slice(1).charAt(0).toUpperCase() + path.slice(2))}
                 </Link>
               </motion.li>
             ))}
