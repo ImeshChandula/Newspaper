@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { FaGlobe } from 'react-icons/fa'; // 🌐 Icon
+import { FaGlobe } from 'react-icons/fa';
+import '../components/css/LanguageSwitcher.css';
 
 const LanguageSwitcher = () => {
     const { i18n } = useTranslation();
@@ -11,10 +12,9 @@ const LanguageSwitcher = () => {
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
         localStorage.setItem('i18nextLng', lng);
-        setIsOpen(false); // Close dropdown after selecting
+        setIsOpen(false);
     };
 
-    // Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -27,14 +27,14 @@ const LanguageSwitcher = () => {
 
     return (
         <motion.div
-            className="dropdown"
+            className="dropdown language-switcher px-2"
             ref={dropdownRef}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease: "easeInOut" }}
         >
             <button
-                className="btn btn-sm btn-outline-primary dropdown-toggle d-flex align-items-center gap-2"
+                className="btn btn-sm btn-outline-primary dropdown-toggle d-flex align-items-center gap-2 py-2 rounded-pill"
                 type="button"
                 id="languageDropdown"
                 onClick={() => setIsOpen(!isOpen)}
@@ -44,7 +44,7 @@ const LanguageSwitcher = () => {
             </button>
 
             <ul
-                className={`dropdown-menu dropdown-menu-end mt-2 ${isOpen ? 'show' : ''}`}
+                className={`dropdown-menu dropdown-menu-end rounded mt-2 ${isOpen ? 'show' : ''}`}
                 aria-labelledby="languageDropdown"
             >
                 <li>

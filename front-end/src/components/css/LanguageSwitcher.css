@@ -1,0 +1,54 @@
+.language-switcher .dropdown-toggle {
+    background-color: transparent;
+    border: 1px solid #007bff;
+    color: #007bff;
+    transition: all 0.3s ease;
+}
+
+.language-switcher .dropdown-toggle:hover {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+
+.language-switcher .dropdown-menu {
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.language-switcher .dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.language-switcher .dropdown-item {
+    font-size: 14px;
+    padding: 8px 16px;
+    color: #333;
+    transition: background-color 0.2s ease;
+}
+
+.language-switcher .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+}
+
+.language-switcher .dropdown-item:active {
+    background-color: #e2e6ea;
+}
+
+/* For Globe icon */
+.language-switcher .dropdown-toggle .fa-globe {
+    font-size: 18px;
+    color: #007bff;
+    transition: transform 0.3s ease;
+}
+
+.language-switcher .dropdown-toggle:hover .fa-globe {
+    transform: scale(1.1);
+}
