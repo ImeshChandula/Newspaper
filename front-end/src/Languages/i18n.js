@@ -35,11 +35,15 @@ i18n
     .init({
         debug: true,
         resources,
-        lng: 'en',
         fallbackLng: 'en',
+        detection: {
+            // Look at localStorage first
+            order: ['localStorage', 'navigator'],
+            caches: ['localStorage'],
+        },
         interpolation: {
-            escapeValue: false
-        }
+            escapeValue: false,
+        },
     });
 
 export default i18n;

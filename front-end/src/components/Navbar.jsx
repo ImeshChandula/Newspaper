@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import ProfileDropdown from "./ProfileDropDown";
 import ProfilForSD from "./ProfileForSD";
 import "./css/Navbar.css";
+import LanguageSwitcher from "../Languages/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
-  const { t } = useTranslation()
+  
+  const { t } = useTranslation();
 
   const [currentTime, setCurrentTime] = useState(new Date());
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -135,6 +137,8 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
+
+        <LanguageSwitcher/>
 
         <motion.div
           className="d-none d-lg-flex align-items-center ms-auto gap-3"
