@@ -37,7 +37,6 @@ i18n
         resources,
         fallbackLng: 'en',
         detection: {
-            // Look at localStorage first
             order: ['localStorage', 'navigator'],
             caches: ['localStorage'],
         },

@@ -6,9 +6,10 @@ import ProfilForSD from "./ProfileForSD";
 import "./css/Navbar.css";
 import LanguageSwitcher from "../Languages/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
+import LanguageSwitcherForMD from "../Languages/LanguageSwitcherForMD";
 
 const Navbar = () => {
-  
+
   const { t } = useTranslation();
 
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -136,9 +137,24 @@ const Navbar = () => {
               </motion.li>
             ))}
           </ul>
+          <motion.div
+              className="nav-item d-lg-none w-100 mb-3"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <LanguageSwitcherForMD />
+            </motion.div>
         </div>
 
-        <LanguageSwitcher/>
+        <motion.div
+          className="d-none d-lg-flex align-items-center ms-auto gap-3"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <LanguageSwitcher />
+        </motion.div>
 
         <motion.div
           className="d-none d-lg-flex align-items-center ms-auto gap-3"

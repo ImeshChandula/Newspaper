@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
 import { FaGlobe } from 'react-icons/fa';
 import '../components/css/LanguageSwitcher.css';
 
@@ -26,12 +25,9 @@ const LanguageSwitcher = () => {
     }, []);
 
     return (
-        <motion.div
+        <div
             className="dropdown language-switcher px-2"
             ref={dropdownRef}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, ease: "easeInOut" }}
         >
             <button
                 className="btn btn-sm btn-outline-primary dropdown-toggle d-flex align-items-center gap-2 py-2 rounded-pill"
@@ -40,7 +36,7 @@ const LanguageSwitcher = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 aria-expanded={isOpen}
             >
-                <FaGlobe />
+                <FaGlobe /> <span className="fw-medium">Language</span>
             </button>
 
             <ul
@@ -57,7 +53,7 @@ const LanguageSwitcher = () => {
                     <button className="dropdown-item" onClick={() => changeLanguage('ta')}>தமிழ்</button>
                 </li>
             </ul>
-        </motion.div>
+        </div>
     );
 };
 
