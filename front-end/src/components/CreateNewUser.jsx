@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from 'react';
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import '../components/css/Register.css';
 import { AuthContext } from "../context/AuthContext";
 
 const CreateNewUser = () => {
+  const { t } = useTranslation();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [editor, setEditor] = useState({
@@ -47,25 +49,25 @@ const CreateNewUser = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      setMessage("User added successfully!");
+      setMessage(t('userAddedSuccess'));
       setEditor({ username: "", password: "" });
 
       setTimeout(() => goToNavigate(), 2000);
     } catch (error) {
       console.error("Error adding User:", error);
       if (error.response && error.response.status === 400) {
-        setMessage("User already registered!");
+        setMessage(t('userAlreadyRegistered'));
       } else if (error.response?.data?.message) {
         setMessage(error.response.data.message);
       } else {
-        setMessage("Failed to add User.");
+        setMessage(t('userAddFail'));
       }
     }
   };
 
   return (
     <div className="register_content">
-      <h2 className="register_header">Create New Editor Account</h2>
+      <h2 className="register_header">{t('createEditorAccount')}</h2>
 
       {message && <p className="message_box">{message}</p>}
 
@@ -73,7 +75,7 @@ const CreateNewUser = () => {
         <input
           type="text"
           name="username"
-          placeholder="User Name"
+          placeholder={t('usernamePlaceholder')}
           value={editor.username}
           onChange={handleChange}
           className="register_input"
@@ -84,7 +86,7 @@ const CreateNewUser = () => {
           <input
             type={showPassword ? "text" : "password"}
             name="password"
-            placeholder="Password"
+            placeholder={t('passwordPlaceholder')}
             value={editor.password}
             onChange={handleChange}
             className="register_input password_input"
@@ -99,14 +101,14 @@ const CreateNewUser = () => {
         </div>
 
         <div className="register_buttons">
-          <button type="submit" className="register_submit_button">Submit</button>
-          <button type="button" className="register_Back_button" onClick={() => { navigate("/"); }}>Back</button>
+          <button type="submit" className="register_submit_button">{t('submitButton')}</button>
+          <button type="button" className="register_Back_button" onClick={() => { navigate("/"); }}>{t('backButton')}</button>
         </div>
 
         {!user && (
           <div>
-            <p>If you have an Account?</p>
-            <Link to="/login">Click Me.!</Link>
+            <p>{t('haveAccount')}</p>
+            <Link to="/login">{t('clickMe')}</Link>
           </div>
         )}
       </form>

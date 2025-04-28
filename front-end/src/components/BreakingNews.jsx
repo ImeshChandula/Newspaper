@@ -34,10 +34,6 @@ const BreakingNews = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
-
-
-
   useEffect(() => {
     const fetchBreakingNews = async () => {
       try {
@@ -52,8 +48,6 @@ const BreakingNews = () => {
 
     fetchBreakingNews();
   }, []);
-
-
 
 
   // Set up auto-sliding
@@ -124,8 +118,6 @@ const BreakingNews = () => {
     if (autoplayRef.current) clearInterval(autoplayRef.current);
     setCurrentIndex(index);
   };
-
-  
 
   const formatDate = (isoDate) => {
     const date = new Date(isoDate);

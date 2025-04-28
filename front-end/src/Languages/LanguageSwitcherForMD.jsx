@@ -18,10 +18,9 @@ const LanguageSwitcherForMD = () => {
     <li className="nav-item d-lg-none px-3 py-2">
       <div className="d-flex align-items-center mb-2">
         <FaGlobe className="me-2" />
-        <span className="fw-medium">Language</span>
+        <span className="fw-medium">Language ({i18n.language.toUpperCase()})</span>
       </div>
       <div className="btn-group btn-group-sm w-100" role="group" aria-label="Language switcher">
-        
         {/* English */}
         <input
           type="radio"

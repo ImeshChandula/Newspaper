@@ -36,7 +36,7 @@ const LanguageSwitcher = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 aria-expanded={isOpen}
             >
-                <FaGlobe /> <span className="fw-medium">Language</span>
+                <FaGlobe /> <span className="fw-medium">Language ({i18n.language.toUpperCase()})</span>
             </button>
 
             <ul

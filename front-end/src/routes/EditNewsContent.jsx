@@ -2,38 +2,36 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import '../components/css/CreateNewsArticle.css';
 
 const EditNewsContent = () => {
-
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const [articleId, setArticleId] = useState('');
   const { user } = useContext(AuthContext);
 
+  const [articleId, setArticleId] = useState('');
   const [formData, setFormData] = useState({
     category: '',
     title: '',
     media: '',
     content: '',
   });
-
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
 
   useEffect(() => {
-    // Check if we have an article ID from state (passed during navigation)
     const id = location.state?.articleId;
     if (id) {
       setArticleId(id);
       fetchArticleData(id);
     } else {
-      // If no ID provided, try to get from URL or localStorage
       const urlParams = new URLSearchParams(location.search);
       const paramId = urlParams.get('id');
       const storedId = localStorage.getItem('editNewsId');
-      
+
       if (paramId) {
         setArticleId(paramId);
         fetchArticleData(paramId);
@@ -42,10 +40,10 @@ const EditNewsContent = () => {
         fetchArticleData(storedId);
       } else {
         setFetchLoading(false);
-        setMessage('No article ID found. Please select an article to edit.');
+        setMessage(t('noArticleId'));
       }
     }
-  }, [location]);
+  }, [location, t]);
 
   const fetchArticleData = async (id) => {
     setFetchLoading(true);
@@ -53,10 +51,9 @@ const EditNewsContent = () => {
       const token = localStorage.getItem('token');
       const res = await axios.get(`http://localhost:5000/api/news/getNewsArticleByID/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      
       const article = res.data;
       setFormData({
         category: article.category || '',
@@ -66,7 +63,7 @@ const EditNewsContent = () => {
       });
     } catch (error) {
       console.error('Error fetching article:', error);
-      setMessage('Failed to load article data. Please try again.');
+      setMessage(t('fetchArticleError'));
     } finally {
       setFetchLoading(false);
     }
@@ -85,9 +82,8 @@ const EditNewsContent = () => {
         navigate("/dashboard/super-admin");
         break;
       default:
-        // Handle unexpected role or fallback
-        navigate("/unauthorized"); // Redirect to home or another appropriate page
-         break;
+        navigate("/unauthorized");
+        break;
     }
   };
 
@@ -112,15 +108,13 @@ const EditNewsContent = () => {
           },
         }
       );
-      setMessage('News article updated successfully!');
-      
-      // Clear localStorage and redirect after successful update
+      setMessage(t('updateSuccess'));
       setTimeout(() => {
         localStorage.removeItem('editNewsId');
         goToDashboard();
       }, 2000);
     } catch (error) {
-      setMessage(error.response?.data?.message || 'Something went wrong during update.');
+      setMessage(error.response?.data?.message || t('updateError'));
     } finally {
       setLoading(false);
     }
@@ -132,15 +126,16 @@ const EditNewsContent = () => {
   };
 
   if (fetchLoading) {
-    return <div className="create_news_container"><p>Loading article data...</p></div>;
+    return (
+      <div className="create_news_container">
+        <p>{t('loadingArticle')}</p>
+      </div>
+    );
   }
 
-
-
-
   return (
-    <div className="create_news_container">
-      <h2 className="create_news_header">Edit News Article</h2>
+    <div className="create_news_container py-5 mt-5">
+      <h2 className="create_news_header">{t('editNewsArticle')}</h2>
       {articleId ? (
         <form onSubmit={handleSubmit} className="create_news_form">
           <select
@@ -150,16 +145,16 @@ const EditNewsContent = () => {
             required
             className="create_news_input_select"
           >
-            <option value="">Select Category</option>
-            <option value="Education">Education</option>
-            <option value="Politics">Politics</option>
-            <option value="Sports">Sports</option>
+            <option value="">{t('selectCategory')}</option>
+            <option value="Education">{t('education')}</option>
+            <option value="Politics">{t('politics')}</option>
+            <option value="Sports">{t('sports')}</option>
           </select>
 
           <input
             type="text"
             name="title"
-            placeholder="Title"
+            placeholder={t('title')}
             value={formData.title}
             onChange={handleChange}
             required
@@ -169,7 +164,7 @@ const EditNewsContent = () => {
           <input
             type="text"
             name="media"
-            placeholder="Media URL (optional)"
+            placeholder={t('mediaUrl')}
             value={formData.media}
             onChange={handleChange}
             className="create_news_input_text"
@@ -177,7 +172,7 @@ const EditNewsContent = () => {
 
           <textarea
             name="content"
-            placeholder="Content"
+            placeholder={t('content')}
             value={formData.content}
             onChange={handleChange}
             required
@@ -191,33 +186,33 @@ const EditNewsContent = () => {
               className="create_news_submit_button"
               disabled={loading}
             >
-              {loading ? 'Updating...' : 'Update Article'}
+              {loading ? t('updating') : t('updateArticle')}
             </button>
-            
+
             <button
               type="button"
               className="edit_news_cancel_button"
               onClick={handleCancel}
             >
-              Cancel
+              {t('cancel')}
             </button>
           </div>
         </form>
       ) : (
         <div className="create_news_message">
           <p>{message}</p>
-          <button 
-            onClick={() => navigate('/acceptNewsModeration')} 
+          <button
+            onClick={() => navigate('/acceptNewsModeration')}
             className="create_news_submit_button"
           >
-            Back to Moderation
+            {t('backToModeration')}
           </button>
         </div>
       )}
 
       {message && <p className="create_news_message">{message}</p>}
     </div>
-  )
-}
+  );
+};
 
-export default EditNewsContent
+export default EditNewsContent;

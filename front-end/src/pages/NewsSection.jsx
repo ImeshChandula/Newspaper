@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NewsCard from "../components/NewsCard";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const NewsSection = () => {
+  const { t } = useTranslation();
+
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visibleNewsCount, setVisibleNewsCount] = useState(4);
@@ -19,11 +22,8 @@ const NewsSection = () => {
 
         const acceptedNews = acceptRes.data;
         const breakingNews = breakingRes.data;
-
-        const breakingNewsIds = new Set(breakingNews.map(item => item._id));
-        const filteredNews = acceptedNews.filter(item => !breakingNewsIds.has(item._id));
-
-        setNews(filteredNews);
+        const breakingIds = new Set(breakingNews.map(item => item._id));
+        setNews(acceptedNews.filter(item => !breakingIds.has(item._id)));
       } catch (error) {
         console.error("Failed to fetch news", error);
       } finally {
@@ -37,11 +37,10 @@ const NewsSection = () => {
   const handleToggle = () => {
     if (isExpanded) {
       setVisibleNewsCount(4);
-      setIsExpanded(false);
     } else {
       setVisibleNewsCount(news.length);
-      setIsExpanded(true);
     }
+    setIsExpanded(!isExpanded);
   };
 
   return (
@@ -52,7 +51,7 @@ const NewsSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        🆕 Recently Published
+        {t('recentlyPublished')}
       </motion.h2>
 
       <div className="row g-4">
@@ -64,7 +63,7 @@ const NewsSection = () => {
             transition={{ duration: 0.5 }}
           >
             <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden">{t('loading')}</span>
             </div>
           </motion.div>
         ) : news.length === 0 ? (
@@ -74,7 +73,7 @@ const NewsSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            No news available.
+            {t('noNews')}
           </motion.p>
         ) : (
           <NewsCard news={news.slice(0, visibleNewsCount)} />
@@ -89,7 +88,7 @@ const NewsSection = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <button className="btn btn-link" onClick={handleToggle}>
-            {isExpanded ? "Hide" : "Show More"}
+            {isExpanded ? t('hide') : t('showMore')}
           </button>
         </motion.div>
       )}
