@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import "./language.css"
 
 const GoogleTranslate = ({ id = "google_translate_element" }) => {
     useEffect(() => {
@@ -17,7 +18,7 @@ const GoogleTranslate = ({ id = "google_translate_element" }) => {
                         {
                             pageLanguage: "en",
                             includedLanguages: "en,si,ta",
-                            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+                            layout: window.google.translate.TranslateElement.InlineLayout.VERTICAL,
                         },
                         id
                     );
@@ -32,7 +33,7 @@ const GoogleTranslate = ({ id = "google_translate_element" }) => {
                         {
                             pageLanguage: "en",
                             includedLanguages: "en,si,ta",
-                            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+                            layout: window.google.translate.TranslateElement.InlineLayout.VERTICAL,
                         },
                         id
                     );
