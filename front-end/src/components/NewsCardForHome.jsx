@@ -20,7 +20,7 @@ const NewsCardForHome = ({ news }) => {
             {news.map((item) => (
                 <motion.div
                     key={item._id}
-                    className="col-12  col-md-4 col-lg-12"
+                    className="col-12"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}

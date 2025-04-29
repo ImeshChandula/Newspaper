@@ -142,7 +142,7 @@ const BreakingNews = () => {
   
 
   return (
-    <div className="container my-4 my-md-5 px-3 px-md-4">
+    <div className="container">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 mb-md-4">
         <motion.h2
           className="border-bottom pb-2 mb-3 mb-md-0"

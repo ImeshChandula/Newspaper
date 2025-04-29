@@ -4,14 +4,9 @@ import { motion } from "framer-motion";
 import ProfileDropdown from "./ProfileDropDown";
 import ProfilForSD from "./ProfileForSD";
 import "./css/Navbar.css";
-import LanguageSwitcher from "../Languages/LanguageSwitcher";
-import { useTranslation } from "react-i18next";
-import LanguageSwitcherForMD from "../Languages/LanguageSwitcherForMD";
+import GoogleTranslate from "../Languages/GoogleTranslate";
 
 const Navbar = () => {
-
-  const { t } = useTranslation();
-
   const [currentTime, setCurrentTime] = useState(new Date());
   const [currentDate, setCurrentDate] = useState(new Date());
   useEffect(() => {
@@ -71,7 +66,7 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top custom-navbar"
+      className="navbar navbar-expand-lg navbar-light bg-light shadow-sm custom-navbar"
       variants={navVariants}
       initial="hidden"
       animate="visible"
@@ -132,29 +127,20 @@ const Navbar = () => {
                 transition={{ delay: 0.5 + index * 0.1 }}
               >
                 <Link className="nav-link" to={path} onClick={closeNavbar}>
-                  {path === "/" ? t('Home') : t(path.slice(1).charAt(0).toUpperCase() + path.slice(2))}
+                  {path === "/" ? "Home" : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
                 </Link>
               </motion.li>
             ))}
-          </ul>
-          <motion.div
-              className="nav-item d-lg-none w-100 mb-3"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
+            <motion.li
+              className="nav-item"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
             >
-              <LanguageSwitcherForMD />
-            </motion.div>
-        </div>
+              <GoogleTranslate id="google_translate_element_navbar" />
 
-        <motion.div
-          className="d-none d-lg-flex align-items-center ms-auto gap-3"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <LanguageSwitcher />
-        </motion.div>
+            </motion.li>
+          </ul>
+        </div>
 
         <motion.div
           className="d-none d-lg-flex align-items-center ms-auto gap-3"

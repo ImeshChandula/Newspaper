@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NewsCard from "../components/NewsCard";
 import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
 
 const EducationPage = () => {
-  const { t } = useTranslation();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +30,7 @@ const EducationPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        {t("educationSection")}
+        📚 Education
       </motion.h2>
 
       <div className="container">
@@ -44,7 +42,7 @@ const EducationPage = () => {
             transition={{ duration: 0.5 }}
           >
             <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">{t("loading")}</span>
+              <span className="visually-hidden">Loading...</span>
             </div>
           </motion.div>
         ) : news.length === 0 ? (
@@ -54,7 +52,7 @@ const EducationPage = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            {t("noNews")}
+            No news available.
           </motion.p>
         ) : (
           <motion.div

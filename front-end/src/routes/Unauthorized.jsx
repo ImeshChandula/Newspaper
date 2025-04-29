@@ -1,20 +1,15 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom'; // using Link instead of <a>
+import React from 'react'
 import '../components/css/Unauthorized.css';
 
-const Unauthorized = () => {
-  const { t } = useTranslation();
 
+const Unauthorized = () => {
   return (
     <div className="unauthorized py-5">
-      <h1 className="unauthorized_heading">{t('accessDenied')}</h1>
-      <p className="unauthorized_message">{t('noPermission')}</p>
-      <Link to="/" className="unauthorized_text">
-        {t('goHome')}
-      </Link>
+      <h1 className="unauthorized_heading">Access Denied</h1>
+      <p className="unauthorized_message">You do not have permission to access this page.</p>
+      <a href="/" className="unauthorized_text">Go to Home-page</a>
     </div>
-  );
-};
+  )
+}
 
-export default Unauthorized;
+export default Unauthorized

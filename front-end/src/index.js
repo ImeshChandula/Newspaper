@@ -5,7 +5,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import "./Languages/i18n.js"
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
