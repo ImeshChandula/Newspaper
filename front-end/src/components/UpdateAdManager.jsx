@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import TrackAds from './TrackAds';
 
-const AdManager = () => {
+const UpdateAdManager = () => {
+  const { id } = useParams(); // get ad ID from URL
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
   const [form, setForm] = useState({
     title: '',
     content: '',
@@ -15,7 +19,29 @@ const AdManager = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  const token = localStorage.getItem("token"); // Assumes token is stored after login
+  // Fetch ad details on mount
+  useEffect(() => {
+    const fetchAd = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/ads/getAdById/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const ad = response.data.ad;
+        setForm({
+          title: ad.title || '',
+          content: ad.content || '',
+          media: ad.media || '',
+          link: ad.link || '',
+          endDate: ad.endDate ? ad.endDate.substring(0, 10) : '', // format for date input
+        });
+      } catch (err) {
+        setError('❌ Failed to load ad details');
+      }
+    };
+    fetchAd();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,13 +50,11 @@ const AdManager = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setMessage('');
     setError('');
-
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/ads/createAd',
+      const response = await axios.patch(
+        `http://localhost:5000/api/ads/updateAd/${id}`,
         form,
         {
           headers: {
@@ -39,26 +63,19 @@ const AdManager = () => {
           }
         }
       );
-
       setMessage("✅ " + response.data.msg);
-      setForm({
-        title: '',
-        content: '',
-        media: '',
-        link: '',
-        endDate: '',
-      });
+      setTimeout(() => navigate('/track-ads'), 1500); // redirect after success
     } catch (err) {
-      setError(err.response?.data?.msg || "❌ Failed to create ad");
+      setError(err.response?.data?.msg || "❌ Failed to update ad");
     }
   };
 
   return (
-    <div className="container text-white">
-      <h2 className="text-center text-primary mb-4">Create New Ad</h2>
+    <div className="container py-5 text-white">
+      <h2 className="text-center text-warning mb-4">✏️ Update Ad</h2>
 
-      {message && <div className="alert alert-success">{message}</div>}
-      {error && <div className="alert alert-danger">{error}</div>}
+      {message && <div className="alert alert-success text-center">{message}</div>}
+      {error && <div className="alert alert-danger text-center">{error}</div>}
 
       <form onSubmit={handleSubmit} className="row g-4">
 
@@ -122,11 +139,11 @@ const AdManager = () => {
         </div>
 
         <div className="col-12 text-center">
-          <button type="submit" className="btn btn-primary mt-3">Submit Ad</button>
+          <button type="submit" className="btn btn-warning mt-3">Update Ad</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default AdManager;
+export default UpdateAdManager;
