@@ -68,7 +68,7 @@ const getAllActiveAds = async (req, res) => {
 };
 
 
-//@desc     Update an ad
+//@desc     Update an ad by AdID
 const updateAd = async (req, res) => {
     try {
         // find ad if it exists
@@ -93,7 +93,24 @@ const updateAd = async (req, res) => {
         const updatedAd = await Ads.findByIdAndUpdate(req.params.id, updateData, {new: true, runValidators: true});
 
         res.status(200).json({ msg: 'Ad updated Successfully', updatedAd });
-    } catch {}
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+};
+
+//@desc     Delete an ad by AdID
+const deleteAd = async (req, res) => {
+    try {
+        const ad = await Ads.findByIdAndDelete(req.params.id);
+        
+        if (!ad) {
+            return res.status(404).json({ msg: 'Ad not found' });
+        }
+
+        res.status(200).json({ message: 'Ad deleted successfully' });
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
 };
 
 module.exports = {
@@ -101,4 +118,5 @@ module.exports = {
     getAllAds,
     getAllActiveAds,
     updateAd,
+    deleteAd,
 };

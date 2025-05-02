@@ -24,9 +24,13 @@ router.get("/getAllAds", authenticateUser, authorizeRoles("super_admin"), adsCon
 router.get("/getAllActiveAds", adsController.getAllActiveAds);
 
 // @route   PATCH api/ads/updateAd/:id
-// @desc    Update an ad
+// @desc    Update an ad by AdID
 // @access  Private: super_admin
 router.patch("/updateAd/:id", authenticateUser, authorizeRoles("super_admin"), adsController.updateAd);
 
+// @route   DELETE api/ads/deleteAd/:id
+// @desc    Delete an ad by AdID
+// @access  Private: super_admin
+router.delete("/deleteAd/:id", authenticateUser, authorizeRoles("super_admin"), adsController.deleteAd);
 
 module.exports = router;
