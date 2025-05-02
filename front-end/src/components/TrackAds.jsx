@@ -55,7 +55,7 @@ const TrackAds = () => {
     };
 
     return (
-        <div className="container py-5">
+        <div className="container">
             <h2 className="text-center text-primary mb-4">📢 Track Submitted Ads</h2>
 
             {error && <div className="alert alert-danger text-center">{error}</div>}

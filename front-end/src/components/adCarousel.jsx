@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AdCarousel = () => {
   const [ads, setAds] = useState([]);
@@ -22,7 +21,6 @@ const AdCarousel = () => {
 
   useEffect(() => {
     fetchAds();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -14,6 +14,7 @@ const AdManager = () => {
 
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -26,6 +27,7 @@ const AdManager = () => {
     e.preventDefault();
     setMessage('');
     setError('');
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -126,7 +128,13 @@ const AdManager = () => {
           </div>
 
           <div className="col-12 text-center">
-            <button type="submit" className="btn btn-primary mt-3 w-50">🚀 Submit Ad</button>
+            <button
+              type="submit"
+              className="btn btn-primary mt-3 px-5 py-2 fs-5"
+              disabled={loading}
+            >
+              {loading ? "🚀 Submitting..." : "🚀 Submit Ad"}
+            </button>
           </div>
 
         </form>
