@@ -16,7 +16,7 @@ const newsSchema = new mongoose.Schema({
         enum: ["accept", "pending", "reject"],
         default: "pending",
     },
-});
+},  { timestamps: true });
 
 const News = mongoose.model('News', newsSchema);
 module.exports = News;

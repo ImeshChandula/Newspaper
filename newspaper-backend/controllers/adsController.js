@@ -3,7 +3,7 @@ const Ads = require("../models/Ads");
 //@desc     create new ad
 const createAd = async (req, res) => {
     try {
-        const { title, content, media, link, author } = req.body;
+        const { title, content, media, link } = req.body;
 
         if( !title || !content || !media || !link ){
             return res.status(400).json({ msg: 'Fill required fields' })

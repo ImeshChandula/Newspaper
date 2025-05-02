@@ -55,10 +55,13 @@ app.use("/api/news", require("./routes/newsRoutes"));
 app.use("/api/ads", require("./routes/adRoutes"));
 
 
-// Default Route 
-// http://localhost:5000
-app.get("/", (req, res) => {
-  res.send("API is running...");
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    status: "error",
+    message: "Something went wrong!",
+  });
 });
 
 const PORT = process.env.PORT || 5000;
