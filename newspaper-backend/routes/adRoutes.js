@@ -20,8 +20,13 @@ router.get("/getAllAds", authenticateUser, authorizeRoles("super_admin"), adsCon
 
 // @route   GET api/ads/getAllActiveAds
 // @desc    Get all active ads that haven't expired for frontend display
-// @access  Private: super_admin
+// @access  Public
 router.get("/getAllActiveAds", adsController.getAllActiveAds);
+
+// @route   PATCH api/ads/updateAd/:id
+// @desc    Update an ad
+// @access  Private: super_admin
+router.patch("/updateAd/:id", authenticateUser, authorizeRoles("super_admin"), adsController.updateAd);
 
 
 module.exports = router;

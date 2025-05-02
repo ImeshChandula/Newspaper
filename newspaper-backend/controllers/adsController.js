@@ -67,8 +67,38 @@ const getAllActiveAds = async (req, res) => {
     }
 };
 
+
+//@desc     Update an ad
+const updateAd = async (req, res) => {
+    try {
+        // find ad if it exists
+        const ad = Ads.findById(req.params.id);
+
+        if (!ad) {
+            return res.status(404).json({ msg: 'Ad not found' });
+        }
+
+        // update ad data
+        const updateData = {
+            title: req.body.title || ad.title,
+            content: req.body.content || ad.content,
+            media: req.body.media || ad.media,
+            link: req.body.link || ad.link,
+            author: req.user.id,
+            active: req.body.active !== undefined ? req.body.active : ad.active,
+            endDate: req.body.endDate || ad.endDate,
+        };
+
+        // update in database
+        const updatedAd = await Ads.findByIdAndUpdate(req.params.id, updateData, {new: true, runValidators: true});
+
+        res.status(200).json({ msg: 'Ad updated Successfully', updatedAd });
+    } catch {}
+};
+
 module.exports = {
     createAd,
     getAllAds,
     getAllActiveAds,
+    updateAd,
 };
