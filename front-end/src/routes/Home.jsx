@@ -5,11 +5,18 @@ import SportForHome from "../components/SportForHome";
 import BreakingNews from "../components/BreakingNews";
 import "../components/css/Home.css"; // We'll edit this for dark styles
 import EducationForHome from "../components/EducationForHome";
+import AdCarousel from "../components/adCarousel";
 
 const Home = () => {
   return (
     <div className="home-page bg-dark text-light min-vh-100 py-4">
       <div className="container">
+
+        <div className="row mb-5">
+          <div className="col-12">
+            <AdCarousel />
+          </div>
+        </div>
 
         <div className="row mb-5">
           <div className="col-12">

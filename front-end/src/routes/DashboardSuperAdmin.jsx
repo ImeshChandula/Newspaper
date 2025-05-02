@@ -9,6 +9,7 @@ import HistoryOfArticle from '../components/HistoryOfArticle';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/css/DashboardSuperAdmin.css';
 import AdManager from '../components/AdManager';
+import TrackAds from '../components/TrackAds';
 
 const DashboardSuperAdmin = () => {
 
@@ -33,6 +34,8 @@ const DashboardSuperAdmin = () => {
         return <HistoryOfArticle />
       case 'AdManager':
         return <AdManager />
+      case 'SubmittedAds':
+        return <TrackAds />
       default:
         return <PendingNewsModeration />
     }
@@ -93,6 +96,12 @@ const DashboardSuperAdmin = () => {
             onClick={() => setActiveComponent('AdManager')}
           >
             <span className="btn-text">Create Add</span>
+          </button>
+          <button
+            className={`btn nav-button ${activeComponent === 'SubmittedAds' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('SubmittedAds')}
+          >
+            <span className="btn-text">Submitted Ads</span>
           </button>
         </div>
       </div>
