@@ -23,9 +23,9 @@ const EducationPage = () => {
   }, []);
 
   return (
-    <div className="home-page">
+    <div className="home-page bg-dark py-4">
       <motion.h2
-        className="border-bottom pb-2"
+        className="border-bottom pb-2 text-white"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}

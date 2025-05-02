@@ -28,11 +28,11 @@ const AdManager = () => {
 
   return (
     <div className="container py-5">
-      <h2 className="text-center mb-4">Ad Manager</h2>
+      <h2 className="text-center mb-4 text-primary">Ad Manager</h2>
 
       <form onSubmit={handleSubmit} className="row g-4">
         <div className="col-md-6">
-          <label className="form-label">Title</label>
+          <label className="form-label text-white">Title</label>
           <input
             type="text"
             name="title"
@@ -44,7 +44,7 @@ const AdManager = () => {
         </div>
 
         <div className="col-md-6">
-          <label className="form-label">Content</label>
+          <label className="form-label text-white">Content</label>
           <input
             type="text"
             name="content"
@@ -56,7 +56,7 @@ const AdManager = () => {
         </div>
 
         <div className="col-md-6">
-          <label className="form-label">Media URL</label>
+          <label className="form-label text-white">Media URL</label>
           <input
             type="text"
             name="media"
@@ -68,7 +68,7 @@ const AdManager = () => {
         </div>
 
         <div className="col-md-6">
-          <label className="form-label">Ad Link</label>
+          <label className="form-label text-white">Ad Link</label>
           <input
             type="text"
             name="link"
@@ -79,14 +79,14 @@ const AdManager = () => {
           />
         </div>
 
-        <div className="col-12 text-center">
+        <div className="col-12 text-center text-white">
           <button type="submit" className="btn btn-primary mt-3">Submit Ad</button>
         </div>
       </form>
 
       <hr className="my-5" />
 
-      <h3 className="text-center mb-4">Submitted Ads</h3>
+      <h3 className="text-center mb-4 text-primary">Submitted Ads</h3>
       <div className="row">
         {ads.map((ad, index) => (
           <div className="col-md-6 col-lg-4 mb-4" key={index}>

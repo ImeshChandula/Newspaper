@@ -45,8 +45,8 @@ const HistoryOfArticle = () => {
   }, []);
 
   return (
-    <div className="container">
-      <h2 className="news-head">📰 My News Article History</h2>
+    <div className="container bg-dark">
+      <h2 className="news-head text-primary">📰 My News Article History</h2>
 
       {loading ? (
         <div className="d-flex justify-content-center">
@@ -60,12 +60,12 @@ const HistoryOfArticle = () => {
         <div className="row gy-4 gx-4 py-2">
           {articles.map((article) => (
             <div key={article._id} className="col-md-6 col-lg-4">
-              <div className="card h-100 shadow-sm border-0">
+              <div className="card h-100 shadow-sm border-0 bg-secondary text-black">
                 <img
                   src={article.media || "https://via.placeholder.com/400x200?text=No+Image"}
                   className="card-img-top"
                   alt={article.title}
-                  style={{ height: "150px", objectFit: "contain" }}
+                  style={{ height: "200px", objectFit: "cover" }}
                 />
                 <div className="card-body d-flex flex-column px-3 py-3">
                   <h5 className="card-title fw-bold text-decoration-underline">{article.title}</h5>
@@ -74,7 +74,7 @@ const HistoryOfArticle = () => {
                   </p>
                   <p className="card-text mb-2">
                     <strong>Status:</strong>{" "}
-                    <span className={`badge bg-${getStatusBadgeColor(article.status)}`}>
+                    <span className={`badge bg-${getStatusBadgeColor(article.status)} border border-black text-black`}>
                       {article.status.toUpperCase()}
                     </span>
                   </p>
@@ -83,9 +83,9 @@ const HistoryOfArticle = () => {
                       <strong>Description:</strong> {article.description}
                     </p>
                   )}
-                  <div className="card-footer d-flex justify-content-between small text-muted">
-                    Submitted on {new Date(article.date).toLocaleString()}
-                  </div>
+                </div>
+                <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-white bg-dark border border-secondary">
+                  Submitted on {new Date(article.date).toLocaleString()}
                 </div>
               </div>
             </div>

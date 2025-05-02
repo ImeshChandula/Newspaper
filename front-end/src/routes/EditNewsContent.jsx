@@ -139,7 +139,7 @@ const EditNewsContent = () => {
 
 
   return (
-    <div className="create_news_container">
+    <div className="create_news_container bg-dark py-5 mt-5 border border-secondary">
       <h2 className="create_news_header">Edit News Article</h2>
       {articleId ? (
         <form onSubmit={handleSubmit} className="create_news_form">
@@ -148,7 +148,7 @@ const EditNewsContent = () => {
             value={formData.category}
             onChange={handleChange}
             required
-            className="create_news_input_select"
+            className="create_news_input_select bg-dark text-white border border-secondary"
           >
             <option value="">Select Category</option>
             <option value="Education">Education</option>
@@ -163,7 +163,7 @@ const EditNewsContent = () => {
             value={formData.title}
             onChange={handleChange}
             required
-            className="create_news_input_text"
+            className="create_news_input_text bg-dark text-white border border-secondary"
           />
 
           <input
@@ -172,7 +172,7 @@ const EditNewsContent = () => {
             placeholder="Media URL (optional)"
             value={formData.media}
             onChange={handleChange}
-            className="create_news_input_text"
+            className="create_news_input_text bg-dark text-white border border-secondary"
           />
 
           <textarea
@@ -182,13 +182,13 @@ const EditNewsContent = () => {
             onChange={handleChange}
             required
             rows="5"
-            className="create_news_input_textarea"
+            className="create_news_input_textarea bg-dark text-white border border-secondary"
           ></textarea>
 
           <div className="edit_news_buttons">
             <button
               type="submit"
-              className="create_news_submit_button"
+              className="create_news_submit_button "
               disabled={loading}
             >
               {loading ? 'Updating...' : 'Update Article'}

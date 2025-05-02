@@ -39,7 +39,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login_container">
+    <div className="login_container py-5 border border-secondary">
       <h2 className="login_heading">Login</h2>
       
       <form onSubmit={handleSubmit} className="login_form">

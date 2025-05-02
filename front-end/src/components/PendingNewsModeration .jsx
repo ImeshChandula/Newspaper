@@ -97,7 +97,7 @@ const PendingNewsModeration  = () => {
 
   return (
     <div className="news-container">
-      <h2 className="news-head">Pending News Moderation</h2>
+      <h2 className="news-head text-primary">Pending News Moderation</h2>
       
       {/* Toast notifications */}
       <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1060 }}>
@@ -124,10 +124,10 @@ const PendingNewsModeration  = () => {
         centered
         size="lg"
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Image Preview</Modal.Title>
+        <Modal.Header closeButton className='bg-dark'>
+          <Modal.Title className='text-white'>Image Preview</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="text-center">
+        <Modal.Body className="text-center bg-dark">
           <img 
             src={previewImage} 
             alt="Full size preview" 
@@ -150,14 +150,14 @@ const PendingNewsModeration  = () => {
       ) : (
         <div className="news-card-container">
           {news.map((article) => (
-            <div key={article._id} className="news-card">
-              <div className="news-metadata">
+            <div key={article._id} className="news-card bg-dark border border-secondary">
+              <div className="news-metadata bg-dark border-bottom border-secondary">
                 <span className="news-category">{article.category}</span>
                 <span className="news-date">
                   {new Date(article.date).toLocaleString()}
                 </span>
               </div>
-              <h3 className="news-title">{article.title}</h3>
+              <h3 className="news-title text-primary">{article.title}</h3>
               
               {/* Enhanced image display */}
               {article.media && (
@@ -183,7 +183,7 @@ const PendingNewsModeration  = () => {
                 </div>
               )}
               
-              <p className="news-content">{article.content.slice(0, 150)}...</p>
+              <p className="news-content text-white">{article.content.slice(0, 150)}...</p>
               <p className="news-author">By: {article.author?.username} ({article.author?.email})</p>
 
               <div className="news-buttons">

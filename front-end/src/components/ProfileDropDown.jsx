@@ -23,7 +23,7 @@ const ProfileDropdown = () => {
             default:
                 // Handle unexpected role or fallback
                 navigate("/unauthorized"); // Redirect to home or another appropriate page
-                 break;
+                break;
         }
     };
 
@@ -41,10 +41,10 @@ const ProfileDropdown = () => {
             </button>
 
             <ul className="dropdown-menu dropdown-menu-end profile-menu" aria-labelledby="profileDropdown">
-                <li className="dropdown-item-text fw-bold text-dark">
+                <li className="dropdown-item-text fw-bold text-white">
                     {user ? user.username : "Guest"}
                 </li>
-                <li className="dropdown-item-text text-muted">
+                <li className="dropdown-item-text text-light">
                     {user ? user.role : "Visitor"}
                 </li>
                 <li><hr className="dropdown-divider" /></li>
@@ -59,7 +59,7 @@ const ProfileDropdown = () => {
 
                 {!user ? (
                     <li>
-                        <Link className="dropdown-item" to="/login">
+                        <Link className="dropdown-item btn-dashboard" to="/login">
                             Login
                         </Link>
                     </li>

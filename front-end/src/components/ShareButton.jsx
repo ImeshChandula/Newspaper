@@ -48,7 +48,7 @@ const ShareButton = ({ url, title }) => {
             <AnimatePresence>
                 {open && (
                     <motion.div
-                        className="dropdown-menu p-3 show"
+                        className="dropdown-menu p-3 show bg-dark border border-secondary"
                         initial={{ opacity: 0, scale: 0.95, y: -10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: -10 }}
@@ -80,7 +80,7 @@ const ShareButton = ({ url, title }) => {
                         </div>
                         <button
                             onClick={copyToClipboard}
-                            className="btn btn-sm btn-outline-secondary w-100"
+                            className="btn btn-sm btn-outline-primary w-100"
                         >
                             {copied ? "Link Copied!" : "Copy Link"}
                         </button>

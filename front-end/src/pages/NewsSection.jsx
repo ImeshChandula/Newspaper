@@ -45,7 +45,7 @@ const NewsSection = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container bg-dark text-white">
       <motion.h2
         className="border-bottom pb-2"
         initial={{ opacity: 0, y: -20 }}

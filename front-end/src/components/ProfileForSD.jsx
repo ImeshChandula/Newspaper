@@ -33,12 +33,12 @@ const ProfilForSD = ({ closeNavbar }) => {
   };
 
   return (
-    <div className="card p-3 mt-3 bg-light shadow-sm">
+    <div className="card p-3 mt-3 bg-dark shadow-sm border border-secondary">
       <div className="d-flex align-items-center mb-3">
         <FaUserCircle size={50} className="text-secondary me-3" />
         <div>
-          <h5 className="mb-0">{user ? user.username : "Guest"}</h5>
-          <small className="text-muted">{user ? user.role : "Visitor"}</small>
+          <h5 className="mb-0 text-white fw-bold">{user ? user.username : "Guest"}</h5>
+          <small className="text-light">{user ? user.role : "Visitor"}</small>
         </div>
       </div>
 
@@ -52,7 +52,7 @@ const ProfilForSD = ({ closeNavbar }) => {
         ) : (
           <>
             <li className="mb-2">
-              <button className="btn btn-outline-secondary w-100" onClick={goToDashboard}>
+              <button className="btn btn-outline-primary w-100" onClick={goToDashboard}>
                 Dashboard
               </button>
             </li>

@@ -1,5 +1,6 @@
 .navbar-toggler {
     border: none;
+    color:#ffffff;
 }
 
 .navbar-nav .nav-item {
@@ -16,6 +17,7 @@
     transition: 0.2s ease;
     max-width: 100px;
     padding: 10px 0;
+    color: #fff;
 }
 
 .navbar-nav .nav-link:hover {
@@ -34,12 +36,12 @@
 
 .live-time {
     font-size: 0.9rem;
-    color: #6c757d;
+    color: #ffffff !important;
 }
 
 .live-date {
     font-size: 0.8rem;
-    color: #6c757d;
+    color: #ffffff !important;
 }
 
 @media (min-width: 992px) {

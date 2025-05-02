@@ -150,27 +150,27 @@ const UserManagement = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4 text-center">User Management</h2>
+      <h2 className="mb-4 text-center text-primary">User Management</h2>
       
       {users.length === 0 ? (
         <div className="alert alert-info" role="alert">
           No users found.
         </div>
       ) : (
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
+        <div className="table-responsive bg-dark rounded shadow-sm overflow-auto">
+          <table className="table table-striped table-hover border border-secondary table-sm align-middle">
             <thead className="table-dark">
               <tr>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Actions</th>
+                <th className='border border-secondary'>Username</th>
+                <th className='border border-secondary'>Role</th>
+                <th className='border border-secondary'>Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
                 <tr key={user._id}>
-                  <td>{user.username}</td>
-                  <td>
+                  <td className='bg-dark text-white border border-secondary'>{user.username}</td>
+                  <td className='bg-dark border border-secondary'>
                     <span className={`role-badge ${
                       user.role === 'super_admin' ? 'bg-danger' : 
                       user.role === 'admin' ? 'bg-warning' : 'bg-secondary'
@@ -178,12 +178,12 @@ const UserManagement = () => {
                       {user.role}
                     </span>
                   </td>
-                  <td>
+                  <td className='bg-dark border border-secondary'>
                     <div className="action-buttons">
                       {user.role !== 'admin' && user.role !== 'super_admin' && (
                         <button
                           onClick={() => handlePromoteToAdmin(user.username)}
-                          className="btn btn-sm btn-outline-primary"
+                          className="btn btn-sm btn-outline-primary mx-2"
                           title="Promote to Admin"
                         >
                           Promote to Admin
@@ -192,7 +192,7 @@ const UserManagement = () => {
                       {user.role !== 'super_admin' && (
                         <button
                           onClick={() => handlePromoteToSuperAdmin(user.username)}
-                          className="btn btn-sm btn-outline-warning"
+                          className="btn btn-sm btn-outline-warning mx-2"
                           title="Promote to Super Admin"
                         >
                           Promote to Super Admin
@@ -200,7 +200,7 @@ const UserManagement = () => {
                       )}
                       <button
                         onClick={() => handleDeleteUser(user.username)}
-                        className="btn btn-sm btn-outline-danger"
+                        className="btn btn-sm btn-outline-danger mx-2"
                         title="Delete User"
                       >
                         Delete

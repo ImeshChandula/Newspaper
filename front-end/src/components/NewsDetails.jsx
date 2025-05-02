@@ -4,6 +4,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { Spinner } from "react-bootstrap";
 import ShareButton from "./ShareButton";
+import "../components/css/Home.css"
 
 const NewsDetail = () => {
     const { id } = useParams();
@@ -52,7 +53,7 @@ const NewsDetail = () => {
 
     return (
         <motion.div
-            className="container"
+            className="py-5 mt-5"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -65,7 +66,7 @@ const NewsDetail = () => {
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
                     {/* Only visible on large displays. */}
-                    <div className="row d-none d-lg-flex align-items-center mb-4">
+                    <div className="row d-none d-lg-flex d-md-flex align-items-center mb-4">
                         <div className="col-lg-1 d-flex justify-content-start">
                             <button onClick={() => navigate(-1)} className="btn btn-secondary">
                                 &lt;
@@ -74,7 +75,7 @@ const NewsDetail = () => {
 
                         <div className="col-lg-10">
                             <motion.h1
-                                className="mb-3 text-center"
+                                className="mb-3 text-center text-white"
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.4, duration: 0.5 }}
@@ -102,7 +103,7 @@ const NewsDetail = () => {
                             </div>
 
                             <motion.h1
-                                className="text-center flex-grow-1 mb-2"
+                                className="text-center flex-grow-1 mb-2 text-white"
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.4, duration: 0.5 }}
@@ -125,7 +126,7 @@ const NewsDetail = () => {
                     )}
 
                     <motion.p
-                        className="lead text-center"
+                        className="lead text-center text-white"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 0.6 }}
@@ -134,7 +135,7 @@ const NewsDetail = () => {
                     </motion.p>
 
                     <motion.div
-                        className="d-flex justify-content-between flex-wrap small text-muted mt-4 border-top pt-2"
+                        className="d-flex justify-content-between flex-wrap small text-white mt-4 border-top pt-2"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.7, duration: 0.4 }}

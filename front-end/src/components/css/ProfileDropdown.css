@@ -1,11 +1,14 @@
 .profile-dropdown .profile-toggle {
     border-radius: 50px;
+    border-color: #c2c2c2;
     padding: 6px 12px;
+    background-color:#212529;
     transition: background-color 0.2s ease-in-out;
+    color: #e9f2ff;
 }
 
 .profile-dropdown .profile-toggle:hover {
-    background-color: #5a5af8;
+    background-color: #494949;
 }
 
 .profile-menu {
@@ -13,6 +16,7 @@
     border-radius: 10px;
     padding: 10px 0;
     box-shadow: 0 8px 20px rgba(85, 101, 220, 0.1);
+    background-color: #333942;
 }
 
 .profile-menu .dropdown-item {
@@ -30,10 +34,10 @@
 }
 
 .profile-menu .btn-dashboard:hover {
-    color: #0d6efd;
-    background-color: #e9f2ff;
+    color: #020074;
+    background-color: #4e6686;
 }
 
 .profile-menu .text-danger:hover {
-    background-color: #ffe9e9;
+    background-color: #b47d7d;
 }

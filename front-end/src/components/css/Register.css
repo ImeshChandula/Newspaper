@@ -3,7 +3,7 @@
     max-width: 400px;
     margin: 80px auto;
     padding: 2rem;
-    background-color: #ffffff;
+    background-color: rgba(58, 54, 54, 0.233);
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -15,7 +15,7 @@
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: #333;
+    color: #3b82f6;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
@@ -23,7 +23,6 @@
   .message_box {
     margin-bottom: 1rem;
     color: #10b981;
-    background-color: #ecfdf5;
     padding: 0.75rem;
     border-radius: 8px;
     font-weight: 500;
@@ -39,11 +38,13 @@
   /* Inputs */
   .register_input {
     padding: 12px 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #9b9b9b;
+    background-color: #413f3f;
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     width: 100%;
+    color: #fff;
   }
   
   .register_input:focus {
@@ -72,6 +73,12 @@
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease;
+  }
+
+  .register_form p {
+    margin: 0.5rem 0;
+    color: #929090;
+    font-size: 0.95rem;
   }
   
   .register_submit_button:hover {
