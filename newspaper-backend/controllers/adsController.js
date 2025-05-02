@@ -45,7 +45,30 @@ const getAllAds = async (req, res) => {
     }
 };
 
+
+//@desc     Get all active ads for frontend display
+const getAllActiveAds = async (req, res) => {
+    try {
+        // build query for active ads that haven't expired
+        const query = {
+            active: true,
+            $or: [
+                { endDate: {$exists: false}},
+                { endDate: null },
+                { endDate: {$gt: new Date()}},
+            ]
+        };
+
+        const ads = await Ads.find(query).sort({ createdAt: -1 });
+
+        res.status(200).json({msg: 'Active ads that have not expired:', ads});
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+};
+
 module.exports = {
     createAd,
     getAllAds,
+    getAllActiveAds,
 };
