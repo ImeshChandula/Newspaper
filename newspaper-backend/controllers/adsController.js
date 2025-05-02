@@ -21,7 +21,7 @@ const createAd = async (req, res) => {
 
         await ad.save();
 
-        res.status(201).json({ msg: 'Ad created successfully', ad });
+        res.status(201).json({ status: "success", msg: 'Ad created successfully', ad });
     } catch (error) {
         res.status(500).json({ status: "error", msg: error.message });
     }
@@ -39,9 +39,9 @@ const getAllAds = async (req, res) => {
 
         const ads = await Ads.find(query).sort({ createdAt: -1});
 
-        res.status(200).json({msg: 'Fetching ads...', ads });
+        res.status(200).json({ status: "success", msg: 'Fetching ads...', ads });
     } catch (error) {
-        res.status(500).json({ msg: error.message });
+        res.status(500).json({ status: "fail", msg: error.message });
     }
 };
 
@@ -61,9 +61,9 @@ const getAllActiveAds = async (req, res) => {
 
         const ads = await Ads.find(query).sort({ createdAt: -1 });
 
-        res.status(200).json({msg: 'Active ads that have not expired:', ads});
+        res.status(200).json({ status: "success", msg: 'Active ads that have not expired:', ads});
     } catch (error) {
-        res.status(500).json({msg: error.message});
+        res.status(500).json({ status: "fail", msg: error.message });
     }
 };
 
@@ -79,7 +79,7 @@ const getSingleAd = async (req, res) => {
 
         res.status(200).json({ status: "success", ad })
     } catch (error) {
-        res.status(500).json({msg: error.message});
+        res.status(500).json({ status: "fail", msg: error.message });
     }
 };
 
@@ -108,9 +108,9 @@ const updateAd = async (req, res) => {
         // update in database
         const updatedAd = await Ads.findByIdAndUpdate(req.params.id, updateData, {new: true, runValidators: true});
 
-        res.status(200).json({ msg: 'Ad updated Successfully', updatedAd });
+        res.status(200).json({ status: "success", msg: 'Ad updated Successfully', updatedAd });
     } catch (error) {
-        res.status(500).json({ msg: error.message });
+        res.status(500).json({ status: "fail", msg: error.message });
     }
 };
 
@@ -123,9 +123,28 @@ const deleteAd = async (req, res) => {
             return res.status(404).json({ msg: 'Ad not found' });
         }
 
-        res.status(200).json({ message: 'Ad deleted successfully' });
+        res.status(200).json({ status: "success", message: 'Ad deleted successfully' });
     } catch (error) {
-        res.status(500).json({msg: error.message});
+        res.status(500).json({ status: "fail",msg: error.message });
+    }
+};
+
+//@desc     Track ad impression
+const trackAdImpression = async (req, res) => {
+    try {
+        const ad = await Ads.findById(req.params.id);
+
+        if (!ad) {
+            return res.status(404).json({ status: "fail", msg: "Ad not found"});
+        }
+
+        // Increment impressions
+        ad.impressions += 1;
+        await ad.save();
+
+        res.status(200).json({ status: "success", data: {impressions: ad.impressions}});
+    } catch (error) {
+        res.status(500).json({ status: "fail", msg: error.message });
     }
 };
 
@@ -136,4 +155,5 @@ module.exports = {
     getSingleAd,
     updateAd,
     deleteAd,
+    trackAdImpression,
 };
