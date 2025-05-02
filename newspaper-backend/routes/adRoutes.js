@@ -12,7 +12,7 @@ const router = express.Router();
 // @access  Private: super_admin
 router.post("/createAd", authenticateUser, authorizeRoles("super_admin"), adsController.createAd);
 
-// @route   POST api/ads/createAd
+// @route   GET api/ads/getAllAds
 // @desc    Get all ads
 // @access  Private: super_admin
 router.get("/getAllAds", authenticateUser, authorizeRoles("super_admin"), adsController.getAllAds);
