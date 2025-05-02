@@ -12,26 +12,15 @@ const BreakingNews = () => {
   const sliderRef = useRef(null);
   const autoplayRef = useRef(null);
 
-  // Handle responsive layout changes
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 576) {
-        setVisibleItems(1); // Mobile: show one item
-      } else if (window.innerWidth < 992) {
-        setVisibleItems(2); // Tablet: show two items
-      } else {
-        setVisibleItems(3); // Desktop: show three items
-      }
+      if (window.innerWidth < 576) setVisibleItems(1);
+      else if (window.innerWidth < 992) setVisibleItems(2);
+      else setVisibleItems(3);
     };
-
-    // Set initial value
     handleResize();
-
-    // Add event listener
-    window.addEventListener('resize', handleResize);
-
-    // Clean up
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -45,104 +34,70 @@ const BreakingNews = () => {
         setLoading(false);
       }
     };
-
     fetchBreakingNews();
   }, []);
 
-
-  // Set up auto-sliding
   useEffect(() => {
     if (loading || news.length <= visibleItems) return;
-
-    // Start autoplay timer
     const startAutoplay = () => {
       autoplayRef.current = setInterval(() => {
-        setCurrentIndex(prevIndex => {
-          const nextIndex = prevIndex + 1;
-          // Loop back to the beginning when reaching the end
-          return nextIndex < news.length - visibleItems + 1 ? nextIndex : 0;
-        });
-      }, 3000); // Change slide every 03 seconds
+        setCurrentIndex((prevIndex) =>
+          prevIndex < news.length - visibleItems ? prevIndex + 1 : 0
+        );
+      }, 3000);
     };
-
     startAutoplay();
 
-    // Pause autoplay on hover and touch
-    const sliderElement = sliderRef.current;
-    if (sliderElement) {
-      const pauseAutoplay = () => {
-        if (autoplayRef.current) clearInterval(autoplayRef.current);
-      };
+    const slider = sliderRef.current;
+    const pause = () => clearInterval(autoplayRef.current);
+    const resume = () => {
+      pause();
+      startAutoplay();
+    };
 
-      const resumeAutoplay = () => {
-        pauseAutoplay();
-        startAutoplay();
-      };
+    if (slider) {
+      slider.addEventListener("mouseenter", pause);
+      slider.addEventListener("mouseleave", resume);
+      slider.addEventListener("touchstart", pause, { passive: true });
+      slider.addEventListener("touchend", resume, { passive: true });
 
-      sliderElement.addEventListener('mouseenter', pauseAutoplay);
-      sliderElement.addEventListener('mouseleave', resumeAutoplay);
-      sliderElement.addEventListener('touchstart', pauseAutoplay, { passive: true });
-      sliderElement.addEventListener('touchend', resumeAutoplay, { passive: true });
-
-      // Clean up
       return () => {
-        if (autoplayRef.current) clearInterval(autoplayRef.current);
-        if (sliderElement) {
-          sliderElement.removeEventListener('mouseenter', pauseAutoplay);
-          sliderElement.removeEventListener('mouseleave', resumeAutoplay);
-          sliderElement.removeEventListener('touchstart', pauseAutoplay);
-          sliderElement.removeEventListener('touchend', resumeAutoplay);
-        }
+        clearInterval(autoplayRef.current);
+        slider.removeEventListener("mouseenter", pause);
+        slider.removeEventListener("mouseleave", resume);
+        slider.removeEventListener("touchstart", pause);
+        slider.removeEventListener("touchend", resume);
       };
     }
-
-    return () => {
-      if (autoplayRef.current) clearInterval(autoplayRef.current);
-    };
   }, [loading, news, visibleItems]);
 
   const handlePrev = () => {
-    // Clear the autoplay when manually navigating
-    if (autoplayRef.current) clearInterval(autoplayRef.current);
-    setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+    clearInterval(autoplayRef.current);
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
   const handleNext = () => {
-    // Clear the autoplay when manually navigating
-    if (autoplayRef.current) clearInterval(autoplayRef.current);
-    setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, news.length - visibleItems));
+    clearInterval(autoplayRef.current);
+    setCurrentIndex((prev) => Math.min(prev + 1, news.length - visibleItems));
   };
 
   const jumpToSlide = (index) => {
-    // Clear the autoplay when manually navigating
-    if (autoplayRef.current) clearInterval(autoplayRef.current);
+    clearInterval(autoplayRef.current);
     setCurrentIndex(index);
   };
 
-  const formatDate = (isoDate) => {
-    const date = new Date(isoDate);
+  const formatDate = (iso) => {
+    const date = new Date(iso);
     return date.toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+      year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"
     });
   };
 
-  // If still loading, show loading indicator
-  if (loading) {
-    return <div className="breaking-news py-4">Loading Breaking News...</div>;
-  }
-
-  // If there's no news, return null to hide the entire section
-  if (news.length === 0) {
-    return null;
-  }
-
+  if (loading) return <div className="breaking-news py-4 text-light">Loading Breaking News...</div>;
+  if (news.length === 0) return null;
 
   return (
-    <div className="container">
+    <div className="container text-light">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 mb-md-4">
         <motion.h2
           className="border-bottom pb-2 mb-3 mb-md-0"
@@ -156,18 +111,16 @@ const BreakingNews = () => {
         {news.length > visibleItems && (
           <div className="slider-controls d-none d-md-block">
             <button
-              className="btn btn-sm btn-outline-dark me-2"
+              className="btn btn-sm btn-outline-light me-2"
               onClick={handlePrev}
               disabled={currentIndex === 0}
-              aria-label="Previous slide"
             >
               <i className="bi bi-chevron-left"></i>
             </button>
             <button
-              className="btn btn-sm btn-outline-dark"
+              className="btn btn-sm btn-outline-light"
               onClick={handleNext}
               disabled={currentIndex >= news.length - visibleItems}
-              aria-label="Next slide"
             >
               <i className="bi bi-chevron-right"></i>
             </button>
@@ -191,7 +144,7 @@ const BreakingNews = () => {
               style={{ flex: `0 0 ${100 / visibleItems}%` }}
             >
               <motion.div
-                className="card news-card h-100 shadow-sm"
+                className="card news-card h-100 bg-secondary text-light"
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.3 }}
               >
@@ -207,7 +160,7 @@ const BreakingNews = () => {
                 )}
                 <div className="card-body d-flex flex-column">
                   <motion.h5
-                    className="card-title fs-6 fs-md-5"
+                    className="card-title fs-6 fs-md-5 fw-bold text-dark"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.3 }}
@@ -215,20 +168,20 @@ const BreakingNews = () => {
                     {item.title}
                   </motion.h5>
                   <motion.p
-                    className="card-text flex-grow-1 small"
+                    className="card-text flex-grow-1 small text-dark"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.4 }}
                   >
                     {item.content.slice(0, 100)}...
                   </motion.p>
-                  <Link to={`/news/${item._id}`} className="btn btn-sm btn-outline-primary mt-auto">
+                  <Link to={`/news/${item._id}`} className="btn btn-sm btn-outline-light mt-auto">
                     View More &raquo;
                   </Link>
                 </div>
-                <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-muted">
+                <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-white bg-dark">
                   <span className="mb-1 mb-md-0">By {item?.author?.username ?? "Unknown"}</span>
-                  <span>{formatDate(item.date)}</span>
+                  <span >{formatDate(item.date)}</span>
                 </div>
               </motion.div>
             </div>
@@ -253,7 +206,7 @@ const BreakingNews = () => {
                   height: "8px",
                   borderRadius: "50%",
                   border: "none",
-                  background: idx === currentIndex ? "#0d6efd" : "#dee2e6",
+                  background: idx === currentIndex ? "#0d6efd" : "#888",
                   cursor: "pointer"
                 }}
                 onClick={() => jumpToSlide(idx)}

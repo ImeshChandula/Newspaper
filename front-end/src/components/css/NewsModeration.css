@@ -63,7 +63,7 @@
   /* Date display */
   .news-date {
     font-size: 0.85rem;
-    color: #6c757d;
+    color: #b7b8b9;
   }
   
   /* News title */
@@ -121,7 +121,7 @@
   .news-author {
     padding: 0 1rem;
     font-style: italic;
-    color: #6c757d;
+    color: #b7b8b9;
     font-size: 0.9rem;
     margin-bottom: 1rem;
   }

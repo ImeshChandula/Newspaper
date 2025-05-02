@@ -19,14 +19,13 @@ import SportPage from "./pages/Sport.jsx"
 import EducationPage from "./pages/Education.jsx"
 import PoliticsPage from "./pages/Politics.jsx"
 import EditNewsContent from "./routes/EditNewsContent.jsx";
-import Contact from "./pages/Contact.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 
 const App = () => {
 
 
   return (
-    <div className="bg-white">
+    <div className="bg-dark">
       <Navbar />
       <ScrollToTop/>
       <div className="container mt-4">
@@ -39,7 +38,6 @@ const App = () => {
           <Route path="/sport" element={<SportPage />} />
           <Route path="/education" element={<EducationPage />} />
           <Route path="/politics" element={<PoliticsPage />} />
-          <Route path="/contact" element={<Contact />}/>
           <Route
             path="/dashboard/editor"
             element={

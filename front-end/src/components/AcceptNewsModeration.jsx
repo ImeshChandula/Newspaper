@@ -4,12 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
-import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/css/NewsModeration.css';
 
 const AcceptNewsModeration = () => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [news, setNews] = useState([]);
@@ -39,7 +37,7 @@ const AcceptNewsModeration = () => {
       setNews(response.data);
     } catch (error) {
       console.error('Error fetching accepted news:', error);
-      showNotification(t('fetchAcceptedFail'), 'danger');
+      showNotification('fetchAcceptedFail', 'danger');
     } finally {
       setLoading(false);
     }
@@ -55,17 +53,17 @@ const AcceptNewsModeration = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setNews((prev) => prev.filter((article) => article._id !== id));
-      showNotification(t('articleRemoved'), 'success');
+      showNotification('Article Removed', 'success');
     } catch (error) {
       console.error('Failed to update article status:', error);
-      showNotification(t('updateStatusFail'), 'danger');
+      showNotification('Update Status Fail', 'danger');
     } finally {
       setActionLoading(null);
     }
   };
 
   const handleEditNews = (articleId) => {
-    localStorage.setItem('editNewsId', articleId);
+    localStorage.setItem('Edit NewsId', articleId);
     navigate('/editNews', { state: { articleId } });
   };
 
@@ -82,7 +80,7 @@ const AcceptNewsModeration = () => {
 
   return (
     <div className="news-container">
-      <h2 className="news-head">{t('acceptedModerationTitle')}</h2>
+      <h2 className="news-head text-primary">Accepted News Moderation</h2>
 
       {/* Toast Notifications */}
       <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1060 }}>
@@ -94,7 +92,7 @@ const AcceptNewsModeration = () => {
           bg={toastVariant}
         >
           <Toast.Header>
-            <strong className="me-auto">{t('notificationTitle')}</strong>
+            <strong className="me-auto">Notification</strong>
           </Toast.Header>
           <Toast.Body className={toastVariant === 'danger' ? 'text-white' : ''}>
             {toastMessage}
@@ -104,13 +102,13 @@ const AcceptNewsModeration = () => {
 
       {/* Image Preview Modal */}
       <Modal show={showImageModal} onHide={() => setShowImageModal(false)} centered size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>{t('imagePreview')}</Modal.Title>
+        <Modal.Header closeButton className='bg-dark text-white'>
+          <Modal.Title>Image Preview</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="text-center">
+        <Modal.Body className="text-center bg-dark">
           <img
             src={previewImage}
-            alt={t('imagePreview')}
+            alt='Image Preview'
             className="img-fluid"
             style={{ maxHeight: '70vh' }}
           />
@@ -120,31 +118,31 @@ const AcceptNewsModeration = () => {
       {loading ? (
         <div className="d-flex justify-content-center my-5">
           <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">{t('loading')}</span>
+            <span className="visually-hidden">loading</span>
           </div>
         </div>
       ) : news.length === 0 ? (
         <div className="alert alert-info mt-3" role="alert">
-          {t('noAcceptedArticles')}
+          No Accepted Articles
         </div>
       ) : (
         <div className="news-card-container">
           {news.map((article) => (
-            <div key={article._id} className="news-card">
-              <div className="news-metadata">
+            <div key={article._id} className="news-card bg-dark border border-secondary">
+              <div className="news-metadata bg-dark border-bottom border-secondary">
                 <span className="news-category">{article.category}</span>
                 <span className="news-date">
                   {new Date(article.date).toLocaleString()}
                 </span>
               </div>
 
-              <h3 className="news-title">{article.title}</h3>
+              <h3 className="news-title text-primary">{article.title}</h3>
 
               {article.media && (
                 <div className="news-media-container position-relative">
                   <img
                     src={article.media}
-                    alt={t('imagePreview')}
+                    alt='Image Preview'
                     className="news-media"
                     style={{ cursor: 'pointer', objectFit: 'cover', height: '200px', width: '100%' }}
                     onClick={() => handleImageClick(article.media)}
@@ -158,9 +156,9 @@ const AcceptNewsModeration = () => {
                 </div>
               )}
 
-              <p className="news-content">{article.content.slice(0, 150)}...</p>
+              <p className="news-content text-white">{article.content.slice(0, 150)}...</p>
               <p className="news-author">
-                {t('by')} {article.author?.username} ({article.author?.email})
+                By {article.author?.username} ({article.author?.email})
               </p>
 
               <div className="news-buttons">
@@ -168,7 +166,7 @@ const AcceptNewsModeration = () => {
                   onClick={() => handleEditNews(article._id)}
                   className="btn btn-outline-primary news-edit-button"
                 >
-                  <i className="bi bi-pencil-square"></i> {t('editContent')}
+                  <i className="bi bi-pencil-square"></i> Edit Content
                 </button>
                 <button
                   onClick={() => updateStatus(article._id, 'reject')}
@@ -182,11 +180,11 @@ const AcceptNewsModeration = () => {
                         role="status"
                         aria-hidden="true"
                       ></span>
-                      {t('processing')}
+                      Processing
                     </>
                   ) : (
                     <>
-                      <i className="bi bi-eye-slash"></i> {t('stopShowing')}
+                      <i className="bi bi-eye-slash"></i> Stop Showing
                     </>
                   )}
                 </button>

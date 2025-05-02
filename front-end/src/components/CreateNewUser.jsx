@@ -64,7 +64,7 @@ const CreateNewUser = () => {
   };
 
   return (
-    <div className="register_content">
+    <div className="register_content border border-secondary">
       <h2 className="register_header">Create New Editor Account</h2>
 
       {message && <p className="message_box">{message}</p>}

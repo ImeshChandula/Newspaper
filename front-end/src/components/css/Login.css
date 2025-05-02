@@ -4,14 +4,14 @@
   max-width: 450px;
   margin: 5rem auto;
   padding: 2.5rem;
-  background-color: white;
+  background-color: rgba(58, 54, 54, 0.233);
   border-radius: 10px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .login_heading {
-  color: #2c3e50;
+  color: #3b82f6;
   margin-bottom: 2rem;
   font-size: 2.2rem;
   font-weight: 700;
@@ -39,18 +39,18 @@
 
 .login_input {
   padding: 1rem;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #9b9b9b;
   border-radius: 6px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background-color: #f9f9f9;
+  background-color: #413f3f;
+  color: #fff;
 }
 
 .login_input:focus {
   border-color: #3498db;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
   outline: none;
-  background-color: white;
 }
 
 .login_buttons {
@@ -94,7 +94,7 @@
 
 .login_form p {
   margin: 0.5rem 0;
-  color: #555;
+  color: #929090;
   font-size: 0.95rem;
 }
 

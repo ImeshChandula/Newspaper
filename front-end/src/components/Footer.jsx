@@ -31,7 +31,7 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className="footer bg-light py-4 mt-5"
+      className="footer bg-dark py-4 mt-5 border-top border-black"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
@@ -40,26 +40,26 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <motion.div className="col-md-4" variants={itemVariants}>
-            <h5 className="text-uppercase">NewsPaper</h5>
-            <p>
+            <h5 className="text-uppercase text-white">NewsPaper</h5>
+            <p className="text-white">
               Stay updated with the latest news, trends, and insights from
               around the world.
             </p>
           </motion.div>
 
           <motion.div className="col-md-4" variants={itemVariants}>
-            <h5 className="text-uppercase">Quick Links</h5>
+            <h5 className="text-uppercase text-white">Quick Links</h5>
             <ul className="list-unstyled">
-              <li><Link to="/" className="footer-link">Home</Link></li>
-              <li><Link to="/sport" className="footer-link">Sport</Link></li>
-              <li><Link to="/education" className="footer-link">Education</Link></li>
-              <li><Link to="/politics" className="footer-link">Politics</Link></li>
-              <li><Link to="/contact" className="footer-link">Contact Us</Link></li>
+              <li><Link to="/" className="footer-link text-white">Home</Link></li>
+              <li><Link to="/sport" className="footer-link text-white">Sport</Link></li>
+              <li><Link to="/education" className="footer-link text-white">Education</Link></li>
+              <li><Link to="/politics" className="footer-link text-white">Politics</Link></li>
+              <li><Link to="/contact" className="footer-link text-white">Contact Us</Link></li>
             </ul>
           </motion.div>
 
           <motion.div className="col-md-4" variants={itemVariants}>
-            <h5 className="text-uppercase">Follow Us</h5>
+            <h5 className="text-uppercase  text-white">Follow Us</h5>
             <div className="social-icons d-flex gap-3 mt-2">
               {[
                 { icon: <FaFacebookF />, url: "https://facebook.com" },
@@ -83,7 +83,7 @@ const Footer = () => {
         </div>
 
         <motion.div
-          className="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center mt-3"
+          className="footer-bottom d-flex flex-column flex-md-row justify-content-center align-items-center mt-3"
           variants={itemVariants}
         >
           <p className="mb-0">

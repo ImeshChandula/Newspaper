@@ -16,7 +16,7 @@ const NewsCardForHome = ({ news }) => {
     };
 
     return (
-        <div className="row g-4">
+        <div className="row g-4 bg-dark mt-0">
             {news.map((item) => (
                 <motion.div
                     key={item._id}
@@ -26,7 +26,7 @@ const NewsCardForHome = ({ news }) => {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <motion.div
-                        className="card news-card h-100 shadow-sm"
+                        className="card news-card h-100 shadow-sm bg-secondary text-light"
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.3 }}
                     >
@@ -42,7 +42,7 @@ const NewsCardForHome = ({ news }) => {
                         )}
                         <div className="card-body d-flex flex-column">
                             <motion.h5
-                                className="card-title"
+                                className="card-title text-black fw-bold"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.3, delay: 0.3 }}
@@ -50,18 +50,18 @@ const NewsCardForHome = ({ news }) => {
                                 {item.title}
                             </motion.h5>
                             <motion.p
-                                className="card-text flex-grow-1"
+                                className="card-text flex-grow-1 text-black"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.3, delay: 0.4 }}
                             >
                                 {item.content.slice(0, 100)}...
                             </motion.p>
-                            <Link to={`/news/${item._id}`} className="btn btn-outline-primary mt-auto">
+                            <Link to={`/news/${item._id}`} className="btn btn-outline-light mt-auto">
                                 View More &raquo;
                             </Link>
                         </div>
-                        <div className="card-footer d-flex justify-content-between small text-muted">
+                        <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-white bg-dark">
                             <span>By {item?.author?.username ?? "Unknown"}</span>
                             <span>{formatDate(item.date)}</span>
                         </div>
