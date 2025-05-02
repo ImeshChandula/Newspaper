@@ -8,6 +8,7 @@ import CreateNewUser from '../components/CreateNewUser';
 import HistoryOfArticle from '../components/HistoryOfArticle';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/css/DashboardSuperAdmin.css';
+import AdManager from '../components/AdManager';
 
 const DashboardSuperAdmin = () => {
 
@@ -30,6 +31,8 @@ const DashboardSuperAdmin = () => {
         return <CreateNewUser />
       case 'HistoryOfArticles':
         return <HistoryOfArticle />
+      case 'AdManager':
+        return <AdManager />
       default:
         return <PendingNewsModeration />
     }
@@ -84,6 +87,12 @@ const DashboardSuperAdmin = () => {
             onClick={() => setActiveComponent('CreateUser')}
           >
             <span className="btn-text">Create User</span>
+          </button>
+          <button
+            className={`btn nav-button ${activeComponent === 'AdManager' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('AdManager')}
+          >
+            <span className="btn-text">Create Add</span>
           </button>
         </div>
       </div>
