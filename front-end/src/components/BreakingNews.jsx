@@ -53,7 +53,7 @@ const BreakingNews = () => {
   // Set up auto-sliding
   useEffect(() => {
     if (loading || news.length <= visibleItems) return;
-    
+
     // Start autoplay timer
     const startAutoplay = () => {
       autoplayRef.current = setInterval(() => {
@@ -64,26 +64,26 @@ const BreakingNews = () => {
         });
       }, 3000); // Change slide every 03 seconds
     };
-    
+
     startAutoplay();
-    
+
     // Pause autoplay on hover and touch
     const sliderElement = sliderRef.current;
     if (sliderElement) {
       const pauseAutoplay = () => {
         if (autoplayRef.current) clearInterval(autoplayRef.current);
       };
-      
+
       const resumeAutoplay = () => {
         pauseAutoplay();
         startAutoplay();
       };
-      
+
       sliderElement.addEventListener('mouseenter', pauseAutoplay);
       sliderElement.addEventListener('mouseleave', resumeAutoplay);
       sliderElement.addEventListener('touchstart', pauseAutoplay, { passive: true });
       sliderElement.addEventListener('touchend', resumeAutoplay, { passive: true });
-      
+
       // Clean up
       return () => {
         if (autoplayRef.current) clearInterval(autoplayRef.current);
@@ -95,7 +95,7 @@ const BreakingNews = () => {
         }
       };
     }
-    
+
     return () => {
       if (autoplayRef.current) clearInterval(autoplayRef.current);
     };
@@ -139,7 +139,7 @@ const BreakingNews = () => {
   if (news.length === 0) {
     return null;
   }
-  
+
 
   return (
     <div className="container">
@@ -152,19 +152,19 @@ const BreakingNews = () => {
         >
           📰 Breaking News
         </motion.h2>
-        
+
         {news.length > visibleItems && (
-          <div className="slider-controls">
-            <button 
-              className="btn btn-sm btn-outline-dark me-2" 
+          <div className="slider-controls d-none d-md-block">
+            <button
+              className="btn btn-sm btn-outline-dark me-2"
               onClick={handlePrev}
               disabled={currentIndex === 0}
               aria-label="Previous slide"
             >
               <i className="bi bi-chevron-left"></i>
             </button>
-            <button 
-              className="btn btn-sm btn-outline-dark" 
+            <button
+              className="btn btn-sm btn-outline-dark"
               onClick={handleNext}
               disabled={currentIndex >= news.length - visibleItems}
               aria-label="Next slide"
@@ -176,18 +176,18 @@ const BreakingNews = () => {
       </div>
 
       <div className="news-slider position-relative overflow-hidden">
-        <motion.div 
+        <motion.div
           className="slider-track d-flex"
           ref={sliderRef}
-          style={{ 
+          style={{
             transform: `translateX(-${currentIndex * (100 / visibleItems)}%)`,
             transition: "transform 0.5s ease"
           }}
         >
           {news.map((item) => (
-            <div 
-              key={item._id} 
-              className="slider-item px-2" 
+            <div
+              key={item._id}
+              className="slider-item px-2"
               style={{ flex: `0 0 ${100 / visibleItems}%` }}
             >
               <motion.div
@@ -237,7 +237,7 @@ const BreakingNews = () => {
       </div>
 
       {news.length > visibleItems && (
-        <motion.div 
+        <motion.div
           className="pagination mt-3 d-flex justify-content-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
