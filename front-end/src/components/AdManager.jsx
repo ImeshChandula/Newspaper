@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import TrackAds from './TrackAds';
+//import TrackAds from './TrackAds';
 
 const AdManager = () => {
   const [form, setForm] = useState({

@@ -32,6 +32,7 @@ const TrackAds = () => {
 
     useEffect(() => {
         fetchAds();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeOnly]);
 
     const handleUpdate = (adId) => {
