@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const TrackAds = () => {
     const [ads, setAds] = useState([]);
     const [error, setError] = useState('');
     const [activeOnly, setActiveOnly] = useState(false);
     const token = localStorage.getItem("token");
+    const navigate = useNavigate(); // Used to redirect to update page
 
     const fetchAds = async () => {
         try {
@@ -28,6 +30,10 @@ const TrackAds = () => {
         fetchAds();
     }, [activeOnly]);
 
+    const handleUpdate = (adId) => {
+        navigate(`/update-ad/${adId}`); // Adjust this route to your app's routing
+    };
+
     return (
         <div className="container py-5">
             <h2 className="text-center text-primary mb-4">📢 Track Submitted Ads</h2>
@@ -46,25 +52,26 @@ const TrackAds = () => {
                 </div>
             </div>
 
-            <div className="row g-4">
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
                 {ads.length === 0 ? (
                     <p className="text-center text-muted">No ads found.</p>
                 ) : (
-                    ads.map((ad, index) => (
-                        <div className="col-sm-12 col-md-6 col-lg-4" key={index}>
-                            <div className="card h-100 shadow-sm border border-secondary bg-dark">
+                    ads.map((ad) => (
+                        <div key={ad._id} className="col">
+                            <div className="card h-100 shadow-lg bg-dark text-light border border-secondary rounded-4">
                                 {ad.media && (
                                     <img
                                         src={ad.media}
-                                        className="card-img-top object-fit-cover"
+                                        className="card-img-top rounded-top"
                                         alt="Ad"
                                         style={{ height: '200px', objectFit: 'cover' }}
                                     />
                                 )}
-                                <div className="card-body d-flex flex-column border-top border-secondary">
-                                    <h5 className="card-title text-primary fw-bold">{ad.title}</h5>
+                                <div className="card-body d-flex flex-column">
+                                    <h5 className="card-title text-info fw-bold">{ad.title}</h5>
+
                                     <p
-                                        className="card-text mb-2 text-white"
+                                        className="card-text text-white"
                                         style={{
                                             display: '-webkit-box',
                                             WebkitLineClamp: 3,
@@ -76,26 +83,35 @@ const TrackAds = () => {
                                         {ad.content}
                                     </p>
 
-                                    <div className="mb-2">
-                                        <span className="fw-bold text-white">🔗 Link:</span>{' '}
-                                        <a href={ad.link} target="_blank" rel="noreferrer" style={{
-                                            display: '-webkit-box',
-                                            WebkitLineClamp: 2,
-                                            WebkitBoxOrient: 'vertical',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                        }}>{ad.link}</a>
+                                    <div className="mb-2 small">
+                                        <span className="fw-semibold">🔗 Link:</span>{' '}
+                                        <a
+                                            href={ad.link}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="text-warning text-break"
+                                            style={{
+                                                display: '-webkit-box',
+                                                WebkitLineClamp: 2,
+                                                WebkitBoxOrient: 'vertical',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                            }}
+                                        >
+                                            {ad.link}
+                                        </a>
                                     </div>
 
-                                    <div className="mb-2 text-white">
-                                        <span className="fw-bold">📅 Start:</span> {new Date(ad.startDate).toLocaleDateString()}
+                                    <div className="mb-2 small">
+                                        <span className="fw-semibold">📅 Start:</span>{' '}
+                                        {new Date(ad.startDate).toLocaleDateString()}
                                     </div>
-                                    <div className="mb-2  text-white">
-                                        <span className="fw-bold">⏳ End:</span>{' '}
+                                    <div className="mb-2 small">
+                                        <span className="fw-semibold">⏳ End:</span>{' '}
                                         {ad.endDate ? new Date(ad.endDate).toLocaleDateString() : 'N/A'}
                                     </div>
-                                    <div className="mb-3 text-white">
-                                        <span className="fw-bold text-white">🟢 Status:</span>{' '}
+                                    <div className="mb-3">
+                                        <span className="fw-semibold">🟢 Status:</span>{' '}
                                         {ad.active ? (
                                             <span className="badge bg-success">Active</span>
                                         ) : (
@@ -103,12 +119,22 @@ const TrackAds = () => {
                                         )}
                                     </div>
 
-                                    <div className="mt-auto border-top border-secondary">
+                                    <div className="mt-auto">
                                         <hr />
-                                        <div className="d-flex justify-content-between">
-                                            <span className="badge bg-info text-dark">📊 {ad.impressions} Impressions</span>
-                                            <span className="badge bg-warning text-dark">👁️ {ad.clicks} Clicks</span>
+                                        <div className="d-flex justify-content-between mb-3">
+                                            <span className="badge bg-info text-dark">
+                                                📊 {ad.impressions} Impressions
+                                            </span>
+                                            <span className="badge bg-warning text-dark">
+                                                👁️ {ad.clicks} Clicks
+                                            </span>
                                         </div>
+                                        <button
+                                            className="btn btn-outline-primary w-100"
+                                            onClick={() => handleUpdate(ad._id)}
+                                        >
+                                            ✏️ Update
+                                        </button>
                                     </div>
                                 </div>
                             </div>

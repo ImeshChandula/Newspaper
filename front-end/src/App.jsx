@@ -20,6 +20,7 @@ import EducationPage from "./pages/Education.jsx"
 import PoliticsPage from "./pages/Politics.jsx"
 import EditNewsContent from "./routes/EditNewsContent.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import UpdateAdManager from "./components/UpdateAdManager.jsx";
 
 const App = () => {
 
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/sport" element={<SportPage />} />
           <Route path="/education" element={<EducationPage />} />
           <Route path="/politics" element={<PoliticsPage />} />
+          <Route path="/update-ad/:id" element={<UpdateAdManager />} />
           <Route
             path="/dashboard/editor"
             element={
