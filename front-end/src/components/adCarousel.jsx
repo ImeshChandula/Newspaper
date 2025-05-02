@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 const AdCarousel = () => {
   const [ads, setAds] = useState([]);
   const [error, setError] = useState('');
   const [collapsed, setCollapsed] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const impressionSet = useRef(new Set());
+  const carouselRef = useRef(null);
+
   const token = localStorage.getItem('token');
 
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(
         'http://localhost:5000/api/ads/getAllActiveAds',
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
       );
       setAds(data.ads);
     } catch (err) {
@@ -19,9 +25,51 @@ const AdCarousel = () => {
     }
   };
 
+  const trackImpression = async (adId) => {
+    if (impressionSet.current.has(adId)) return;
+    impressionSet.current.add(adId);
+    try {
+      await axios.patch(`http://localhost:5000/api/ads/trackAdImpression/${adId}`);
+    } catch (err) {
+      console.error('Error tracking impression:', err.message);
+    }
+  };
+
+  const handleVisitClick = async (e, ad) => {
+    e.preventDefault();
+    try {
+      await axios.patch(`http://localhost:5000/api/ads/trackAdClick/${ad._id}`);
+    } catch (err) {
+      console.error('Error tracking click:', err.message);
+    } finally {
+      window.open(ad.link, '_blank');
+    }
+  };
+
   useEffect(() => {
     fetchAds();
   }, []);
+
+  // Register carousel slide event using Bootstrap's native event
+  useEffect(() => {
+    const carouselNode = carouselRef.current;
+    if (!carouselNode || !ads.length) return;
+
+    const handleBootstrapSlide = (event) => {
+      const nextIndex = parseInt(event.to, 10); // `to` is the index of the next slide
+      setActiveIndex(nextIndex);
+      trackImpression(ads[nextIndex]._id);
+    };
+
+    carouselNode.addEventListener('slide.bs.carousel', handleBootstrapSlide);
+
+    // Track initial ad
+    trackImpression(ads[0]._id);
+
+    return () => {
+      carouselNode.removeEventListener('slide.bs.carousel', handleBootstrapSlide);
+    };
+  }, [ads]);
 
   useEffect(() => {
     if (ads.length) {
@@ -62,6 +110,7 @@ const AdCarousel = () => {
         data-bs-ride="carousel"
         data-bs-interval="7000"
         style={{ height: '300px' }}
+        ref={carouselRef}
       >
         {/* Indicators */}
         <div className="carousel-indicators">
@@ -115,14 +164,12 @@ const AdCarousel = () => {
                     >
                       {ad.content}
                     </p>
-                    <a
-                      href={ad.link}
-                      target="_blank"
-                      rel="noreferrer"
+                    <button
                       className="btn btn-sm btn-light mt-2 align-self-start mb-3"
+                      onClick={(e) => handleVisitClick(e, ad)}
                     >
                       Visit link
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
