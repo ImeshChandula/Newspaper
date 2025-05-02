@@ -22,7 +22,7 @@ const UpdateAdManager = () => {
     useEffect(() => {
         const fetchAd = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/ads/getAdById/${id}`, {
+                const response = await axios.get(`http://localhost:5000/api/ads/getSingleAd/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 const ad = response.data.ad;
