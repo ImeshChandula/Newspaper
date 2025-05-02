@@ -23,6 +23,11 @@ router.get("/getAllAds", authenticateUser, authorizeRoles("super_admin"), adsCon
 // @access  Public
 router.get("/getAllActiveAds", adsController.getAllActiveAds);
 
+// @route   GET api/ads/getSingleAd/:id
+// @desc    Get single ad by adID
+// @access  Private: super_admin
+router.get("/getSingleAd/:id", authenticateUser, authorizeRoles("super_admin"), adsController.getSingleAd);
+
 // @route   PATCH api/ads/updateAd/:id
 // @desc    Update an ad by AdID
 // @access  Private: super_admin

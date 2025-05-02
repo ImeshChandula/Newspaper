@@ -68,6 +68,22 @@ const getAllActiveAds = async (req, res) => {
 };
 
 
+//@desc     Get single ad by adID
+const getSingleAd = async (req, res) => {
+    try {
+        const ad = await Ads.findById(req.params.id);
+
+        if (!ad) {
+            return res.status(404).json({ msg: 'Ad not found' });
+        }
+
+        res.status(200).json({ status: "success", ad })
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+};
+
+
 //@desc     Update an ad by AdID
 const updateAd = async (req, res) => {
     try {
@@ -117,6 +133,7 @@ module.exports = {
     createAd,
     getAllAds,
     getAllActiveAds,
+    getSingleAd,
     updateAd,
     deleteAd,
 };
