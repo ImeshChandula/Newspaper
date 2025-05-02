@@ -148,6 +148,25 @@ const trackAdImpression = async (req, res) => {
     }
 };
 
+//@desc     Track ad click
+const trackAdClick = async (req, res) => {
+    try {
+        const ad = await Ads.findById(req.params.id);
+        
+        if (!ad) {
+          return res.status(404).json({ status: "fail", message: "Ad not found" });
+        }
+        
+        // Increment clicks
+        ad.clicks += 1;
+        await ad.save();
+        
+        res.status(200).json({ status: "success", data: {clicks: ad.clicks}});
+      } catch (error) {
+        res.status(500).json({ status: "error", message: error.message });
+      }
+};
+
 module.exports = {
     createAd,
     getAllAds,
@@ -156,4 +175,5 @@ module.exports = {
     updateAd,
     deleteAd,
     trackAdImpression,
+    trackAdClick,
 };

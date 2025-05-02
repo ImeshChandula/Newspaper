@@ -39,8 +39,14 @@ router.patch("/updateAd/:id", authenticateUser, authorizeRoles("super_admin"), a
 router.delete("/deleteAd/:id", authenticateUser, authorizeRoles("super_admin"), adsController.deleteAd);
 
 // @route   PATCH api/ads/trackAdImpression/:id
-// @desc    Track ad impression
+// @desc    Track ad impression by adID
 // @access  Public
 router.patch("/trackAdImpression/:id", adsController.trackAdImpression);
+
+// @route   PATCH api/ads/trackAdClick/:id
+// @desc    Track ad click by adID
+// @access  Public
+router.patch("/trackAdClick/:id", adsController.trackAdClick);
+
 
 module.exports = router;
