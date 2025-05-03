@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-//import TrackAds from './TrackAds';
 
-const AdManager = () => {
+const CreateAds = () => {
   const [form, setForm] = useState({
     title: '',
     content: '',
@@ -57,7 +55,7 @@ const AdManager = () => {
   return (
     <div className="container">
       <div className="bg-dark p-4 rounded shadow text-white">
-        <h2 className="text-center text-primary mb-4">📢 Create New Ad</h2>
+        <h2 className="text-center text-primary mb-4 fw-bold">📢 Create New Ad</h2>
 
         {message && <div className="alert alert-success text-center">{message}</div>}
         {error && <div className="alert alert-danger text-center">{error}</div>}
@@ -143,4 +141,4 @@ const AdManager = () => {
   );
 };
 
-export default AdManager;
+export default CreateAds;

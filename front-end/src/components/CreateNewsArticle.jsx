@@ -46,64 +46,85 @@ const CreateNewsArticle = () => {
   };
 
   return (
-    <div className="create_news_container bg-dark border border-secondary">
-      <h2 className="create_news_header">Create News Article</h2>
-      <form onSubmit={handleSubmit} className="create_news_form">
-        <select
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          required
-          className="create_news_input_select bg-dark text-white border border-secondary"
-        >
-          <option value="">Select Category</option>
-          <option value="Education">Education</option>
-          <option value="Politics">Politics</option>
-          <option value="Sports">Sports</option>
-          <option value="Breaking News">Breaking News</option>
-        </select>
+    <div className="container my-5">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-10 col-lg-8 col-xl-6 bg-dark text-white p-4 rounded shadow-lg border border-secondary">
+          <h2 className="text-center mb-4 border-bottom pb-2 text-primary fw-bold">Create News Article</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label">Category</label>
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                required
+                className="form-select bg-dark text-white border-secondary"
+              >
+                <option value="">Select Category</option>
+                <option value="Education">Education</option>
+                <option value="Politics">Politics</option>
+                <option value="Sports">Sports</option>
+                <option value="Breaking News">Breaking News</option>
+              </select>
+            </div>
 
-        <input
-          type="text"
-          name="title"
-          placeholder='Title'
-          value={formData.title}
-          onChange={handleChange}
-          required
-          className="create_news_input_text bg-dark text-white border border-secondary"
-        />
+            <div className="mb-3">
+              <label className="form-label">Title</label>
+              <input
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={formData.title}
+                onChange={handleChange}
+                required
+                className="form-control bg-dark text-white border-secondary"
+              />
+            </div>
 
-        <input
-          type="text"
-          name="media"
-          placeholder='Media Url'
-          value={formData.media}
-          onChange={handleChange}
-          className="create_news_input_text bg-dark text-white border border-secondary"
-        />
+            <div className="mb-3">
+              <label className="form-label">Media URL (optional)</label>
+              <input
+                type="text"
+                name="media"
+                placeholder="Media URL"
+                value={formData.media}
+                onChange={handleChange}
+                className="form-control bg-dark text-white border-secondary"
+              />
+            </div>
 
-        <textarea
-          name="content"
-          placeholder='Content'
-          value={formData.content}
-          onChange={handleChange}
-          required
-          rows="5"
-          className="create_news_input_textarea bg-dark text-white border border-secondary"
-        ></textarea>
+            <div className="mb-4">
+              <label className="form-label">Content</label>
+              <textarea
+                name="content"
+                placeholder="Content"
+                value={formData.content}
+                onChange={handleChange}
+                required
+                rows="5"
+                className="form-control bg-dark text-white border-secondary"
+              ></textarea>
+            </div>
 
-        <button
-          type="submit"
-          className="create_news_submit_button"
-          disabled={loading}
-        >
-          {loading ? 'Submitting' : 'Submit'}
-        </button>
-      </form>
+            <button
+              type="submit"
+              className="btn btn-primary w-100"
+              disabled={loading}
+            >
+              {loading ? 'Submitting...' : 'Submit'}
+            </button>
+          </form>
 
-      {message && <p className="create_news_message">{message}</p>}
+          {message && (
+            <div className="alert alert-info mt-4 text-center">
+              {message}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
+
 };
 
 export default CreateNewsArticle;

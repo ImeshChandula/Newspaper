@@ -73,7 +73,7 @@ const UpdateAdManager = () => {
     return (
         <div className="container py-5">
             <div className="bg-dark text-white p-4 rounded shadow-lg">
-                <h2 className="text-center text-warning mb-4">✏️ Update Advertisement</h2>
+                <h2 className="text-center text-warning mb-4 fw-bold">✏️ Update Advertisement</h2>
 
                 {message && <div className="alert alert-success text-center">{message}</div>}
                 {error && <div className="alert alert-danger text-center">{error}</div>}

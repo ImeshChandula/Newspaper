@@ -8,9 +8,8 @@ import CreateNewUser from '../components/CreateNewUser';
 import HistoryOfArticle from '../components/HistoryOfArticle';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/css/DashboardSuperAdmin.css';
-import AdManager from '../components/AdManager';
-//import TrackAds from '../components/TrackAds';
-import AdManagement from '../components/AdManagement';
+import CreateAds from '../components/CreateAds';
+import TrackSubmittedAds from '../components/TrackSubmittedAds';
 
 const DashboardSuperAdmin = () => {
 
@@ -33,11 +32,10 @@ const DashboardSuperAdmin = () => {
         return <CreateNewUser />
       case 'HistoryOfArticles':
         return <HistoryOfArticle />
-      case 'AdManager':
-        return <AdManager />
+      case 'CreateAds':
+        return <CreateAds />
       case 'SubmittedAds':
-        //return <TrackAds />
-        return <AdManagement />
+        return <TrackSubmittedAds />
       default:
         return <PendingNewsModeration />
     }
@@ -94,10 +92,10 @@ const DashboardSuperAdmin = () => {
             <span className="btn-text">Create User</span>
           </button>
           <button
-            className={`btn nav-button ${activeComponent === 'AdManager' ? 'btn-primary' : 'btn-outline-primary'}`}
-            onClick={() => setActiveComponent('AdManager')}
+            className={`btn nav-button ${activeComponent === 'CreateAds' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('CreateAds')}
           >
-            <span className="btn-text">Create Add</span>
+            <span className="btn-text">Create Ads</span>
           </button>
           <button
             className={`btn nav-button ${activeComponent === 'SubmittedAds' ? 'btn-primary' : 'btn-outline-primary'}`}

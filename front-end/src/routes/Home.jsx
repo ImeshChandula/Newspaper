@@ -12,19 +12,19 @@ const Home = () => {
     <div className="home-page bg-dark text-light min-vh-100 py-4">
       <div className="container">
 
-        <div className="row mb-5">
+        <div className="row">
           <div className="col-12">
             <AdCarousel />
           </div>
         </div>
 
-        <div className="row mb-5">
+        <div className="row">
           <div className="col-12">
             <BreakingNews />
           </div>
         </div>
 
-        <div className="row mb-2">
+        <div className="row mt-5">
           <div className="col-12">
             <NewsSection />
           </div>
@@ -43,7 +43,7 @@ const Home = () => {
             <SportForHome />
           </div>
         </div>
-        
+
       </div>
     </div>
   );
