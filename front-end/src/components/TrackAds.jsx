@@ -32,7 +32,7 @@ const TrackAds = () => {
 
     useEffect(() => {
         fetchAds();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeOnly]);
 
     const handleUpdate = (adId) => {
@@ -126,10 +126,17 @@ const TrackAds = () => {
                                             <span className="fw-semibold">📅 Start:</span>{' '}
                                             {new Date(ad.startDate).toLocaleDateString()}
                                         </div>
+
                                         <div className="mb-2 small">
                                             <span className="fw-semibold">⏳ End:</span>{' '}
                                             {ad.endDate ? new Date(ad.endDate).toLocaleDateString() : 'N/A'}
                                         </div>
+
+                                        <div className="mb-2 small">
+                                            <span className="fw-semibold"> By: </span>{' '}
+                                            {ad.author.username}
+                                        </div>
+
                                         <div className="mb-3">
                                             <span className="fw-semibold">🟢 Status:</span>{' '}
                                             {ad.active ? (
