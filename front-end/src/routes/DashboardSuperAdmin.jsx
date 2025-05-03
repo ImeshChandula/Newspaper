@@ -9,7 +9,8 @@ import HistoryOfArticle from '../components/HistoryOfArticle';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/css/DashboardSuperAdmin.css';
 import AdManager from '../components/AdManager';
-import TrackAds from '../components/TrackAds';
+//import TrackAds from '../components/TrackAds';
+import AdManagement from '../components/AdManagement';
 
 const DashboardSuperAdmin = () => {
 
@@ -35,7 +36,8 @@ const DashboardSuperAdmin = () => {
       case 'AdManager':
         return <AdManager />
       case 'SubmittedAds':
-        return <TrackAds />
+        //return <TrackAds />
+        return <AdManagement />
       default:
         return <PendingNewsModeration />
     }
