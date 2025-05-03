@@ -37,7 +37,7 @@ const getAllAds = async (req, res) => {
             query.active = active === "true";
         }
 
-        const ads = await Ads.find(query).sort({ createdAt: -1});
+        const ads = await Ads.find(query).populate('author', 'username name email').sort({ createdAt: -1 });
 
         res.status(200).json({ status: "success", msg: 'Fetching ads...', ads });
     } catch (error) {
