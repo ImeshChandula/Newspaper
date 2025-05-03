@@ -133,9 +133,10 @@ const TrackAds = () => {
                                         </div>
 
                                         <div className="mb-2 small">
-                                            <span className="fw-semibold">✍️ By: </span>{' '}
-                                            {ad.author.username}
+                                            <span className="fw-semibold">✍️ By:</span>{' '}
+                                            {ad.author?.username || "Unknown"}
                                         </div>
+
 
                                         <div className="mb-3">
                                             <span className="fw-semibold">🟢 Status:</span>{' '}
