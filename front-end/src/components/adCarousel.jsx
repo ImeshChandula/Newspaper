@@ -5,6 +5,7 @@ const AdCarousel = () => {
   const [ads, setAds] = useState([]);
   const [error, setError] = useState('');
   const [collapsed, setCollapsed] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [activeIndex, setActiveIndex] = useState(0);
   const impressionSet = useRef(new Set());
   const carouselRef = useRef(null);
@@ -48,6 +49,7 @@ const AdCarousel = () => {
 
   useEffect(() => {
     fetchAds();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Register carousel slide event using Bootstrap's native event

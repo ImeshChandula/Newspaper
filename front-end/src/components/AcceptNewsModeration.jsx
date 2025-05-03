@@ -108,7 +108,7 @@ const AcceptNewsModeration = () => {
         <Modal.Body className="text-center bg-dark">
           <img
             src={previewImage}
-            alt='Image Preview'
+            alt='Preview of the uploaded file'
             className="img-fluid"
             style={{ maxHeight: '70vh' }}
           />
@@ -142,7 +142,7 @@ const AcceptNewsModeration = () => {
                 <div className="news-media-container position-relative">
                   <img
                     src={article.media}
-                    alt='Image Preview'
+                    alt='Preview of the uploaded file'
                     className="news-media"
                     style={{ cursor: 'pointer', objectFit: 'cover', height: '200px', width: '100%' }}
                     onClick={() => handleImageClick(article.media)}
