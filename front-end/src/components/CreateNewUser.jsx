@@ -64,52 +64,54 @@ const CreateNewUser = () => {
   };
 
   return (
-    <div className="register_content border border-secondary">
-      <h2 className="register_header">Create New Editor Account</h2>
+    <div className="py-4">
+      <div className="register_content border border-secondary">
+        <h2 className="register_header">Create New Editor Account</h2>
 
-      {message && <p className="message_box">{message}</p>}
+        {message && <p className="message_box">{message}</p>}
 
-      <form onSubmit={handleSubmit} className="register_form">
-        <input
-          type="text"
-          name="username"
-          placeholder="User Name"
-          value={editor.username}
-          onChange={handleChange}
-          className="register_input"
-          required
-        />
-
-        <div className="password_wrapper">
+        <form onSubmit={handleSubmit} className="register_form">
           <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={editor.password}
+            type="text"
+            name="username"
+            placeholder="User Name"
+            value={editor.username}
             onChange={handleChange}
-            className="register_input password_input"
+            className="register_input"
             required
           />
-          <span
-            className="toggle_password_icon"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? "🙈" : "👁️"}
-          </span>
-        </div>
 
-        <div className="register_buttons">
-          <button type="submit" className="register_submit_button">Submit</button>
-          <button type="button" className="register_Back_button" onClick={() => { navigate("/"); }}>Back</button>
-        </div>
-
-        {!user && (
-          <div>
-            <p>If you have an Account?</p>
-            <Link to="/login">Click Me.!</Link>
+          <div className="password_wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={editor.password}
+              onChange={handleChange}
+              className="register_input password_input"
+              required
+            />
+            <span
+              className="toggle_password_icon"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </span>
           </div>
-        )}
-      </form>
+
+          <div className="register_buttons">
+            <button type="submit" className="register_submit_button">Submit</button>
+            <button type="button" className="register_Back_button" onClick={() => { navigate("/"); }}>Back</button>
+          </div>
+
+          {!user && (
+            <div>
+              <p>If you have an Account?</p>
+              <Link to="/login">Click Me.!</Link>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   )
 }
