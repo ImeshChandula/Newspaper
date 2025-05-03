@@ -31,6 +31,9 @@ const createAd = async (req, res) => {
 //@desc     Get all ads
 const getAllAds = async (req, res) => {
     try {
+        // Manually update all expired ads
+        await Ads.updateExpiredAds();
+
         const { active } = req.query;
         const query = {};
         if( active !== undefined ) {
@@ -49,13 +52,16 @@ const getAllAds = async (req, res) => {
 //@desc     Get all active ads for frontend display
 const getAllActiveAds = async (req, res) => {
     try {
+        // Manually update all expired ads
+        await Ads.updateExpiredAds();
+
         // build query for active ads that haven't expired
         const query = {
             active: true,
             $or: [
-                { endDate: {$exists: false}},
-                { endDate: null },
-                { endDate: {$gt: new Date()}},
+                { endDate: {$exists: false}}, // No endDate exists
+                { endDate: null }, // endDate is null
+                { endDate: {$gt: new Date()}}, // endDate is in the future
             ]
         };
 

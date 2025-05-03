@@ -16,4 +16,20 @@ const adSchema = new mongoose.Schema({
     endDate: { type: Date },
 }, { timestamps: true });
 
-module.exports = mongoose.model("Ad", adSchema);
+
+// Create a static method to manually update expired ads
+adSchema.statics.updateExpiredAds = function() {
+    const currentDate = new Date();
+    return this.updateMany(
+      { 
+        active: true, 
+        endDate: { $lt: currentDate }
+      },
+      { 
+        active: false 
+      }
+    );
+  };
+
+
+module.exports = mongoose.model("Ads", adSchema);
