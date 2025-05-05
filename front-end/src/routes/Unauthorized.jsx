@@ -32,6 +32,7 @@ const Unauthorized = () => {
     <div className="unauthorized py-5 mt-5">
       <h1 className="unauthorized_heading mt-5">Access Denied</h1>
       <p className="unauthorized_message">You do not have permission to access this page.</p>
+      <button className='unauthorized_button' onClick={() => navigate('/login')}>Login Again</button>
       <button className='unauthorized_button' onClick={goToDashboard}>
         Go to Dashboard
       </button>
