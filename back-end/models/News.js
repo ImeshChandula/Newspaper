@@ -6,7 +6,7 @@ const newsSchema = new mongoose.Schema({
         enum: ["Education", "Politics", "Sports"],
         required: true,
       },
-    breakingNews: false,
+    breakingNews: { type: Boolean, default: false},
     title: { type: String, required: true },
     media: { type: String }, // URL for image or video
     content: { type: String, required: true },
@@ -22,7 +22,7 @@ const newsSchema = new mongoose.Schema({
 
 
 // Create a static method to manually update breaking news
-adSchema.statics.updateBreakingNews = function() {
+newsSchema.statics.updateBreakingNews = function() {
     // Calculate the date 24 hours ago
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
