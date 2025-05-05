@@ -29,8 +29,8 @@ const NewsDetail = () => {
 
     if (loading) {
         return (
-            <div className="container mt-5 text-center py-5">
-                <Spinner animation="border" role="status">
+            <div className="container vh-100 mt-5 text-center py-5">
+                <Spinner animation="border" role="status" className="mt-5">
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
                 <h4 className="mt-3">Loading News...</h4>
@@ -46,7 +46,7 @@ const NewsDetail = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
             >
-                <h4>News not found</h4>
+                <h4 className="mt-5">News not found</h4>
             </motion.div>
         );
     }
@@ -66,16 +66,16 @@ const NewsDetail = () => {
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
                     {/* Only visible on large displays. */}
-                    <div className="row d-none d-lg-flex d-md-flex align-items-center mb-4">
+                    <div className="row d-none d-lg-flex d-md-flex align-items-center mb-4 mt-5">
                         <div className="col-lg-1 d-flex justify-content-start">
-                            <button onClick={() => navigate(-1)} className="btn btn-secondary">
+                            <button onClick={() => navigate(-1)} className="btn btn-outline-dark">
                                 &lt;
                             </button>
                         </div>
 
                         <div className="col-lg-10">
                             <motion.h1
-                                className="mb-3 text-center text-white"
+                                className="mb-3 text-center text-black"
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.4, duration: 0.5 }}
@@ -90,12 +90,12 @@ const NewsDetail = () => {
                     </div>
 
                     {/* Only visible on small displays. */}
-                    <div className="d-block d-md-none">
+                    <div className="d-block d-md-none mt-5">
                         <div className="d-flex flex-column flex-md-row align-items-center justify-content-between mb-4 gap-2">
                             <div className="d-flex justify-content-between w-100 w-md-auto">
                                 <button
                                     onClick={() => navigate(-1)}
-                                    className="btn btn-secondary"
+                                    className="btn btn-outline-dark"
                                 >
                                     &lt;
                                 </button>
@@ -103,7 +103,7 @@ const NewsDetail = () => {
                             </div>
 
                             <motion.h1
-                                className="text-center flex-grow-1 mb-2 text-white"
+                                className="text-center flex-grow-1 mb-2 text-black"
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.4, duration: 0.5 }}
@@ -126,7 +126,7 @@ const NewsDetail = () => {
                     )}
 
                     <motion.p
-                        className="lead text-center text-white"
+                        className="lead text-center text-black"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 0.6 }}
@@ -135,7 +135,7 @@ const NewsDetail = () => {
                     </motion.p>
 
                     <motion.div
-                        className="d-flex justify-content-between flex-wrap small text-white mt-4 border-top pt-2"
+                        className="d-flex justify-content-between flex-wrap small text-black mt-4 border-top pt-2"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.7, duration: 0.4 }}

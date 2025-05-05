@@ -3,13 +3,13 @@ import NewsSection from "../pages/NewsSection";
 import PoliticsforHome from "../components/PoliticsFroHome";
 import SportForHome from "../components/SportForHome";
 import BreakingNews from "../components/BreakingNews";
-import "../components/css/Home.css"; // We'll edit this for dark styles
+import "../components/css/Home.css";
 import EducationForHome from "../components/EducationForHome";
 import AdCarousel from "../components/adCarousel";
 
 const Home = () => {
   return (
-    <div className="home-page bg-dark text-light min-vh-100 py-4">
+    <div className="home-page bg-white text-black min-vh-100 py-4">
       <div className="container">
 
         <div className="row">
@@ -30,7 +30,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="row py-2">
+        <div className="row py-2 mt-4">
           <div className="col-md-4 mb-4">
             <PoliticsforHome />
           </div>

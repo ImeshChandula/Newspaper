@@ -25,7 +25,7 @@ const SportForHome = () => {
     return (
         <div className="home-page">
             <motion.h2
-                className="border-bottom pb-2 text-white"
+                className="border-bottom pb-2 text-black"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
@@ -41,13 +41,13 @@ const SportForHome = () => {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <div className="spinner-border text-primary" role="status">
+                        <div className="spinner-border text-black" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </div>
                     </motion.div>
                 ) : news.length === 0 ? (
                     <motion.p
-                        className="text-center"
+                        className="text-center text-black"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5 }}

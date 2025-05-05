@@ -45,7 +45,7 @@ const NewsSection = () => {
   };
 
   return (
-    <div className="container bg-dark text-white mt-4 pb-0 mb-0">
+    <div className="container bg-white text-black mt-4 pb-0 mb-0">
       <motion.h2
         className="border-bottom pb-2"
         initial={{ opacity: 0, y: -20 }}
@@ -63,13 +63,13 @@ const NewsSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="spinner-border text-primary" role="status">
+            <div className="spinner-border text-black" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
           </motion.div>
         ) : news.length === 0 ? (
           <motion.p
-            className="text-center"
+            className="text-center text-black"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}

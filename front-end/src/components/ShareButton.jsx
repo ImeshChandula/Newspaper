@@ -39,7 +39,7 @@ const ShareButton = ({ url, title }) => {
     return (
         <div className="position-relative d-inline-block" ref={dropdownRef}>
             <button
-                className="btn btn-outline-primary d-flex align-items-center gap-1 text-nowrap"
+                className="btn btn-outline-dark d-flex align-items-center gap-1 text-nowrap"
                 onClick={toggleDropdown}
             >
                 <FiShare2 size={18} />
@@ -48,7 +48,7 @@ const ShareButton = ({ url, title }) => {
             <AnimatePresence>
                 {open && (
                     <motion.div
-                        className="dropdown-menu p-3 show bg-dark border border-secondary"
+                        className="dropdown-menu p-3 show bg-white border border-dark"
                         initial={{ opacity: 0, scale: 0.95, y: -10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: -10 }}
@@ -80,7 +80,7 @@ const ShareButton = ({ url, title }) => {
                         </div>
                         <button
                             onClick={copyToClipboard}
-                            className="btn btn-sm btn-outline-primary w-100"
+                            className="btn btn-sm btn-outline-dark w-100"
                         >
                             {copied ? "Link Copied!" : "Copy Link"}
                         </button>

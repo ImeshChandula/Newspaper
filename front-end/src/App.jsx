@@ -27,10 +27,10 @@ const App = () => {
 
 
   return (
-    <div className="bg-dark">
+    <div className="bg-white">
       <Navbar />
       <ScrollToTop/>
-      <div className="container mt-4 bg-dark">
+      <div className="container mt-4 bg-white">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
