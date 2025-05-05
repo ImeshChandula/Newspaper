@@ -110,7 +110,7 @@ const AdCarousel = () => {
         id="adsCarousel"
         className="carousel slide"
         data-bs-ride="carousel"
-        data-bs-interval="2000"
+        data-bs-interval="1500"
         data-bs-pause="false"
         style={{ height: '200px' }}
         ref={carouselRef}
