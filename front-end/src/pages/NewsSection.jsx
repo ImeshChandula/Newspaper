@@ -10,29 +10,49 @@ const NewsSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const [acceptRes, breakingRes] = await Promise.all([
-          axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/accept`),
-          axios.get("http://localhost:5000/api/news/breakingNews")
-        ]);
-
-        const acceptedNews = acceptRes.data;
-        const breakingNews = breakingRes.data;
-
-        const breakingNewsIds = new Set(breakingNews.map(item => item._id));
-        const filteredNews = acceptedNews.filter(item => !breakingNewsIds.has(item._id));
-
-        setNews(filteredNews);
-      } catch (error) {
-        console.error("Failed to fetch news", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNews();
+    fetchRecentlyNewsWithoutBreakingNews();
+    //fetchNews();
   }, []);
+
+  const fetchRecentlyNewsWithoutBreakingNews = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get('http://localhost:5000/api/news/getAllRecentlyNewsWithoutBreakingNews', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      console.log("API Response:", res.data);
+      setNews(res.data);
+    } catch (error) {
+      console.error('Error fetching Reject news:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /*
+  const fetchNews = async () => {
+    try {
+      const [acceptRes, breakingRes] = await Promise.all([
+        axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/getAllRecentlyNewsWithoutBreakingNews`),
+        axios.get("http://localhost:5000/api/news/breakingNews")
+      ]);
+
+      const acceptedNews = acceptRes.data;
+      const breakingNews = breakingRes.data;
+
+      const breakingNewsIds = new Set(breakingNews.map(item => item._id));
+      const filteredNews = acceptedNews.filter(item => !breakingNewsIds.has(item._id));
+
+      setNews(filteredNews);
+    } catch (error) {
+      console.error("Failed to fetch news", error);
+    } finally {
+      setLoading(false);
+    }
+  };*/
 
   const handleToggle = () => {
     if (isExpanded) {

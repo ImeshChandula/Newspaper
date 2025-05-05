@@ -320,7 +320,23 @@ const getAllAcceptNews = async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: 'Error fetching accept news', error: error.message });
     }
-  };
+};
+
+
+//@route   GET /api/news/getAllRecentlyNewsWithoutBreakingNews
+//@desc    Get all Recently Accept News Without BreakingNews
+//@access  public
+const getAllRecentlyNewsWithoutBreakingNews = async (req, res) => {
+  try {
+    const pendingNews = await News.find({ status: "accept", breakingNews: false })
+      .sort({ date: -1 })
+      .populate('author', 'username email');
+
+    res.status(200).json(pendingNews);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching accept news', error: error.message });
+  }
+};
 
 
 //@route   GET /api/news/reject
@@ -460,5 +476,6 @@ module.exports = {
     deleteNewsArticleByID,
     getMyNewsArticles,
     getBreakingNews,
-    toggleBreakingNews
+    toggleBreakingNews,
+    getAllRecentlyNewsWithoutBreakingNews
 };

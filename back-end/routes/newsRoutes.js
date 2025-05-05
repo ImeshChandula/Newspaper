@@ -20,7 +20,8 @@ const {
     deleteNewsArticleByID,
     getMyNewsArticles,
     getBreakingNews,
-    toggleBreakingNews
+    toggleBreakingNews,
+    getAllRecentlyNewsWithoutBreakingNews
 } = require("../controllers/newsController");
 
 
@@ -54,5 +55,6 @@ router.patch("/updateNewsArticleByID/:id", authenticateUser, authorizeRoles("sup
 router.delete("/deleteNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin"), deleteNewsArticleByID);
 
 router.patch("/toggleBreakingNews/:id", authenticateUser, authorizeRoles("super_admin", "admin"), toggleBreakingNews);
+router.get("/getAllRecentlyNewsWithoutBreakingNews", getAllRecentlyNewsWithoutBreakingNews)
 
 module.exports = router;
