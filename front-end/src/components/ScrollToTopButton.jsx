@@ -25,7 +25,7 @@ const ScrollToTopButton = () => {
 
   return (
     <button
-      className={`btn btn-dark border border-secondary rounded-circle shadow-lg position-fixed bottom-0 end-0 m-4 ${
+      className={`btn btn-light border border-black rounded-circle shadow-lg position-fixed bottom-0 end-0 m-4 ${
         visible ? "d-block" : "d-none"
       }`}
       style={{ width: "50px", height: "50px", zIndex: 9999 }}

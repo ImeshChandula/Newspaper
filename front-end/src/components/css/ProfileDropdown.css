@@ -14,9 +14,10 @@
 .profile-menu {
     min-width: 200px;
     border-radius: 10px;
+    border-color: #ffc000;
     padding: 10px 0;
     box-shadow: 0 8px 20px rgba(85, 101, 220, 0.1);
-    background-color: #333942;
+    background-color: #000000;
 }
 
 .profile-menu .dropdown-item {
@@ -34,10 +35,11 @@
 }
 
 .profile-menu .btn-dashboard:hover {
-    color: #020074;
+    color: #ffffff;
     background-color: #4e6686;
 }
 
 .profile-menu .text-danger:hover {
-    background-color: #b47d7d;
+    background-color: #ff0000;
+    color: white !important;
 }

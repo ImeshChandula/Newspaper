@@ -16,7 +16,7 @@ const NewsCard = ({ news }) => {
     };
 
     return (
-        <div className="row g-4 bg-dark mt-3">
+        <div className="row g-4 bg-white mt-3">
             {news.map((item) => (
                 <motion.div
                     key={item._id}
@@ -26,7 +26,7 @@ const NewsCard = ({ news }) => {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <motion.div
-                        className="card news-card h-100 shadow-sm bg-secondary text-light"
+                        className="card news-card h-100 shadow-sm bg-white border border-black"
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.3 }}
                     >
@@ -50,18 +50,18 @@ const NewsCard = ({ news }) => {
                                 {item.title}
                             </motion.h5>
                             <motion.p
-                                className="card-text flex-grow-1 text-black"
+                                className="card-text flex-grow-1 text-muted-dark"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.3, delay: 0.4 }}
                             >
                                 {item.content.slice(0, 100)}...
                             </motion.p>
-                            <Link to={`/news/${item._id}`} className="btn btn-outline-light mt-auto">
+                            <Link to={`/news/${item._id}`} className="btn btn-outline-dark mt-auto">
                                 View More &raquo;
                             </Link>
                         </div>
-                        <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-white bg-dark">
+                        <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-muted bg-white">
                             <span>By {item?.author?.username ?? "Unknown"}</span>
                             <span>{formatDate(item.date)}</span>
                         </div>

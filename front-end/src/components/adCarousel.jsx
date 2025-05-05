@@ -95,7 +95,7 @@ const AdCarousel = () => {
   return (
     <div className="w-100 py-5 px-2 px-md-4 mt-4 pb-0 mb-0">
       <div className="d-flex justify-content-between align-items-center mb-2">
-        <h4 className="text-white mb-0">📢 Ads</h4>
+        <h4 className="text-black mb-0">📢 Ads</h4>
         <button
           className="btn btn-sm btn-outline-secondary"
           onClick={() => setCollapsed(true)}
