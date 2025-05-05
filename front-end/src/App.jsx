@@ -21,6 +21,7 @@ import PoliticsPage from "./pages/Politics.jsx"
 import EditNewsContent from "./routes/EditNewsContent.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import UpdateAdManager from "./components/UpdateAdManager.jsx";
+import ScrollToTopButton from "./components/ScrollToTopButton.jsx";
 
 const App = () => {
 
@@ -73,6 +74,7 @@ const App = () => {
             }
           />
         </Routes>
+        <ScrollToTopButton/>
       </div>
       <Footer />
     </div>
