@@ -9,12 +9,15 @@ const CreateNewsArticle = () => {
     title: '',
     media: '',
     content: '',
+    breakingNews: false
   });
 
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
+    // eslint-disable-next-line no-unused-vars
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -37,7 +40,7 @@ const CreateNewsArticle = () => {
       );
       console.log("News article created successfully!");
       setMessage('News Created Success');
-      setFormData({ category: '', title: '', media: '', content: '' });
+      setFormData({ category: '', title: '', media: '', content: '', breakingNews: false });
     } catch (error) {
       setMessage(error.response?.data?.message || 'Something Went Wrong');
     } finally {
@@ -64,7 +67,6 @@ const CreateNewsArticle = () => {
                 <option value="Education">Education</option>
                 <option value="Politics">Politics</option>
                 <option value="Sports">Sports</option>
-                <option value="Breaking News">Breaking News</option>
               </select>
             </div>
 
@@ -106,12 +108,26 @@ const CreateNewsArticle = () => {
               ></textarea>
             </div>
 
+            <div className="mb-3 form-check">
+              <input
+                type="checkbox"
+                name="breakingNews"
+                id="breakingNews"
+                checked={formData.breakingNews}
+                onChange={handleChange}
+                className="form-check-input"
+              />
+              <label className="form-check-label" htmlFor="breakingNews">
+                Mark as Breaking News
+              </label>
+            </div>
+
             <button
               type="submit"
               className="btn btn-primary w-100"
               disabled={loading}
             >
-              {loading ? 'Submitting...' : 'Submit'}
+              {loading ? 'Creating...' : 'Create News'}
             </button>
           </form>
 

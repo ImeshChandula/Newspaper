@@ -20,6 +20,7 @@ const {
     deleteNewsArticleByID,
     getMyNewsArticles,
     getBreakingNews,
+    toggleBreakingNews
 } = require("../controllers/newsController");
 
 
@@ -52,5 +53,6 @@ router.get("/getNewsArticleByID/:id", getNewsArticleByID);
 router.patch("/updateNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin", "admin"), updateNewsArticleByID);
 router.delete("/deleteNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin"), deleteNewsArticleByID);
 
+router.patch("/toggleBreakingNews/:id", authenticateUser, authorizeRoles("super_admin", "admin"), toggleBreakingNews);
 
 module.exports = router;

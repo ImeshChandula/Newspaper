@@ -16,9 +16,9 @@ const createNewsArticle = async (req, res) => {
         const newsArticle = new News({
             category,
             title,
-            media,
+            media: media || '',
             content,
-            breakingNews: breakingNews || false,
+            breakingNews: Boolean(breakingNews) || false,
             author: req.user.id, // middleware that sets req.user
             // status defaults to "pending", so no need to manually add it unless overriding
         });
@@ -257,6 +257,40 @@ const getBreakingNews = async (req, res) => {
   }
 };
 
+// @route   PATCH /api/news/toggleBreakingNews/:id
+// @desc    Toggle breaking news status
+// @access  Editor, Admin
+const toggleBreakingNews = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const { breakingNews } = req.body;
+
+      // Check if news article exists
+      const newsArticle = await News.findById(id);
+      if (!newsArticle) {
+          return res.status(404).json({ message: 'News article not found' });
+      }
+
+      // Update breaking news status
+      newsArticle.breakingNews = breakingNews;
+      
+      // If setting to breaking news, update the date to reset the 24-hour timer
+      if (breakingNews) {
+          newsArticle.date = new Date();
+      }
+      
+      await newsArticle.save();
+
+      res.status(200).json({ 
+          message: `Article successfully ${breakingNews ? 'marked as' : 'unmarked from'} breaking news`,
+          newsArticle 
+      });
+  } catch (error) {
+      console.error('Error toggling breaking news status:', error);
+      res.status(500).json({ message: 'Error updating breaking news status', error: error.message });
+  }
+};
+
 
 //@route   GET /api/news/pending
 //@desc    Get all pending news articles
@@ -427,4 +461,5 @@ module.exports = {
     deleteNewsArticleByID,
     getMyNewsArticles,
     getBreakingNews,
+    toggleBreakingNews
 };

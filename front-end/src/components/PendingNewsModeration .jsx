@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const PendingNewsModeration  = () => {
 
   const navigate = useNavigate();
+
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(null);
@@ -22,6 +23,8 @@ const PendingNewsModeration  = () => {
   // Image preview modal state
   const [showImageModal, setShowImageModal] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
+
+  const [breakingNewsToggleLoading, setBreakingNewsToggleLoading] = useState(null);
 
   const fetchPendingNews = async () => {
     try {
@@ -62,13 +65,43 @@ const PendingNewsModeration  = () => {
           }
         }
       );
-      setNews(news.filter(article => article._id !== id));
+      setNews((prev) => prev.filter((article) => article._id !== id));
       showNotification(`Article has been ${status === 'accept' ? 'accepted' : 'rejected'}`, "success");
     } catch (error) {
       console.error(`Failed to ${status} article:`, error);
       showNotification(`Failed to ${status} article`, "danger");
     } finally {
       setActionLoading(null);
+    }
+  };
+
+  const toggleBreakingNews = async (id, currentStatus) => {
+    setBreakingNewsToggleLoading(id);
+    try {
+      const token = localStorage.getItem('token');
+      // eslint-disable-next-line no-unused-vars
+      const response = await axios.patch(
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/toggleBreakingNews/${id}`,
+        { breakingNews: !currentStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      // Update the news state with the updated article
+      setNews((prev) => 
+        prev.map((article) => 
+          article._id === id ? { ...article, breakingNews: !currentStatus } : article
+        )
+      );
+      
+      showNotification(
+        `Article ${!currentStatus ? 'marked as breaking news' : 'unmarked as breaking news'}`, 
+        'success'
+      );
+    } catch (error) {
+      console.error('Failed to toggle breaking news status:', error);
+      showNotification('Failed to update breaking news status', 'danger');
+    } finally {
+      setBreakingNewsToggleLoading(null);
     }
   };
 
@@ -93,45 +126,55 @@ const PendingNewsModeration  = () => {
     setShowImageModal(true);
   };
 
+  // Calculate time remaining for breaking news
+  const getBreakingNewsTimeRemaining = (date) => {
+    const articleDate = new Date(date);
+    const expiryDate = new Date(articleDate.getTime() + 24 * 60 * 60 * 1000);
+    const now = new Date();
+    
+    if (now > expiryDate) return 'Expired';
+    
+    const timeRemaining = expiryDate - now;
+    const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    
+    return `${hours}h ${minutes}m remaining`;
+  };
+
 
 
   return (
     <div className="news-container">
       <h2 className="news-head text-primary">Pending News Moderation</h2>
-      
-      {/* Toast notifications */}
+
+      {/* Toast Notifications */}
       <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1060 }}>
-        <Toast 
-          onClose={() => setShowToast(false)} 
-          show={showToast} 
-          delay={3000} 
+        <Toast
+          show={showToast}
+          onClose={() => setShowToast(false)}
+          delay={3000}
           autohide
           bg={toastVariant}
         >
           <Toast.Header>
             <strong className="me-auto">Notification</strong>
           </Toast.Header>
-          <Toast.Body className={toastVariant === "danger" ? "text-white" : ""}>
+          <Toast.Body className={toastVariant === 'danger' ? 'text-white' : ''}>
             {toastMessage}
           </Toast.Body>
         </Toast>
       </ToastContainer>
-      
-      {/* Image preview modal */}
-      <Modal
-        show={showImageModal}
-        onHide={() => setShowImageModal(false)}
-        centered
-        size="lg"
-      >
-        <Modal.Header closeButton className='bg-dark'>
-          <Modal.Title className='text-white'>Image Preview</Modal.Title>
+
+      {/* Image Preview Modal */}
+      <Modal show={showImageModal} onHide={() => setShowImageModal(false)} centered size="lg">
+        <Modal.Header closeButton className='bg-dark text-white'>
+          <Modal.Title>Image Preview</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center bg-dark">
-          <img 
-            src={previewImage} 
-            alt="Full size preview" 
-            className="img-fluid" 
+          <img
+            src={previewImage}
+            alt='Preview of the uploaded file'
+            className="img-fluid"
             style={{ maxHeight: '70vh' }}
           />
         </Modal.Body>
@@ -140,41 +183,46 @@ const PendingNewsModeration  = () => {
       {loading ? (
         <div className="d-flex justify-content-center my-5">
           <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
+            <span className="visually-hidden">loading</span>
           </div>
         </div>
       ) : news.length === 0 ? (
         <div className="alert alert-info mt-3" role="alert">
-          No pending articles to review.
+          No Pending Article to review
         </div>
       ) : (
         <div className="news-card-container">
           {news.map((article) => (
-            <div key={article._id} className="news-card bg-dark border border-secondary">
-              <div className="news-metadata bg-dark border-bottom border-secondary">
+            <div 
+              key={article._id} 
+              className={`news-card bg-dark border ${article.breakingNews ? 'border-danger' : 'border-secondary'}`}
+            >
+              <div className="news-metadata bg-dark border-bottom border-secondary d-flex justify-content-between align-items-center">
                 <span className="news-category">{article.category}</span>
                 <span className="news-date">
                   {new Date(article.date).toLocaleString()}
                 </span>
               </div>
+
+              {article.breakingNews && (
+                <div className="breaking-news-badge bg-danger text-white px-2 py-1 d-flex justify-content-between align-items-center">
+                  <span><i className="bi bi-lightning-fill me-1"></i> BREAKING NEWS</span>
+                  <small>{getBreakingNewsTimeRemaining(article.date)}</small>
+                </div>
+              )}
+
               <h3 className="news-title text-primary">{article.title}</h3>
-              
-              {/* Enhanced image display */}
+
               {article.media && (
-                <div className="news-media-container">
-                  <img 
-                    src={article.media} 
-                    alt="Article media" 
+                <div className="news-media-container position-relative">
+                  <img
+                    src={article.media}
+                    alt='Preview of the uploaded file'
                     className="news-media"
-                    style={{ 
-                      cursor: 'pointer', 
-                      objectFit: 'cover',
-                      height: '200px',
-                      width: '100%'
-                    }}
+                    style={{ cursor: 'pointer', objectFit: 'cover', height: '200px', width: '100%' }}
                     onClick={() => handleImageClick(article.media)}
                   />
-                  <div 
+                  <div
                     className="position-absolute top-0 end-0 m-2"
                     style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '4px', padding: '2px 8px' }}
                   >
@@ -182,17 +230,42 @@ const PendingNewsModeration  = () => {
                   </div>
                 </div>
               )}
-              
+
               <p className="news-content text-white">{article.content.slice(0, 150)}...</p>
-              <p className="news-author">By: {article.author?.username} ({article.author?.email})</p>
+              <p className="news-author">
+                By {article.author?.username} ({article.author?.email})
+              </p>
 
               <div className="news-buttons">
-                <button 
-                  onClick={() => handleEditNews(article._id)} 
+                <button
+                  onClick={() => handleEditNews(article._id)}
                   className="btn btn-outline-primary news-edit-button"
                 >
-                  <i className="bi bi-pencil-square"></i> Edit content
+                  <i className="bi bi-pencil-square"></i> Edit Content
                 </button>
+                
+                <button
+                  onClick={() => toggleBreakingNews(article._id, article.breakingNews)}
+                  className={`btn ${article.breakingNews ? 'btn-warning' : 'btn-outline-warning'} news-breaking-button`}
+                  disabled={breakingNewsToggleLoading === article._id}
+                >
+                  {breakingNewsToggleLoading === article._id ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Processing
+                    </>
+                  ) : (
+                    <>
+                      <i className={`bi ${article.breakingNews ? 'bi-lightning-fill' : 'bi-lightning'}`}></i> 
+                      {article.breakingNews ? 'Unmark Breaking' : 'Mark Breaking'}
+                    </>
+                  )}
+                </button>
+                
                 <button
                   onClick={() => updateStatus(article._id, 'accept')}
                   className="btn btn-success news-accept-button"

@@ -21,6 +21,8 @@ const AcceptNewsModeration = () => {
   const [showImageModal, setShowImageModal] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
 
+  const [breakingNewsToggleLoading, setBreakingNewsToggleLoading] = useState(null);
+
   useEffect(() => {
     fetchNews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,6 +64,36 @@ const AcceptNewsModeration = () => {
     }
   };
 
+  const toggleBreakingNews = async (id, currentStatus) => {
+    setBreakingNewsToggleLoading(id);
+    try {
+      const token = localStorage.getItem('token');
+      // eslint-disable-next-line no-unused-vars
+      const response = await axios.patch(
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/toggleBreakingNews/${id}`,
+        { breakingNews: !currentStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      // Update the news state with the updated article
+      setNews((prev) => 
+        prev.map((article) => 
+          article._id === id ? { ...article, breakingNews: !currentStatus } : article
+        )
+      );
+      
+      showNotification(
+        `Article ${!currentStatus ? 'marked as breaking news' : 'unmarked as breaking news'}`, 
+        'success'
+      );
+    } catch (error) {
+      console.error('Failed to toggle breaking news status:', error);
+      showNotification('Failed to update breaking news status', 'danger');
+    } finally {
+      setBreakingNewsToggleLoading(null);
+    }
+  };
+
   const handleEditNews = (articleId) => {
     localStorage.setItem('Edit NewsId', articleId);
     navigate('/editNews', { state: { articleId } });
@@ -76,6 +108,21 @@ const AcceptNewsModeration = () => {
   const handleImageClick = (imageUrl) => {
     setPreviewImage(imageUrl);
     setShowImageModal(true);
+  };
+
+  // Calculate time remaining for breaking news
+  const getBreakingNewsTimeRemaining = (date) => {
+    const articleDate = new Date(date);
+    const expiryDate = new Date(articleDate.getTime() + 24 * 60 * 60 * 1000);
+    const now = new Date();
+    
+    if (now > expiryDate) return 'Expired';
+    
+    const timeRemaining = expiryDate - now;
+    const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    
+    return `${hours}h ${minutes}m remaining`;
   };
 
   return (
@@ -128,13 +175,23 @@ const AcceptNewsModeration = () => {
       ) : (
         <div className="news-card-container">
           {news.map((article) => (
-            <div key={article._id} className="news-card bg-dark border border-secondary">
-              <div className="news-metadata bg-dark border-bottom border-secondary">
+            <div 
+              key={article._id} 
+              className={`news-card bg-dark border ${article.breakingNews ? 'border-danger' : 'border-secondary'}`}
+            >
+              <div className="news-metadata bg-dark border-bottom border-secondary d-flex justify-content-between align-items-center">
                 <span className="news-category">{article.category}</span>
                 <span className="news-date">
                   {new Date(article.date).toLocaleString()}
                 </span>
               </div>
+
+              {article.breakingNews && (
+                <div className="breaking-news-badge bg-danger text-white px-2 py-1 d-flex justify-content-between align-items-center">
+                  <span><i className="bi bi-lightning-fill me-1"></i> BREAKING NEWS</span>
+                  <small>{getBreakingNewsTimeRemaining(article.date)}</small>
+                </div>
+              )}
 
               <h3 className="news-title text-primary">{article.title}</h3>
 
@@ -168,6 +225,29 @@ const AcceptNewsModeration = () => {
                 >
                   <i className="bi bi-pencil-square"></i> Edit Content
                 </button>
+                
+                <button
+                  onClick={() => toggleBreakingNews(article._id, article.breakingNews)}
+                  className={`btn ${article.breakingNews ? 'btn-warning' : 'btn-outline-warning'} news-breaking-button`}
+                  disabled={breakingNewsToggleLoading === article._id}
+                >
+                  {breakingNewsToggleLoading === article._id ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Processing
+                    </>
+                  ) : (
+                    <>
+                      <i className={`bi ${article.breakingNews ? 'bi-lightning-fill' : 'bi-lightning'}`}></i> 
+                      {article.breakingNews ? 'Unmark Breaking' : 'Mark Breaking'}
+                    </>
+                  )}
+                </button>
+                
                 <button
                   onClick={() => updateStatus(article._id, 'reject')}
                   className="btn btn-danger news-reject-button"
