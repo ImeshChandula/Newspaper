@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const newsSchema = new mongoose.Schema({
     category: {
         type: String,
-        enum: ["Education", "Politics", "Sports","Breaking News"],
+        enum: ["Education", "Politics", "Sports"],
         required: true,
       },
+    breakingNews: false,
     title: { type: String, required: true },
     media: { type: String }, // URL for image or video
     content: { type: String, required: true },
@@ -18,5 +19,22 @@ const newsSchema = new mongoose.Schema({
     },
 },  { timestamps: true });
 
-const News = mongoose.model('News', newsSchema);
-module.exports = News;
+
+
+// Create a static method to manually update breaking news
+adSchema.statics.updateBreakingNews = function() {
+    // Calculate the date 24 hours ago
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
+    return this.updateMany(
+        { 
+          breakingNews: true,
+          date: { $lt: twentyFourHoursAgo }
+        },
+        { 
+          $set: { breakingNews: false } 
+        }
+      );
+};
+
+module.exports = mongoose.model('News', newsSchema);

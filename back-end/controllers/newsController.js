@@ -1,4 +1,4 @@
-const News = require("../models/newsModel");
+const News = require("../models/News");
 
 
 //@route   POST /api/news/createNewsArticle
@@ -6,7 +6,7 @@ const News = require("../models/newsModel");
 //@access  Editor, Admin
 const createNewsArticle = async (req, res) => {
     try {
-        const { category, title, media, content } = req.body;
+        const { category, title, media, content, breakingNews } = req.body;
 
         // Basic input validation (optional but recommended)
         if (!category || !title || !content) {
@@ -18,6 +18,7 @@ const createNewsArticle = async (req, res) => {
             title,
             media,
             content,
+            breakingNews: breakingNews || false,
             author: req.user.id, // middleware that sets req.user
             // status defaults to "pending", so no need to manually add it unless overriding
         });
@@ -40,7 +41,10 @@ const getMyNewsArticles = async (req, res) => {
       const editorId = req.user.id;
       
       // Find all news articles where author matches the editor's ID
-      const myArticles = await News.find({ author: editorId })
+      const query = {
+        author: editorId,
+      };
+      const myArticles = await News.find(query)
           .sort({ date: -1 }) 
           .populate('author', 'username email'); 
       
@@ -78,7 +82,10 @@ const getEducationPendingNews = async (req, res) => {
 //@access  Public
 const getEducationAcceptNews = async (req, res) => {
     try {
+        await News.updateBreakingNews();
+
         const newsArticles = await News.find({
+            breakingNews: false,
             category: "Education",
             status: "accept"
         })
@@ -134,7 +141,10 @@ const getPoliticsPendingNews = async (req, res) => {
 //@access  Public
 const getPoliticsAcceptNews = async (req, res) => {
     try {
+        await News.updateBreakingNews();
+
         const newsArticles = await News.find({
+            breakingNews: false,
             category: "Politics",
             status: "accept"
         })
@@ -189,7 +199,10 @@ const getSportsPendingNews = async (req, res) => {
 //@access  Public
 const getSportsAcceptNews = async (req, res) => {
     try {
+        await News.updateBreakingNews();
+
         const newsArticles = await News.find({
+            breakingNews: false,
             category: "Sports",
             status: "accept"
         })
@@ -226,13 +239,13 @@ const getSportsRejectNews = async (req, res) => {
 //@access  Public
 const getBreakingNews = async (req, res) => {
   try {
-      // Calculate the date 24 hours ago
-      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-      
+      // Manually update all expired breaking news
+      await News.updateBreakingNews();
+
       // Query for breaking news articles created in the last 24 hours
       const breakingNews = await News.find({ 
-          category: "Breaking News",
-          status: "accept", // Only return approved articles
+          breakingNews: true,
+          status: "accept", 
           date: { $gte: twentyFourHoursAgo }
       })
       .sort({ date: -1 }) // Sort by newest first
@@ -345,17 +358,25 @@ const getNewsArticleByID = async (req, res) => {
   // @access  Admin, Super Admin
   const updateNewsArticleByID = async (req, res) => {
     try {
-      const { title, media, content, category } = req.body;
+      const news = News.findById(req.params.id);
+
+      if (!news) {
+        return res.status(404).json({ message: 'News article not found' });
+      }
+
+      const updateNewsData = {
+        title: req.body.title || news.title,
+        media: req.body.media || news.media,
+        content: req.body.content || news.content,
+        category: req.body.category || news.category,
+        breakingNews: req.body.breakingNews !== undefined ? req.body.breakingNews : news.breakingNews,
+      };
   
       const updatedNews = await News.findByIdAndUpdate(
         req.params.id,
-        { title, media, content, category },
+        updateNewsData,
         { new: true }
       );
-  
-      if (!updatedNews) {
-        return res.status(404).json({ message: 'News article not found' });
-      }
   
       res.status(200).json({
         message: 'News article updated successfully',
