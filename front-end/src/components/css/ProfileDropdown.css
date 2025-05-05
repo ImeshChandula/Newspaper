@@ -1,10 +1,10 @@
 .profile-dropdown .profile-toggle {
     border-radius: 50px;
-    border-color: #c2c2c2;
+    border-color: #ffc000;
     padding: 6px 12px;
     background-color:#212529;
     transition: background-color 0.2s ease-in-out;
-    color: #e9f2ff;
+    color: #ffc000;
 }
 
 .profile-dropdown .profile-toggle:hover {

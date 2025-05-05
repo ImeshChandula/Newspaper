@@ -66,7 +66,7 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className="navbar fixed-top navbar-expand-lg navbar-light bg-dark shadow-sm border-bottom border-black custom-navbar"
+      className="navbar fixed-top navbar-expand-lg navbar-light bg-black shadow-sm border-bottom border-black custom-navbar"
       variants={navVariants}
       initial="hidden"
       animate="visible"
@@ -105,7 +105,7 @@ const Navbar = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon" style={{ filter: "invert(1)" }}></span>
+          <span className="navbar-toggler-icon" style={{ filter: "invert(1)"}}></span>
         </button>
 
 

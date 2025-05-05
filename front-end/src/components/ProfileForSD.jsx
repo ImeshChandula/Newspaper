@@ -33,26 +33,26 @@ const ProfilForSD = ({ closeNavbar }) => {
   };
 
   return (
-    <div className="card p-3 mt-3 bg-dark shadow-sm border border-secondary">
+    <div className="card p-3 mt-3 bg-dark shadow-sm border border-warning">
       <div className="d-flex align-items-center mb-3">
-        <FaUserCircle size={50} className="text-secondary me-3" />
+        <FaUserCircle size={50} className="text-warning me-3" />
         <div>
-          <h5 className="mb-0 text-white fw-bold">{user ? user.username : "Guest"}</h5>
-          <small className="text-light">{user ? user.role : "Visitor"}</small>
+          <h5 className="mb-0 text-warning fw-bold">{user ? user.username : "Guest"}</h5>
+          <small className="text-warning">{user ? user.role : "Visitor"}</small>
         </div>
       </div>
 
       <ul className="list-unstyled mb-0">
         {!user ? (
           <li>
-            <Link to="/login" className="btn btn-outline-primary w-100" onClick={closeNavbar}>
+            <Link to="/login" className="btn btn-outline-warning w-100" onClick={closeNavbar}>
               Login
             </Link>
           </li>
         ) : (
           <>
             <li className="mb-2">
-              <button className="btn btn-outline-primary w-100" onClick={goToDashboard}>
+              <button className="btn btn-outline-warning w-100" onClick={goToDashboard}>
                 Dashboard
               </button>
             </li>
