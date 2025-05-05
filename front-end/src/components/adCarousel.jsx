@@ -75,7 +75,7 @@ const AdCarousel = () => {
 
   useEffect(() => {
     if (ads.length) {
-      const timer = setTimeout(() => setCollapsed(true), 3000);
+      const timer = setTimeout(() => setCollapsed(true), 5000);
       return () => clearTimeout(timer);
     }
   }, [ads]);
@@ -110,8 +110,9 @@ const AdCarousel = () => {
         id="adsCarousel"
         className="carousel slide"
         data-bs-ride="carousel"
-        data-bs-interval="7000"
-        style={{ height: '300px' }}
+        data-bs-interval="2000"
+        data-bs-pause="false"
+        style={{ height: '200px' }}
         ref={carouselRef}
       >
         {/* Indicators */}
