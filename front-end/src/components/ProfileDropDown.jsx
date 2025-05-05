@@ -30,7 +30,7 @@ const ProfileDropdown = () => {
     return (
         <div className="dropdown profile-dropdown">
             <button
-                className="btn btn-outline-secondary dropdown-toggle d-flex align-items-center profile-toggle"
+                className="btn btn-outline-warning dropdown-toggle d-flex align-items-center profile-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -41,10 +41,10 @@ const ProfileDropdown = () => {
             </button>
 
             <ul className="dropdown-menu dropdown-menu-end profile-menu" aria-labelledby="profileDropdown">
-                <li className="dropdown-item-text fw-bold text-white">
+                <li className="dropdown-item-text fw-bold text-warning">
                     {user ? user.username : "Guest"}
                 </li>
-                <li className="dropdown-item-text text-light">
+                <li className="dropdown-item-text text-warning small">
                     {user ? user.role : "Visitor"}
                 </li>
                 <li><hr className="dropdown-divider" /></li>
