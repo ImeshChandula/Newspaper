@@ -72,7 +72,7 @@ const Footer = () => {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-decoration-none text-muted fs-5"
+                  className="text-decoration-none text-dark fs-5"
                   {...iconHover}
                 >
                   {icon}

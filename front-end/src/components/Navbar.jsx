@@ -5,6 +5,7 @@ import ProfileDropdown from "./ProfileDropDown";
 import ProfilForSD from "./ProfileForSD";
 import "./css/Navbar.css";
 import GoogleTranslate from "../Languages/GoogleTranslate";
+import logo from "../assets/logo.png"
 
 const Navbar = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -66,15 +67,17 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className="navbar fixed-top navbar-expand-lg navbar-light bg-black shadow-sm border-bottom border-black custom-navbar"
+      className="navbar fixed-top navbar-expand-lg navbar-light bg-black shadow-sm border-bottom border-black custom-navbar pt-4"
       variants={navVariants}
       initial="hidden"
       animate="visible"
     >
       <div className="container-fluid px-4">
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link className="navbar-brand fw-bold me-4 d-lg-none" to="/">NP</Link>
-          <Link className="navbar-brand fw-bold me-4 d-none d-lg-flex" to="/">News Paper</Link>
+          <Link className="navbar-brand me-4 d-flex" to="/">
+            <img src={logo} alt="Logo" style={{ height: "70px" }} />
+          </Link>
+
         </motion.div>
 
         <div>
@@ -105,7 +108,7 @@ const Navbar = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon" style={{ filter: "invert(1)"}}></span>
+          <span className="navbar-toggler-icon" style={{ filter: "invert(1)" }}></span>
         </button>
 
 
