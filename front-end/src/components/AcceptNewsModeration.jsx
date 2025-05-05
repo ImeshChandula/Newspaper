@@ -21,6 +21,11 @@ const AcceptNewsModeration = () => {
   const [showImageModal, setShowImageModal] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
 
+  // New state for content preview modal
+  const [showContentModal, setShowContentModal] = useState(false);
+  const [previewContent, setPreviewContent] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+
   const [breakingNewsToggleLoading, setBreakingNewsToggleLoading] = useState(null);
 
   useEffect(() => {
@@ -110,6 +115,13 @@ const AcceptNewsModeration = () => {
     setShowImageModal(true);
   };
 
+  // New function to handle content preview
+  const handleContentClick = (title, content) => {
+    setPreviewTitle(title);
+    setPreviewContent(content);
+    setShowContentModal(true);
+  };
+
   // Calculate time remaining for breaking news
   const getBreakingNewsTimeRemaining = (date) => {
     const articleDate = new Date(date);
@@ -159,6 +171,20 @@ const AcceptNewsModeration = () => {
             className="img-fluid"
             style={{ maxHeight: '70vh' }}
           />
+        </Modal.Body>
+      </Modal>
+
+      {/* Content Preview Modal */}
+      <Modal show={showContentModal} onHide={() => setShowContentModal(false)} centered size="lg">
+        <Modal.Header closeButton className='bg-dark text-white'>
+          <Modal.Title>{previewTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="bg-dark text-white">
+          <div className="content-preview">
+            {previewContent.split('\n').map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
         </Modal.Body>
       </Modal>
 
@@ -213,7 +239,16 @@ const AcceptNewsModeration = () => {
                 </div>
               )}
 
-              <p className="news-content text-black">{article.content.slice(0, 150)}...</p>
+              <p className="news-content text-black">{article.content.slice(0, 120)}...</p>
+              <div className="d-flex justify-content-end mb-2">
+                <button
+                  onClick={() => handleContentClick(article.title, article.content)}
+                  className="btn btn-sm btn-outline-info"
+                >
+                  <i className="bi bi-eye"></i> View Full Content
+                </button>
+              </div>
+
               <p className="news-author text-muted small">
                 By {article.author?.username} ({article.author?.email})
               </p>
