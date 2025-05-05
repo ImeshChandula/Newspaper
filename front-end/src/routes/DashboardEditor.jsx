@@ -18,8 +18,8 @@ const DashboardEditor = () => {
   }
   return (
 
-    <div className="container mt-4 dashboard-container py-5 bg-dark">
-      <h1 className="dashboard-title text-white">Author Dashboard</h1>
+    <div className="container mt-5 dashboard-container pt-5">
+      <h1 className="dashboard-title text-black">Author Dashboard</h1>
       
       <div className="dashboard-nav">
         <div className="btn-group" role="group" aria-label="Dashboard Navigation">
@@ -38,7 +38,7 @@ const DashboardEditor = () => {
         </div>
       </div>
       
-      <div className="card dashboard-card bg-dark">
+      <div className="card dashboard-card bg-white">
         <div className="card-body component-container">
           {renderComponent()}
         </div>

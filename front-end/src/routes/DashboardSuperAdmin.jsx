@@ -44,8 +44,8 @@ const DashboardSuperAdmin = () => {
 
 
   return (
-    <div className="container mt-4 dashboard-container py-4">
-      <h1 className="dashboard-title text-primary">Super Admin Dashboard</h1>
+    <div className="container mt-5 dashboard-container pt-5">
+      <h1 className="dashboard-title text-black">Super Admin Dashboard</h1>
 
       <div className="dashboard-nav">
         <div className="btn-group" role="group" aria-label="Dashboard Navigation">
@@ -107,7 +107,7 @@ const DashboardSuperAdmin = () => {
         </div>
       </div>
 
-      <div className="card dashboard-card bg-dark">
+      <div className="card dashboard-card bg-white">
         <div className="card-body component-container">
           {renderComponent()}
         </div>

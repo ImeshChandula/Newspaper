@@ -97,10 +97,10 @@ const BreakingNews = () => {
   if (news.length === 0) return null;
 
   return (
-    <div className="container text-light mt-4 pb-0 mb-0">
+    <div className="container mt-4 pb-0 mb-0">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 mb-md-4">
         <motion.h2
-          className="border-bottom pb-2 mb-3 mb-md-0 mt-5"
+          className="border-bottom pb-2 mb-3 mb-md-0 mt-5 text-black"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -111,14 +111,14 @@ const BreakingNews = () => {
         {news.length > visibleItems && (
           <div className="slider-controls d-none d-md-block">
             <button
-              className="btn btn-sm btn-outline-light me-2"
+              className="btn btn-sm btn-outline-dark me-2"
               onClick={handlePrev}
               disabled={currentIndex === 0}
             >
               <i className="bi bi-chevron-left"></i>
             </button>
             <button
-              className="btn btn-sm btn-outline-light"
+              className="btn btn-sm btn-outline-dark"
               onClick={handleNext}
               disabled={currentIndex >= news.length - visibleItems}
             >
@@ -144,7 +144,7 @@ const BreakingNews = () => {
               style={{ flex: `0 0 ${100 / visibleItems}%` }}
             >
               <motion.div
-                className="card news-card h-100 bg-secondary text-light"
+                className="card news-card h-100 bg-white border border-black"
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.3 }}
               >
@@ -160,7 +160,7 @@ const BreakingNews = () => {
                 )}
                 <div className="card-body d-flex flex-column">
                   <motion.h5
-                    className="card-title fs-6 fs-md-5 fw-bold text-dark"
+                    className="card-title fs-6 fs-md-5 fw-bold text-black"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.3 }}
@@ -168,18 +168,18 @@ const BreakingNews = () => {
                     {item.title}
                   </motion.h5>
                   <motion.p
-                    className="card-text flex-grow-1 small text-dark"
+                    className="card-text flex-grow-1 small text-muted-dark"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.4 }}
                   >
                     {item.content.slice(0, 100)}...
                   </motion.p>
-                  <Link to={`/news/${item._id}`} className="btn btn-sm btn-outline-light mt-auto">
+                  <Link to={`/news/${item._id}`} className="btn btn-sm btn-outline-dark mt-auto">
                     View More &raquo;
                   </Link>
                 </div>
-                <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-white bg-dark">
+                <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-muted bg-white">
                   <span className="mb-1 mb-md-0">By {item?.author?.username ?? "Unknown"}</span>
                   <span >{formatDate(item.date)}</span>
                 </div>
