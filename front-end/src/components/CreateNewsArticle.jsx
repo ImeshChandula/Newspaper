@@ -51,8 +51,8 @@ const CreateNewsArticle = () => {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
-        <div className="col-12 col-md-10 col-lg-8 col-xl-6 bg-dark text-white p-4 rounded shadow-lg border border-secondary">
-          <h2 className="text-center mb-4 border-bottom pb-2 text-primary fw-bold">Create News Article</h2>
+        <div className="col-12 col-md-10 col-lg-8 col-xl-6 bg-white text-black p-4 rounded shadow-lg border border-secondary">
+          <h2 className="text-center mb-4 border-bottom pb-2 text-black fw-bold">Create News Article</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label className="form-label">Category</label>
@@ -61,7 +61,7 @@ const CreateNewsArticle = () => {
                 value={formData.category}
                 onChange={handleChange}
                 required
-                className="form-select bg-dark text-white border-secondary"
+                className="form-select text-black border-secondary"
               >
                 <option value="">Select Category</option>
                 <option value="Education">Education</option>
@@ -79,7 +79,7 @@ const CreateNewsArticle = () => {
                 value={formData.title}
                 onChange={handleChange}
                 required
-                className="form-control bg-dark text-white border-secondary"
+                className="form-control bg-white text-black border-secondary"
               />
             </div>
 
@@ -91,7 +91,7 @@ const CreateNewsArticle = () => {
                 placeholder="Media URL"
                 value={formData.media}
                 onChange={handleChange}
-                className="form-control bg-dark text-white border-secondary"
+                className="form-control bg-white text-black border-secondary"
               />
             </div>
 
@@ -104,7 +104,7 @@ const CreateNewsArticle = () => {
                 onChange={handleChange}
                 required
                 rows="5"
-                className="form-control bg-dark text-white border-secondary"
+                className="form-control bg-white text-black border-secondary"
               ></textarea>
             </div>
 

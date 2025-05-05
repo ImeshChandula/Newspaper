@@ -117,12 +117,12 @@ const TrackSubmittedAds = () => {
 
     return (
         <div className="container">
-            <h2 className="text-center text-primary mb-4 fw-bold">📢 Track Submitted Ads</h2>
+            <h2 className="text-center text-black mb-4 fw-bold">📢 Track Submitted Ads</h2>
 
             {error && <div className="alert alert-danger text-center">{error}</div>}
 
             <div className="d-flex justify-content-center align-items-center mb-4">
-                <label className="form-check-label me-2 fw-semibold text-white">Show only active ads:</label>
+                <label className="form-check-label me-2 fw-semibold text-black">Show only active ads:</label>
                 <div className="form-check form-switch">
                     <input
                         className="form-check-input"
@@ -134,7 +134,7 @@ const TrackSubmittedAds = () => {
             </div>
 
             {loading ? (
-                <div className="text-center text-light">Loading ads...</div>
+                <div className="text-center text-black">Loading ads...</div>
             ) : (
                 <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
                     {ads.length === 0 ? (
@@ -142,7 +142,7 @@ const TrackSubmittedAds = () => {
                     ) : (
                         ads.map((ad) => (
                             <div key={ad._id} className="col">
-                                <div className="card h-100 shadow bg-dark text-light border border-secondary rounded-4">
+                                <div className="card h-100 shadow bg-white text-muted border border-secondary rounded-4">
                                     {ad.media && (
                                         <img
                                             src={ad.media}
@@ -152,9 +152,9 @@ const TrackSubmittedAds = () => {
                                         />
                                     )}
                                     <div className="card-body d-flex flex-column">
-                                        <h5 className="card-title text-info fw-bold">{ad.title}</h5>
+                                        <h5 className="card-title text-black fw-bold">{ad.title}</h5>
 
-                                        <p className="card-text text-white" style={{
+                                        <p className="card-text text-black" style={{
                                             display: '-webkit-box',
                                             WebkitLineClamp: 3,
                                             WebkitBoxOrient: 'vertical',
@@ -164,13 +164,13 @@ const TrackSubmittedAds = () => {
                                             {ad.content}
                                         </p>
 
-                                        <div className="mb-2 small">
+                                        <div className="mb-2 small text-black">
                                             <span className="fw-semibold">🔗 Link:</span>{' '}
                                             <a
                                                 href={ad.link}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className="text-warning text-break"
+                                                className="text-primary text-break"
                                                 style={{
                                                     display: '-webkit-box',
                                                     WebkitLineClamp: 2,
@@ -183,23 +183,23 @@ const TrackSubmittedAds = () => {
                                             </a>
                                         </div>
 
-                                        <div className="mb-2 small">
+                                        <div className="mb-2 small text-black">
                                             <span className="fw-semibold">📅 Start:</span>{' '}
                                             {new Date(ad.startDate).toLocaleDateString()}
                                         </div>
 
-                                        <div className="mb-2 small">
+                                        <div className="mb-2 small text-black">
                                             <span className="fw-semibold">⏳ End:</span>{' '}
                                             {ad.endDate ? new Date(ad.endDate).toLocaleDateString() : 'N/A'}
                                         </div>
 
-                                        <div className="mb-2 small">
+                                        <div className="mb-2 small text-black">
                                             <span className="fw-semibold">✍️ By:</span>{' '}
                                             {ad.author?.username || "Unknown"}
                                         </div>
 
                                         <div className="mb-3 position-relative">
-                                            <span className="fw-semibold">🟢 Status:</span>{' '}
+                                            <span className="fw-semibold text-black">🟢 Status:</span>{' '}
                                             <div className="dropdown d-inline-block" ref={el => dropdownRefs.current[ad._id] = el}>
                                                 <button
                                                     className={`btn btn-sm ${ad.active ? 'btn-success' : 'btn-danger'} dropdown-toggle`}

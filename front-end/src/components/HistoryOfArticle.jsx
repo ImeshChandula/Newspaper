@@ -45,12 +45,12 @@ const HistoryOfArticle = () => {
   }, []);
 
   return (
-    <div className="container bg-dark">
-      <h2 className="news-head text-primary">📰 My News Article History</h2>
+    <div className="container bg-white">
+      <h2 className="news-head text-black">📰 My News Article History</h2>
 
       {loading ? (
         <div className="d-flex justify-content-center">
-          <div className="spinner-border text-primary" role="status" />
+          <div className="spinner-border text-black" role="status" />
         </div>
       ) : error ? (
         <div className="alert alert-danger text-center">{error}</div>
@@ -60,7 +60,7 @@ const HistoryOfArticle = () => {
         <div className="row gy-4 gx-4 py-2">
           {articles.map((article) => (
             <div key={article._id} className="col-md-6 col-lg-4">
-              <div className="card h-100 shadow-sm border-0 bg-secondary text-black">
+              <div className="card h-100 shadow-sm border border-black bg-white text-black">
                 <img
                   src={article.media || "https://via.placeholder.com/400x200?text=No+Image"}
                   className="card-img-top"
@@ -74,7 +74,7 @@ const HistoryOfArticle = () => {
                   </p>
                   <p className="card-text mb-2">
                     <strong>Status:</strong>{" "}
-                    <span className={`badge bg-${getStatusBadgeColor(article.status)} border border-black text-black`}>
+                    <span className={`badge bg-${getStatusBadgeColor(article.status)}`}>
                       {article.status.toUpperCase()}
                     </span>
                   </p>
@@ -84,7 +84,7 @@ const HistoryOfArticle = () => {
                     </p>
                   )}
                 </div>
-                <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-white bg-dark border border-secondary">
+                <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-muted bg-white">
                   Submitted on {new Date(article.date).toLocaleString()}
                 </div>
               </div>

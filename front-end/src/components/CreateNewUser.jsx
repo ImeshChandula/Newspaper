@@ -65,8 +65,8 @@ const CreateNewUser = () => {
 
   return (
     <div className="py-4">
-      <div className="register_content border border-secondary">
-        <h2 className="register_header">Create New Editor Account</h2>
+      <div className="register_content border border-black bg-white">
+        <h2 className="register_header text-black">Create New Editor Account</h2>
 
         {message && <p className="message_box">{message}</p>}
 
@@ -106,7 +106,7 @@ const CreateNewUser = () => {
 
           {!user && (
             <div>
-              <p>If you have an Account?</p>
+              <p className='text-muted'>If you have an Account?</p>
               <Link to="/login">Click Me.!</Link>
             </div>
           )}

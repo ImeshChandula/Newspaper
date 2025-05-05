@@ -145,7 +145,7 @@ const PendingNewsModeration  = () => {
 
   return (
     <div className="news-container">
-      <h2 className="news-head text-primary">Pending News Moderation</h2>
+      <h2 className="news-head text-black">Pending News Moderation</h2>
 
       {/* Toast Notifications */}
       <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1060 }}>
@@ -167,10 +167,10 @@ const PendingNewsModeration  = () => {
 
       {/* Image Preview Modal */}
       <Modal show={showImageModal} onHide={() => setShowImageModal(false)} centered size="lg">
-        <Modal.Header closeButton className='bg-dark text-white'>
+        <Modal.Header closeButton className='bg-white text-black'>
           <Modal.Title>Image Preview</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="text-center bg-dark">
+        <Modal.Body className="text-center bg-white">
           <img
             src={previewImage}
             alt='Preview of the uploaded file'
@@ -195,11 +195,11 @@ const PendingNewsModeration  = () => {
           {news.map((article) => (
             <div 
               key={article._id} 
-              className={`news-card bg-dark border ${article.breakingNews ? 'border-danger' : 'border-secondary'}`}
+              className={`news-card bg-white border ${article.breakingNews ? 'border-danger' : 'border-secondary'}`}
             >
-              <div className="news-metadata bg-dark border-bottom border-secondary d-flex justify-content-between align-items-center">
+              <div className="news-metadata bg-white border-bottom border-secondary d-flex justify-content-between align-items-center">
                 <span className="news-category">{article.category}</span>
-                <span className="news-date">
+                <span className="news-date text-muted">
                   {new Date(article.date).toLocaleString()}
                 </span>
               </div>
@@ -211,7 +211,7 @@ const PendingNewsModeration  = () => {
                 </div>
               )}
 
-              <h3 className="news-title text-primary">{article.title}</h3>
+              <h3 className="news-title text-black">{article.title}</h3>
 
               {article.media && (
                 <div className="news-media-container position-relative">
@@ -231,8 +231,8 @@ const PendingNewsModeration  = () => {
                 </div>
               )}
 
-              <p className="news-content text-white">{article.content.slice(0, 150)}...</p>
-              <p className="news-author">
+              <p className="news-content text-black">{article.content.slice(0, 150)}...</p>
+              <p className="news-author text-muted">
                 By {article.author?.username} ({article.author?.email})
               </p>
 

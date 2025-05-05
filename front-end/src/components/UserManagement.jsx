@@ -136,7 +136,7 @@ const UserManagement = () => {
 
   if (loading) return (
     <div className="loading-container">
-      <div className="spinner-border text-primary" role="status">
+      <div className="spinner-border text-black" role="status">
         <span className="visually-hidden text-black">Loading users...</span>
       </div>
     </div>

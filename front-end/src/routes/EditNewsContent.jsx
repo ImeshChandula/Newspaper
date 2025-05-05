@@ -123,16 +123,16 @@ const EditNewsContent = () => {
 
   if (fetchLoading) {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100 text-white bg-dark">
+      <div className="d-flex justify-content-center align-items-center vh-100 text-black bg-white">
         <div>Loading article data...</div>
       </div>
     );
   }
 
   return (
-    <div className="container my-5 py-4">
+    <div className="container my-5 pt-5">
       <div className="row justify-content-center">
-        <div className="col-12 col-md-10 col-lg-8 col-xl-6 bg-dark text-white p-4 rounded shadow-lg">
+        <div className="col-12 col-md-10 col-lg-8 col-xl-6 bg-white text-black p-4 rounded shadow-lg">
           <h2 className="mb-4 text-center border-bottom pb-2">Edit News Article</h2>
 
           {articleId ? (
@@ -144,7 +144,7 @@ const EditNewsContent = () => {
                   value={formData.category}
                   onChange={handleChange}
                   required
-                  className="form-select bg-dark text-white border-secondary"
+                  className="form-select bg-white border-secondary"
                 >
                   <option value="">Select Category</option>
                   <option value="Education">Education</option>
@@ -162,7 +162,7 @@ const EditNewsContent = () => {
                   value={formData.title}
                   onChange={handleChange}
                   required
-                  className="form-control bg-dark text-white border-secondary"
+                  className="form-control bg-white border-secondary"
                 />
               </div>
 
@@ -174,7 +174,7 @@ const EditNewsContent = () => {
                   placeholder="Enter media URL"
                   value={formData.media}
                   onChange={handleChange}
-                  className="form-control bg-dark text-white border-secondary"
+                  className="form-control bgwhite border-secondary"
                 />
               </div>
 
@@ -187,7 +187,7 @@ const EditNewsContent = () => {
                   onChange={handleChange}
                   required
                   rows="6"
-                  className="form-control bg-dark text-white border-secondary"
+                  className="form-control bg-white border-secondary"
                 ></textarea>
               </div>
 

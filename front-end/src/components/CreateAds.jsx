@@ -54,8 +54,8 @@ const CreateAds = () => {
 
   return (
     <div className="container">
-      <div className="bg-dark p-4 rounded shadow text-white">
-        <h2 className="text-center text-primary mb-4 fw-bold">📢 Create New Ad</h2>
+      <div className="bg-white p-4 rounded shadow text-black">
+        <h2 className="text-center text-black mb-4 fw-bold">📢 Create New Ad</h2>
 
         {message && <div className="alert alert-success text-center">{message}</div>}
         {error && <div className="alert alert-danger text-center">{error}</div>}
@@ -67,7 +67,7 @@ const CreateAds = () => {
             <input
               type="text"
               name="title"
-              className="form-control"
+              className="form-control border border-black"
               value={form.title}
               onChange={handleChange}
               required
@@ -80,7 +80,7 @@ const CreateAds = () => {
             <input
               type="date"
               name="endDate"
-              className="form-control"
+              className="form-control border border-black"
               value={form.endDate}
               onChange={handleChange}
             />
@@ -90,7 +90,7 @@ const CreateAds = () => {
             <label className="form-label">🖊️ Content</label>
             <textarea
               name="content"
-              className="form-control"
+              className="form-control border border-black"
               rows="4"
               value={form.content}
               onChange={handleChange}
@@ -104,7 +104,7 @@ const CreateAds = () => {
             <input
               type="text"
               name="media"
-              className="form-control"
+              className="form-control border border-black"
               value={form.media}
               onChange={handleChange}
               required
@@ -117,7 +117,7 @@ const CreateAds = () => {
             <input
               type="text"
               name="link"
-              className="form-control"
+              className="form-control border border-black"
               value={form.link}
               onChange={handleChange}
               required

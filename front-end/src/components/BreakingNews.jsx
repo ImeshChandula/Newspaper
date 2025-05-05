@@ -109,7 +109,7 @@ const BreakingNews = () => {
         </motion.h2>
 
         {news.length > visibleItems && (
-          <div className="slider-controls d-none d-md-block">
+          <div className="slider-controls d-none d-md-block mt-5">
             <button
               className="btn btn-sm btn-outline-dark me-2"
               onClick={handlePrev}

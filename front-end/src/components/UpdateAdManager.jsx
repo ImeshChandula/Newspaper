@@ -72,8 +72,8 @@ const UpdateAdManager = () => {
 
     return (
         <div className="container py-5">
-            <div className="bg-dark text-white p-4 rounded shadow-lg">
-                <h2 className="text-center text-warning mb-4 fw-bold">✏️ Update Advertisement</h2>
+            <div className="bg-white text-black p-4 rounded shadow-lg">
+                <h2 className="text-center text-black mb-4 fw-bold">✏️ Update Advertisement</h2>
 
                 {message && <div className="alert alert-success text-center">{message}</div>}
                 {error && <div className="alert alert-danger text-center">{error}</div>}
@@ -85,7 +85,7 @@ const UpdateAdManager = () => {
                         <input
                             type="text"
                             name="title"
-                            className="form-control"
+                            className="form-control border border-black"
                             value={form.title}
                             onChange={handleChange}
                             required
@@ -98,7 +98,7 @@ const UpdateAdManager = () => {
                         <input
                             type="date"
                             name="endDate"
-                            className="form-control"
+                            className="form-control border border-black"
                             value={form.endDate}
                             onChange={handleChange}
                         />
@@ -108,7 +108,7 @@ const UpdateAdManager = () => {
                         <label className="form-label">Content</label>
                         <textarea
                             name="content"
-                            className="form-control"
+                            className="form-control border border-black"
                             rows="4"
                             value={form.content}
                             onChange={handleChange}
@@ -122,7 +122,7 @@ const UpdateAdManager = () => {
                         <input
                             type="text"
                             name="media"
-                            className="form-control"
+                            className="form-control border border-black"
                             value={form.media}
                             onChange={handleChange}
                             required
@@ -135,7 +135,7 @@ const UpdateAdManager = () => {
                         <input
                             type="text"
                             name="link"
-                            className="form-control"
+                            className="form-control border border-black"
                             value={form.link}
                             onChange={handleChange}
                             required
@@ -145,7 +145,7 @@ const UpdateAdManager = () => {
 
                     <div className="col-12 text-center">
                         <button type="submit" className="btn btn-warning mt-3 me-3">💾 Update Ad</button>
-                        <button type="button" className="btn btn-outline-light mt-3" onClick={handleCancel}>↩️ Cancel</button>
+                        <button type="button" className="btn btn-outline-danger mt-3" onClick={handleCancel}>↩️ Cancel</button>
                     </div>
                 </form>
             </div>

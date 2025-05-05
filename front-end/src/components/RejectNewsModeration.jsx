@@ -177,7 +177,7 @@ const RejectNewsModeration = () => {
 
   return (
     <div className="news-container">
-      <h2 className="news-head text-primary">Rejected News Moderation</h2>
+      <h2 className="news-head text-black">Rejected News Moderation</h2>
       
       {/* Toast notifications */}
       <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1060 }}>
@@ -231,10 +231,10 @@ const RejectNewsModeration = () => {
         centered
         size="lg"
       >
-        <Modal.Header closeButton className='bg-dark text-white'>
+        <Modal.Header closeButton className='bg-white text-black'>
           <Modal.Title>Image Preview</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="text-center bg-dark">
+        <Modal.Body className="text-center bg-white">
           <img 
             src={previewImage} 
             alt="Full size preview" 
@@ -246,8 +246,8 @@ const RejectNewsModeration = () => {
 
       {loading ? (
         <div className="d-flex justify-content-center my-5">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
+          <div className="spinner-border text-black" role="status">
+            <span className="visually-hidden tect-black">Loading...</span>
           </div>
         </div>
       ) : news.length === 0 ? (
@@ -257,10 +257,10 @@ const RejectNewsModeration = () => {
       ) : (
         <div className="news-card-container">
           {news.map((article) => (
-            <div key={article._id} className={`news-card bg-dark border ${article.breakingNews ? 'border-danger' : 'border-secondary'}`}>
-              <div className="news-metadata bg-dark border-bottom border-secondary d-flex justify-content-between align-items-center">
+            <div key={article._id} className={`news-card bg-white border ${article.breakingNews ? 'border-danger' : 'border-secondary'}`}>
+              <div className="news-metadata bg-white border-bottom border-secondary d-flex justify-content-between align-items-center">
                 <span className="news-category">{article.category}</span>
-                <span className="news-date">
+                <span className="news-date text-muted">
                   {new Date(article.date).toLocaleString()}
                 </span>
               </div>
@@ -272,7 +272,7 @@ const RejectNewsModeration = () => {
                 </div>
               )}
 
-              <h3 className="news-title text-primary">{article.title}</h3>
+              <h3 className="news-title text-black">{article.title}</h3>
               
               {/* Enhanced image display */}
               {article.media && (
@@ -298,8 +298,8 @@ const RejectNewsModeration = () => {
                 </div>
               )}
               
-              <p className="news-content text-white">{article.content.slice(0, 150)}...</p>
-              <p className="news-author">By: {article.author?.username} ({article.author?.email})</p>
+              <p className="news-content text-black">{article.content.slice(0, 150)}...</p>
+              <p className="news-author text-muted">By: {article.author?.username} ({article.author?.email})</p>
 
               <div className="news-buttons">
                 <button 

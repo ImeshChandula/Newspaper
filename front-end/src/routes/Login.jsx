@@ -40,8 +40,8 @@ const Login = () => {
 
   return (
     <div className="py-5">
-      <div className="login_container border border-secondary mt-5">
-        <h2 className="login_heading">Login</h2>
+      <div className="login_container border border-black mt-5 bg-white">
+        <h2 className="login_heading text-black">Login</h2>
 
         <form onSubmit={handleSubmit} className="login_form">
           <input
@@ -74,7 +74,7 @@ const Login = () => {
           </div>
 
           <div>
-            <p>Do not have an Account?</p>
+            <p className='text-muted'>Do not have an Account?</p>
             <Link to="/register">Click Me.!</Link>
           </div>
         </form>
