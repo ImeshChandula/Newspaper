@@ -129,7 +129,7 @@ const RejectNewsModeration = () => {
 
   return (
     <div className="news-container">
-      <h2 className="news-head">Rejected News Moderation</h2>
+      <h2 className="news-head text-primary">Rejected News Moderation</h2>
       
       {/* Toast notifications */}
       <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1060 }}>

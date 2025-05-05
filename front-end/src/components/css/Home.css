@@ -1,27 +1,8 @@
 .home-page {
-    margin: 80px 2% 0 2%;
     color: #f0f0f0 !important;
 }
 
 .loading-container {
     text-align: center;
     padding: 60px 0;
-}
-
-@media (max-width: 1000px) {
-    .home-page {
-        margin: 70px 0 0 0 !important;
-    }
-}
-
-@media (max-width: 992px) {
-    .home-page {
-        margin: 50px 0 0 0 !important;
-    }
-}
-
-@media (max-width: 575.98px) {
-    .home-page {
-        margin: 50px 0 0 0 !important;
-    }
 }

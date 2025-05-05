@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const TrackAds = () => {
+const TrackSubmittedAds = () => {
+
     const [ads, setAds] = useState([]);
     const [error, setError] = useState('');
     const [activeOnly, setActiveOnly] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState({});
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
+    const dropdownRefs = useRef({});
 
     const fetchAds = async () => {
         try {
@@ -35,6 +38,28 @@ const TrackAds = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeOnly]);
 
+    useEffect(() => {
+        // Close dropdown when clicking outside
+        const handleClickOutside = (event) => {
+            for (const adId in dropdownRefs.current) {
+                if (dropdownRefs.current[adId] &&
+                    !dropdownRefs.current[adId].contains(event.target) &&
+                    dropdownOpen[adId]) {
+
+                    setDropdownOpen(prev => ({
+                        ...prev,
+                        [adId]: false
+                    }));
+                }
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownOpen]);
+
     const handleUpdate = (adId) => {
         navigate(`/update-ad/${adId}`);
     };
@@ -54,9 +79,45 @@ const TrackAds = () => {
         }
     };
 
+    const toggleDropdown = (adId) => {
+        setDropdownOpen(prev => ({
+            ...prev,
+            [adId]: !prev[adId]
+        }));
+    };
+
+    const updateAdStatus = async (adId, isActive) => {
+        try {
+            await axios.patch(
+                `http://localhost:5000/api/ads/updateAd/${adId}`,
+                { active: isActive },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            // Update the status in UI
+            setAds(prev => prev.map(ad =>
+                ad._id === adId ? { ...ad, active: isActive } : ad
+            ));
+
+            // Close the dropdown
+            setDropdownOpen(prev => ({
+                ...prev,
+                [adId]: false
+            }));
+
+        } catch (err) {
+            setError('❌ Failed to update status: ' + (err.response?.data?.msg || err.message));
+        }
+    };
+
+
     return (
         <div className="container">
-            <h2 className="text-center text-primary mb-4">📢 Track Submitted Ads</h2>
+            <h2 className="text-center text-primary mb-4 fw-bold">📢 Track Submitted Ads</h2>
 
             {error && <div className="alert alert-danger text-center">{error}</div>}
 
@@ -137,14 +198,39 @@ const TrackAds = () => {
                                             {ad.author?.username || "Unknown"}
                                         </div>
 
-
-                                        <div className="mb-3">
+                                        <div className="mb-3 position-relative">
                                             <span className="fw-semibold">🟢 Status:</span>{' '}
-                                            {ad.active ? (
-                                                <span className="badge bg-success">Active</span>
-                                            ) : (
-                                                <span className="badge bg-danger">Inactive</span>
-                                            )}
+                                            <div className="dropdown d-inline-block" ref={el => dropdownRefs.current[ad._id] = el}>
+                                                <button
+                                                    className={`btn btn-sm ${ad.active ? 'btn-success' : 'btn-danger'} dropdown-toggle`}
+                                                    type="button"
+                                                    onClick={() => toggleDropdown(ad._id)}
+                                                    aria-expanded={dropdownOpen[ad._id] || false}
+                                                >
+                                                    {ad.active ? 'Active' : 'Inactive'}
+                                                </button>
+                                                <ul
+                                                    className={`dropdown-menu ${dropdownOpen[ad._id] ? 'show' : ''}`}
+                                                    style={{ minWidth: '100%' }}
+                                                >
+                                                    <li>
+                                                        <button
+                                                            className="dropdown-item text-success"
+                                                            onClick={() => updateAdStatus(ad._id, true)}
+                                                        >
+                                                            Active
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            className="dropdown-item text-danger"
+                                                            onClick={() => updateAdStatus(ad._id, false)}
+                                                        >
+                                                            Inactive
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
 
                                         <div className="mt-auto">
@@ -176,7 +262,7 @@ const TrackAds = () => {
                 </div>
             )}
         </div>
-    );
-};
+    )
+}
 
-export default TrackAds;
+export default TrackSubmittedAds;

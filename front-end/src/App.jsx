@@ -29,7 +29,7 @@ const App = () => {
     <div className="bg-dark">
       <Navbar />
       <ScrollToTop/>
-      <div className="container mt-4">
+      <div className="container mt-4 bg-dark">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

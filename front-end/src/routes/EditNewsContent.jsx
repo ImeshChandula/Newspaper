@@ -2,10 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from 'react-router-dom';
-import '../components/css/CreateNewsArticle.css';
 
 const EditNewsContent = () => {
-
   const navigate = useNavigate();
   const location = useLocation();
   const [articleId, setArticleId] = useState('');
@@ -23,17 +21,15 @@ const EditNewsContent = () => {
   const [fetchLoading, setFetchLoading] = useState(true);
 
   useEffect(() => {
-    // Check if we have an article ID from state (passed during navigation)
     const id = location.state?.articleId;
     if (id) {
       setArticleId(id);
       fetchArticleData(id);
     } else {
-      // If no ID provided, try to get from URL or localStorage
       const urlParams = new URLSearchParams(location.search);
       const paramId = urlParams.get('id');
       const storedId = localStorage.getItem('editNewsId');
-      
+
       if (paramId) {
         setArticleId(paramId);
         fetchArticleData(paramId);
@@ -52,11 +48,8 @@ const EditNewsContent = () => {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.get(`http://localhost:5000/api/news/getNewsArticleByID/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` },
       });
-      
       const article = res.data;
       setFormData({
         category: article.category || '',
@@ -85,9 +78,8 @@ const EditNewsContent = () => {
         navigate("/dashboard/super-admin");
         break;
       default:
-        // Handle unexpected role or fallback
-        navigate("/unauthorized"); // Redirect to home or another appropriate page
-         break;
+        navigate("/unauthorized");
+        break;
     }
   };
 
@@ -112,9 +104,7 @@ const EditNewsContent = () => {
           },
         }
       );
-      setMessage('News article updated successfully!');
-      
-      // Clear localStorage and redirect after successful update
+      setMessage('✅ News article updated successfully!');
       setTimeout(() => {
         localStorage.removeItem('editNewsId');
         goToDashboard();
@@ -132,92 +122,112 @@ const EditNewsContent = () => {
   };
 
   if (fetchLoading) {
-    return <div className="create_news_container"><p>Loading article data...</p></div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100 text-white bg-dark">
+        <div>Loading article data...</div>
+      </div>
+    );
   }
 
-
-
-
   return (
-    <div className="create_news_container bg-dark py-5 mt-5 border border-secondary">
-      <h2 className="create_news_header">Edit News Article</h2>
-      {articleId ? (
-        <form onSubmit={handleSubmit} className="create_news_form">
-          <select
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            required
-            className="create_news_input_select bg-dark text-white border border-secondary"
-          >
-            <option value="">Select Category</option>
-            <option value="Education">Education</option>
-            <option value="Politics">Politics</option>
-            <option value="Sports">Sports</option>
-          </select>
+    <div className="container my-5 py-4">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-10 col-lg-8 col-xl-6 bg-dark text-white p-4 rounded shadow-lg">
+          <h2 className="mb-4 text-center border-bottom pb-2">Edit News Article</h2>
 
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-            className="create_news_input_text bg-dark text-white border border-secondary"
-          />
+          {articleId ? (
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="form-label">Category</label>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  required
+                  className="form-select bg-dark text-white border-secondary"
+                >
+                  <option value="">Select Category</option>
+                  <option value="Education">Education</option>
+                  <option value="Politics">Politics</option>
+                  <option value="Sports">Sports</option>
+                </select>
+              </div>
 
-          <input
-            type="text"
-            name="media"
-            placeholder="Media URL (optional)"
-            value={formData.media}
-            onChange={handleChange}
-            className="create_news_input_text bg-dark text-white border border-secondary"
-          />
+              <div className="mb-3">
+                <label className="form-label">Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Enter article title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  required
+                  className="form-control bg-dark text-white border-secondary"
+                />
+              </div>
 
-          <textarea
-            name="content"
-            placeholder="Content"
-            value={formData.content}
-            onChange={handleChange}
-            required
-            rows="5"
-            className="create_news_input_textarea bg-dark text-white border border-secondary"
-          ></textarea>
+              <div className="mb-3">
+                <label className="form-label">Media URL (optional)</label>
+                <input
+                  type="text"
+                  name="media"
+                  placeholder="Enter media URL"
+                  value={formData.media}
+                  onChange={handleChange}
+                  className="form-control bg-dark text-white border-secondary"
+                />
+              </div>
 
-          <div className="edit_news_buttons">
-            <button
-              type="submit"
-              className="create_news_submit_button "
-              disabled={loading}
-            >
-              {loading ? 'Updating...' : 'Update Article'}
-            </button>
-            
-            <button
-              type="button"
-              className="edit_news_cancel_button"
-              onClick={handleCancel}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      ) : (
-        <div className="create_news_message">
-          <p>{message}</p>
-          <button 
-            onClick={() => navigate('/acceptNewsModeration')} 
-            className="create_news_submit_button"
-          >
-            Back to Moderation
-          </button>
+              <div className="mb-4">
+                <label className="form-label">Content</label>
+                <textarea
+                  name="content"
+                  placeholder="Enter news content"
+                  value={formData.content}
+                  onChange={handleChange}
+                  required
+                  rows="6"
+                  className="form-control bg-dark text-white border-secondary"
+                ></textarea>
+              </div>
+
+              <div className="d-flex gap-3">
+                <button
+                  type="submit"
+                  className="btn btn-primary w-100"
+                  disabled={loading}
+                >
+                  {loading ? 'Updating...' : 'Update Article'}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger w-100"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </button>
+              </div>
+
+              {message && (
+                <div className="alert alert-info mt-4 text-center">{message}</div>
+              )}
+            </form>
+          ) : (
+            <div className="text-center">
+              <p>{message}</p>
+              <button
+                onClick={() => navigate('/acceptNewsModeration')}
+                className="btn btn-primary mt-3"
+              >
+                Back to Moderation
+              </button>
+            </div>
+          )}
         </div>
-      )}
-
-      {message && <p className="create_news_message">{message}</p>}
+      </div>
     </div>
-  )
-}
+  );
 
-export default EditNewsContent
+};
+
+export default EditNewsContent;
