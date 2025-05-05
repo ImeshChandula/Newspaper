@@ -5,7 +5,6 @@ import SportForHome from "../components/SportForHome";
 import BreakingNews from "../components/BreakingNews";
 import "../components/css/Home.css";
 import EducationForHome from "../components/EducationForHome";
-//import AdCarousel from "../components/adCarousel";
 import AdSection from "../components/AdSection";
 
 const Home = () => {
@@ -15,7 +14,6 @@ const Home = () => {
 
         <div className="row">
           <div className="col-12">
-            {/*<AdCarousel />*/}
             <AdSection />
           </div>
         </div>

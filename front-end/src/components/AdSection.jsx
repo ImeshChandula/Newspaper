@@ -2,136 +2,154 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 const AdSection = () => {
+  const [ads, setAds] = useState([]);
+  const [error, setError] = useState('');
+  const [collapsed, setCollapsed] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const impressionSet = useRef(new Set());
+  const carouselRef = useRef(null);
+  const token = localStorage.getItem('token');
 
-    const [ads, setAds] = useState([]);
-    const [error, setError] = useState('');
-    const [collapsed, setCollapsed] = useState(false);
-    const [activeIndex, setActiveIndex] = useState(0);
-    const impressionSet = useRef(new Set());
-    const carouselRef = useRef(null);
-    // eslint-disable-next-line no-unused-vars
-    const carouselInstance = useRef(null);
-  
-    const token = localStorage.getItem('token');
-  
-    const fetchAds = async () => {
-      try {
-        const { data } = await axios.get(
-          'http://localhost:5000/api/ads/getAllActiveAds',
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
-        );
-        setAds(data.ads);
-      } catch (err) {
-        setError('❌ Error fetching ads: ' + (err.response?.data?.msg || err.message));
-      }
-    };
-  
-    const trackImpression = async (adId) => {
-      if (impressionSet.current.has(adId)) return;
-      impressionSet.current.add(adId);
-      try {
-        await axios.patch(`http://localhost:5000/api/ads/trackAdImpression/${adId}`);
-      } catch (err) {
-        console.error('Error tracking impression:', err.message);
-      }
-    };
-  
-    const handleVisitClick = async (e, ad) => {
-      e.preventDefault();
-      try {
-        await axios.patch(`http://localhost:5000/api/ads/trackAdClick/${ad._id}`);
-      } catch (err) {
-        console.error('Error tracking click:', err.message);
-      } finally {
-        window.open(ad.link, '_blank');
-      }
-    };
-  
-    useEffect(() => {
-      fetchAds();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-  
-    // Custom autoplay implementation
-    useEffect(() => {
-      if (!ads.length) return;
-      
-      // Track initial impression
-      if (ads[0]) {
-        trackImpression(ads[0]._id);
-      }
-      
-      // Set up interval for autoplay
-      const autoplayInterval = setInterval(() => {
-        setActiveIndex(prevIndex => {
-          const nextIndex = (prevIndex + 1) % ads.length;
-          if (ads[nextIndex]) {
-            trackImpression(ads[nextIndex]._id);
-          }
-          return nextIndex;
-        });
-      }, 3000); // 3 seconds between slides
-      
-      return () => {
-        // Clean up interval on unmount
-        clearInterval(autoplayInterval);
-      };
-    }, [ads]);
-    
-    // Update DOM when activeIndex changes
-    useEffect(() => {
-      const carouselNode = carouselRef.current;
-      if (!carouselNode || !ads.length) return;
-      
-      // Find all carousel items
-      const items = carouselNode.querySelectorAll('.carousel-item');
-      
-      // Remove active class from all items
-      items.forEach(item => {
-        item.classList.remove('active');
-      });
-      
-      // Add active class to current item
-      if (items[activeIndex]) {
-        items[activeIndex].classList.add('active');
-      }
-      
-      // Update indicators
-      const indicators = carouselNode.querySelectorAll('.carousel-indicators button');
-      indicators.forEach((indicator, idx) => {
-        indicator.classList.toggle('active', idx === activeIndex);
-        indicator.setAttribute('aria-current', idx === activeIndex ? 'true' : 'false');
-      });
-    }, [activeIndex, ads]);
-  
-    // Auto-collapse after 5 seconds
-    useEffect(() => {
-      if (ads.length) {
-        const timer = setTimeout(() => setCollapsed(true), 5000);
-        return () => clearTimeout(timer);
-      }
-    }, [ads]);
-  
-    if (!ads.length) return null;
-  
-    if (collapsed) {
-      return (
-        <div className="fixed-bottom mb-3 ms-3">
-          <button className="btn btn-sm btn-primary" onClick={() => setCollapsed(false)}>
-            Show Ads
-          </button>
-        </div>
+  // Swipe tracking
+  const touchStartX = useRef(null);
+  const touchEndX = useRef(null);
+
+  const fetchAds = async () => {
+    try {
+      const { data } = await axios.get(
+        'http://localhost:5000/api/ads/getAllActiveAds',
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
       );
+      setAds(data.ads);
+    } catch (err) {
+      setError('❌ Error fetching ads: ' + (err.response?.data?.msg || err.message));
+    }
+  };
+
+  const trackImpression = async (adId) => {
+    if (impressionSet.current.has(adId)) return;
+    impressionSet.current.add(adId);
+    try {
+      await axios.patch(`http://localhost:5000/api/ads/trackAdImpression/${adId}`);
+    } catch (err) {
+      console.error('Error tracking impression:', err.message);
+    }
+  };
+
+  const handleVisitClick = async (e, ad) => {
+    e.preventDefault();
+    try {
+      await axios.patch(`http://localhost:5000/api/ads/trackAdClick/${ad._id}`);
+    } catch (err) {
+      console.error('Error tracking click:', err.message);
+    } finally {
+      window.open(ad.link, '_blank');
+    }
+  };
+
+  useEffect(() => {
+    fetchAds();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!ads.length) return;
+
+    // Track first ad
+    if (ads[0]) {
+      trackImpression(ads[0]._id);
     }
 
+    const autoplayInterval = setInterval(() => {
+      setActiveIndex(prevIndex => {
+        const nextIndex = (prevIndex + 1) % ads.length;
+        if (ads[nextIndex]) {
+          trackImpression(ads[nextIndex]._id);
+        }
+        return nextIndex;
+      });
+    }, 3000);
 
+    return () => clearInterval(autoplayInterval);
+  }, [ads]);
+
+  useEffect(() => {
+    const carouselNode = carouselRef.current;
+    if (!carouselNode || !ads.length) return;
+
+    const items = carouselNode.querySelectorAll('.carousel-item');
+    items.forEach(item => item.classList.remove('active'));
+    if (items[activeIndex]) items[activeIndex].classList.add('active');
+
+    const indicators = carouselNode.querySelectorAll('.carousel-indicators button');
+    indicators.forEach((indicator, idx) => {
+      indicator.classList.toggle('active', idx === activeIndex);
+      indicator.setAttribute('aria-current', idx === activeIndex ? 'true' : 'false');
+    });
+  }, [activeIndex, ads]);
+
+  useEffect(() => {
+    if (ads.length) {
+      const timer = setTimeout(() => setCollapsed(true), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [ads]);
+
+  // Swipe event handlers
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+
+    const deltaX = touchStartX.current - touchEndX.current;
+    const threshold = 50;
+
+    if (Math.abs(deltaX) > threshold) {
+      if (deltaX > 0) {
+        // Swipe left → next
+        setActiveIndex(prevIndex => {
+          const newIndex = (prevIndex + 1) % ads.length;
+          trackImpression(ads[newIndex]._id);
+          return newIndex;
+        });
+      } else {
+        // Swipe right → previous
+        setActiveIndex(prevIndex => {
+          const newIndex = prevIndex === 0 ? ads.length - 1 : prevIndex - 1;
+          trackImpression(ads[newIndex]._id);
+          return newIndex;
+        });
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  if (!ads.length) return null;
+
+  if (collapsed) {
+    return (
+      <div className="fixed-bottom mb-3 ms-3">
+        <button className="btn btn-sm btn-primary" onClick={() => setCollapsed(false)}>
+          Show Ads
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="w-100 py-5 px-2 px-md-4 mt-4 pb-0 mb-0">
-      <div className="d-flex justify-content-between align-items-center mb-2">
-        <h4 className="text-black mb-0">📢 Ads</h4>
+    <div className="container-fluid pt-5 mt-5">
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h3 className="text-dark mb-0">📢 Sponsored Ads</h3>
         <button
           className="btn btn-sm btn-outline-dark"
           onClick={() => setCollapsed(true)}
@@ -144,12 +162,12 @@ const AdSection = () => {
 
       <div
         id="adsCarousel"
-        className="carousel slide"
-        style={{ height: '200px' }}
+        className="carousel slide position-relative"
+        style={{ height: '220px' }}
         ref={carouselRef}
       >
         {/* Indicators */}
-        <div className="carousel-indicators">
+        <div className="carousel-indicators mb-0">
           {ads.map((_, idx) => (
             <button
               key={idx}
@@ -165,8 +183,13 @@ const AdSection = () => {
           ))}
         </div>
 
-        {/* Carousel Items */}
-        <div className="carousel-inner h-100">
+        {/* Carousel Items with swipe support */}
+        <div
+          className="carousel-inner h-100 rounded-3 overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           {ads.map((ad, idx) => (
             <div
               key={ad._id}
@@ -174,18 +197,16 @@ const AdSection = () => {
             >
               <div className="h-100 d-flex justify-content-center align-items-center">
                 <div
-                  className="card text-white w-100 h-100 mx-2"
+                  className="card text-white w-100 h-100 mx-2 border-0 shadow-lg"
                   style={{
                     background: `url(${ad.media}) center/cover no-repeat`,
-                    border: 'none',
-                    borderRadius: '0.75rem',
-                    minHeight: '100%',
+                    borderRadius: '1rem',
                   }}
                 >
                   <div
                     className="card-img-overlay d-flex flex-column justify-content-end p-3"
                     style={{
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.6), transparent)',
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)',
                     }}
                   >
                     <h5 className="card-title text-truncate">{ad.title}</h5>
@@ -197,16 +218,16 @@ const AdSection = () => {
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
-                        fontSize: '0.95rem',
+                        fontSize: '0.9rem',
                       }}
                     >
                       {ad.content}
                     </p>
                     <button
-                      className="btn btn-sm btn-light mt-2 align-self-start mb-3"
+                      className="btn btn-sm btn-light mt-2 align-self-start"
                       onClick={(e) => handleVisitClick(e, ad)}
                     >
-                      Visit link
+                      Visit Link
                     </button>
                   </div>
                 </div>
@@ -215,34 +236,40 @@ const AdSection = () => {
           ))}
         </div>
 
-        {/* Controls - optional, can be removed if you don't want manual navigation */}
-        <button 
-          className="carousel-control-prev" 
+        {/* Controls */}
+        <button
+          className="carousel-control-prev d-none d-md-flex d-lg-flex"
           type="button"
-          onClick={() => setActiveIndex((prevIndex) => {
-            const newIndex = prevIndex === 0 ? ads.length - 1 : prevIndex - 1;
-            trackImpression(ads[newIndex]._id);
-            return newIndex;
-          })}
+          onClick={() =>
+            setActiveIndex((prevIndex) => {
+              const newIndex = prevIndex === 0 ? ads.length - 1 : prevIndex - 1;
+              trackImpression(ads[newIndex]._id);
+              return newIndex;
+            })
+          }
+          style={{ width: "50px", height: "50px", marginLeft: "50px", marginTop: "75px" }}
         >
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true" />
           <span className="visually-hidden">Previous</span>
         </button>
-        <button 
-          className="carousel-control-next" 
+        <button
+          className="carousel-control-next d-none d-md-flex d-lg-flex"
           type="button"
-          onClick={() => setActiveIndex((prevIndex) => {
-            const newIndex = (prevIndex + 1) % ads.length;
-            trackImpression(ads[newIndex]._id);
-            return newIndex;
-          })}
+          onClick={() =>
+            setActiveIndex((prevIndex) => {
+              const newIndex = (prevIndex + 1) % ads.length;
+              trackImpression(ads[newIndex]._id);
+              return newIndex;
+            })
+          }
+          style={{ width: "50px", height: "50px", marginRight: "50px", marginTop: "75px" }}
         >
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true" />
           <span className="visually-hidden">Next</span>
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdSection
+export default AdSection;
