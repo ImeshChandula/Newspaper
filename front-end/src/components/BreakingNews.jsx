@@ -97,10 +97,10 @@ const BreakingNews = () => {
   if (news.length === 0) return null;
 
   return (
-    <div className="container text-light mt-4">
+    <div className="container text-light mt-4 pb-0 mb-0">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 mb-md-4">
         <motion.h2
-          className="border-bottom pb-2 mb-3 mb-md-0"
+          className="border-bottom pb-2 mb-3 mb-md-0 mt-5"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
