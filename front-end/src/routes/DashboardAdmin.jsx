@@ -58,16 +58,16 @@ const DashboardAdmin = () => {
             <span className="btn-text">Rejected News</span>
           </button>
           <button 
-            className={`btn nav-button ${activeComponent === 'CreateNewsArticle' ? 'btn-primary' : 'btn-outline-primary'}`}
-            onClick={() => setActiveComponent('CreateNewsArticle')}
-          >
-            <span className="btn-text">Create Article</span>
-          </button>
-          <button 
             className={`btn nav-button ${activeComponent === 'HistoryOfArticles' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => setActiveComponent('HistoryOfArticles')}
           >
             <span className="btn-text">History Of Articles</span>
+          </button>
+          <button 
+            className={`btn nav-button ${activeComponent === 'CreateNewsArticle' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveComponent('CreateNewsArticle')}
+          >
+            <span className="btn-text">Create Article</span>
           </button>
           <button 
             className={`btn nav-button ${activeComponent === 'CreateUser' ? 'btn-primary' : 'btn-outline-primary'}`}

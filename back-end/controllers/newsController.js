@@ -245,8 +245,7 @@ const getBreakingNews = async (req, res) => {
       // Query for breaking news articles created in the last 24 hours
       const breakingNews = await News.find({ 
           breakingNews: true,
-          status: "accept", 
-          date: { $gte: twentyFourHoursAgo }
+          status: "accept"
       })
       .sort({ date: -1 }) // Sort by newest first
       .populate('author', 'username email');
