@@ -45,7 +45,7 @@ const GoogleTranslate = ({ id = "google_translate_element" }) => {
     return (
         <div
             id={id}
-            className="translate-container bg-black bg-opacity-10 rounded px-2 py-1 shadow-sm"
+            className="translate-container bg-black bg-opacity-10 rounded px-2 py-1 shadow-sm border border-dark"
             style={{
                 minWidth: "120px",
                 fontSize: "0.85rem",

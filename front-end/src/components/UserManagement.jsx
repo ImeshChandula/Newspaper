@@ -137,7 +137,7 @@ const UserManagement = () => {
   if (loading) return (
     <div className="loading-container">
       <div className="spinner-border text-primary" role="status">
-        <span className="visually-hidden">Loading users...</span>
+        <span className="visually-hidden text-black">Loading users...</span>
       </div>
     </div>
   );
@@ -150,27 +150,27 @@ const UserManagement = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4 text-center text-primary">User Management</h2>
+      <h2 className="mb-4 text-center text-black">User Management</h2>
       
       {users.length === 0 ? (
-        <div className="alert alert-info" role="alert">
+        <div className="alert alert-info text-black" role="alert">
           No users found.
         </div>
       ) : (
-        <div className="table-responsive bg-dark rounded shadow-sm overflow-auto">
-          <table className="table table-striped table-hover border border-secondary table-sm align-middle">
-            <thead className="table-dark">
+        <div className="table-responsive bg-white shadow-sm overflow-auto">
+          <table className="table table-striped table-hover border border-black table-sm align-middle">
+            <thead className="table-white">
               <tr>
-                <th className='border border-secondary'>Username</th>
-                <th className='border border-secondary'>Role</th>
-                <th className='border border-secondary'>Actions</th>
+                <th className='border border-black text-black'>Username</th>
+                <th className='border border-black text-black'>Role</th>
+                <th className='border border-black text-black'>Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
                 <tr key={user._id}>
-                  <td className='bg-dark text-white border border-secondary'>{user.username}</td>
-                  <td className='bg-dark border border-secondary'>
+                  <td className='bg-white text-black border border-black'>{user.username}</td>
+                  <td className='bg-white border border-black'>
                     <span className={`role-badge ${
                       user.role === 'super_admin' ? 'bg-danger' : 
                       user.role === 'admin' ? 'bg-warning' : 'bg-secondary'
@@ -178,7 +178,7 @@ const UserManagement = () => {
                       {user.role}
                     </span>
                   </td>
-                  <td className='bg-dark border border-secondary'>
+                  <td className='bg-white border border-black'>
                     <div className="action-buttons">
                       {user.role !== 'admin' && user.role !== 'super_admin' && (
                         <button
