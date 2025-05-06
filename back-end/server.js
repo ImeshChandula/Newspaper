@@ -3,8 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
-const User = require("./models/User");
-const bcrypt = require("bcryptjs");
+
 
 dotenv.config();
 connectDB();
