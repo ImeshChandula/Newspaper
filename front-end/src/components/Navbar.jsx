@@ -67,18 +67,31 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className="navbar fixed-top navbar-expand-lg navbar-light bg-black shadow-sm border-bottom border-black custom-navbar pt-4"
+      className="navbar fixed-top navbar-expand-lg navbar-light bg-black shadow-sm border-bottom border-black custom-navbar pt-5"
       variants={navVariants}
       initial="hidden"
       animate="visible"
     >
       <div className="container-fluid px-4">
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="ms-0 ms-sm-3">
           <Link className="navbar-brand me-4 d-flex" to="/">
-            <img src={logo} alt="Logo" style={{ height: "70px" }} />
+            {/* Logo for large screens */}
+            <img
+              src={logo}
+              alt="Logo"
+              className="d-none d-sm-block"
+              height="70"
+            />
+            {/* Logo for small screens */}
+            <img
+              src={logo}
+              alt="Logo"
+              className="d-block d-sm-none"
+              height="50"
+            />
           </Link>
-
         </motion.div>
+
 
         <div>
           <motion.p

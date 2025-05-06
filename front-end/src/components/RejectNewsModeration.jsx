@@ -43,7 +43,7 @@ const RejectNewsModeration = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("API Response:", res.data); 
+      console.log("API Response:", res.data);
       setNews(res.data);
     } catch (error) {
       console.error('Error fetching Reject news:', error);
@@ -55,7 +55,7 @@ const RejectNewsModeration = () => {
 
   useEffect(() => {
     fetchNews();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const RejectNewsModeration = () => {
     try {
       setActionLoading(id);
       const token = localStorage.getItem("token");
-      await axios.patch(`http://localhost:5000/api/news/updateStatus/${id}`, 
+      await axios.patch(`http://localhost:5000/api/news/updateStatus/${id}`,
         { status },
         {
           headers: {
@@ -94,16 +94,16 @@ const RejectNewsModeration = () => {
         { breakingNews: !currentStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
+
       // Update the news state with the updated article
-      setNews((prev) => 
-        prev.map((article) => 
+      setNews((prev) =>
+        prev.map((article) =>
           article._id === id ? { ...article, breakingNews: !currentStatus } : article
         )
       );
-      
+
       showNotification(
-        `Article ${!currentStatus ? 'marked as breaking news' : 'unmarked as breaking news'}`, 
+        `Article ${!currentStatus ? 'marked as breaking news' : 'unmarked as breaking news'}`,
         'success'
       );
     } catch (error) {
@@ -130,13 +130,13 @@ const RejectNewsModeration = () => {
     const articleDate = new Date(date);
     const expiryDate = new Date(articleDate.getTime() + 24 * 60 * 60 * 1000);
     const now = new Date();
-    
+
     if (now > expiryDate) return 'Expired';
-    
+
     const timeRemaining = expiryDate - now;
     const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
     const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-    
+
     return `${hours}h ${minutes}m remaining`;
   };
 
@@ -189,13 +189,13 @@ const RejectNewsModeration = () => {
   return (
     <div className="news-container">
       <h2 className="news-head text-black">Rejected News Moderation</h2>
-      
+
       {/* Toast notifications */}
       <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1060 }}>
-        <Toast 
-          onClose={() => setShowToast(false)} 
-          show={showToast} 
-          delay={3000} 
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={showToast}
+          delay={3000}
           autohide
           bg={toastVariant}
         >
@@ -225,8 +225,8 @@ const RejectNewsModeration = () => {
           <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
             Cancel
           </Button>
-          <Button 
-            variant="danger" 
+          <Button
+            variant="danger"
             onClick={handleDeletePermanent}
             disabled={deleteLoading === articleToDelete}
           >
@@ -234,7 +234,7 @@ const RejectNewsModeration = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      
+
       {/* Image preview modal */}
       <Modal
         show={showImageModal}
@@ -246,10 +246,10 @@ const RejectNewsModeration = () => {
           <Modal.Title>Image Preview</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center bg-white">
-          <img 
-            src={previewImage} 
-            alt="Full size preview" 
-            className="img-fluid" 
+          <img
+            src={previewImage}
+            alt="Full size preview"
+            className="img-fluid"
             style={{ maxHeight: '70vh' }}
           />
         </Modal.Body>
@@ -257,10 +257,10 @@ const RejectNewsModeration = () => {
 
       {/* Content Preview Modal */}
       <Modal show={showContentModal} onHide={() => setShowContentModal(false)} centered size="lg">
-        <Modal.Header closeButton className='bg-dark text-white'>
+        <Modal.Header closeButton className='bg-white text-black'>
           <Modal.Title>{previewTitle}</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-dark text-white">
+        <Modal.Body className="bg-white text-black">
           <div className="content-preview">
             {previewContent.split('\n').map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
@@ -298,23 +298,23 @@ const RejectNewsModeration = () => {
               )}
 
               <h3 className="news-title text-black">{article.title}</h3>
-              
+
               {/* Enhanced image display */}
               {article.media && (
                 <div className="news-media-container position-relative">
-                  <img 
-                    src={article.media} 
-                    alt="Article media" 
+                  <img
+                    src={article.media}
+                    alt="Article media"
                     className="news-media"
-                    style={{ 
-                      cursor: 'pointer', 
+                    style={{
+                      cursor: 'pointer',
                       objectFit: 'cover',
                       height: '200px',
                       width: '100%'
                     }}
                     onClick={() => handleImageClick(article.media)}
                   />
-                  <div 
+                  <div
                     className="position-absolute top-0 end-0 m-2"
                     style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '4px', padding: '2px 8px' }}
                   >
@@ -322,7 +322,7 @@ const RejectNewsModeration = () => {
                   </div>
                 </div>
               )}
-              
+
               <p className="news-content text-black">{article.content.slice(0, 120)}...</p>
               <div className="d-flex justify-content-end mb-2">
                 <button
@@ -332,12 +332,12 @@ const RejectNewsModeration = () => {
                   <i className="bi bi-eye"></i> View Full Content
                 </button>
               </div>
-              
+
               <p className="news-author text-muted">By: {article.author?.username} ({article.author?.email})</p>
 
               <div className="news-buttons">
-                <button 
-                  onClick={() => handleEditNews(article._id)} 
+                <button
+                  onClick={() => handleEditNews(article._id)}
                   className="btn btn-outline-primary news-edit-button"
                 >
                   <i className="bi bi-pencil-square"></i> Edit content
@@ -359,7 +359,7 @@ const RejectNewsModeration = () => {
                     </>
                   ) : (
                     <>
-                      <i className={`bi ${article.breakingNews ? 'bi-lightning-fill' : 'bi-lightning'}`}></i> 
+                      <i className={`bi ${article.breakingNews ? 'bi-lightning-fill' : 'bi-lightning'}`}></i>
                       {article.breakingNews ? 'Unmark Breaking' : 'Mark Breaking'}
                     </>
                   )}
@@ -381,7 +381,7 @@ const RejectNewsModeration = () => {
                     </>
                   )}
                 </button>
-                <button 
+                <button
                   onClick={() => confirmDelete(article._id)}
                   className="btn btn-danger news-reject-button"
                 >

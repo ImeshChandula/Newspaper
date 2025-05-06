@@ -71,8 +71,8 @@ const UpdateAdManager = () => {
     const handleCancel = () => navigate(-1);
 
     return (
-        <div className="container py-5">
-            <div className="bg-white text-black p-4 rounded shadow-lg">
+        <div className="container pt-5 mt-5">
+            <div className="bg-white text-black p-5 rounded shadow-lg">
                 <h2 className="text-center text-black mb-4 fw-bold">✏️ Update Advertisement</h2>
 
                 {message && <div className="alert alert-success text-center">{message}</div>}

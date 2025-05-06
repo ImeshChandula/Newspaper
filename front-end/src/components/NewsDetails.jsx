@@ -31,7 +31,7 @@ const NewsDetail = () => {
         return (
             <div className="container vh-100 mt-5 text-center py-5">
                 <Spinner animation="border" role="status" className="mt-5">
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden mt-5">Loading...</span>
                 </Spinner>
                 <h4 className="mt-3">Loading News...</h4>
             </div>
@@ -46,7 +46,7 @@ const NewsDetail = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
             >
-                <h4 className="mt-5">News not found</h4>
+                <h4 className="mt-5 py-2">News not found</h4>
             </motion.div>
         );
     }

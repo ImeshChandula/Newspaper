@@ -30,7 +30,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="row py-2 mt-4">
+        <div className="container row py-2 mt-4">
           <div className="col-md-4 mb-4">
             <PoliticsforHome />
           </div>

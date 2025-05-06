@@ -131,7 +131,7 @@ const EditNewsContent = () => {
 
   return (
     <div className="container my-5 pt-5">
-      <div className="row justify-content-center">
+      <div className="row justify-content-center mt-5">
         <div className="col-12 col-md-10 col-lg-8 col-xl-6 bg-white text-black p-4 rounded shadow-lg">
           <h2 className="mb-4 text-center border-bottom pb-2">Edit News Article</h2>
 

@@ -5,7 +5,7 @@ import CreateNewUser from '../components/CreateNewUser'
 const Register = () => {
 
   return (
-    <div>
+    <div className='mt-5'>
       <CreateNewUser />
     </div>
   )
