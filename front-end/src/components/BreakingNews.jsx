@@ -26,7 +26,7 @@ const BreakingNews = () => {
   useEffect(() => {
     const fetchBreakingNews = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/news/breakingNews");
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/breakingNews`);
         setNews(res.data);
         setLoading(false);
       } catch (err) {

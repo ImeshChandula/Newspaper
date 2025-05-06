@@ -47,7 +47,7 @@ const EditNewsContent = () => {
     setFetchLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/news/getNewsArticleByID/${id}`, {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/getNewsArticleByID/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const article = res.data;
@@ -95,7 +95,7 @@ const EditNewsContent = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.patch(
-        `http://localhost:5000/api/news/updateNewsArticleByID/${articleId}`,
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/updateNewsArticleByID/${articleId}`,
         formData,
         {
           headers: {

@@ -27,7 +27,7 @@ const HistoryOfArticle = () => {
         return;
       }
 
-      const response = await axios.get("http://localhost:5000/api/news/myArticles", {
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/myArticles`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

@@ -17,7 +17,7 @@ const AdSection = () => {
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(
-        'http://localhost:5000/api/ads/getAllActiveAds',
+        `${process.env.REACT_APP_API_BASE_URL_ADS}/getAllActiveAds`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -32,7 +32,7 @@ const AdSection = () => {
     if (impressionSet.current.has(adId)) return;
     impressionSet.current.add(adId);
     try {
-      await axios.patch(`http://localhost:5000/api/ads/trackAdImpression/${adId}`);
+      await axios.patch(`${process.env.REACT_APP_API_BASE_URL_ADS}/trackAdImpression/${adId}`);
     } catch (err) {
       console.error('Error tracking impression:', err.message);
     }
@@ -41,7 +41,7 @@ const AdSection = () => {
   const handleVisitClick = async (e, ad) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:5000/api/ads/trackAdClick/${ad._id}`);
+      await axios.patch(`${process.env.REACT_APP_API_BASE_URL_ADS}/trackAdClick/${ad._id}`);
     } catch (err) {
       console.error('Error tracking click:', err.message);
     } finally {

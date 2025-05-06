@@ -17,7 +17,7 @@ const TrackSubmittedAds = () => {
         try {
             setLoading(true);
             const response = await axios.get(
-                `http://localhost:5000/api/ads/getAllAds${activeOnly ? '?active=true' : ''}`,
+                `${process.env.REACT_APP_API_BASE_URL_ADS}/getAllAds${activeOnly ? '?active=true' : ''}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ const TrackSubmittedAds = () => {
     const handleDelete = async (adId) => {
         if (window.confirm("Are you sure you want to delete this ad?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/ads/deleteAd/${adId}`, {
+                await axios.delete(`${process.env.REACT_APP_API_BASE_URL_ADS}/deleteAd/${adId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -89,7 +89,7 @@ const TrackSubmittedAds = () => {
     const updateAdStatus = async (adId, isActive) => {
         try {
             await axios.patch(
-                `http://localhost:5000/api/ads/updateAd/${adId}`,
+                `${process.env.REACT_APP_API_BASE_URL_ADS}/updateAd/${adId}`,
                 { active: isActive },
                 {
                     headers: {

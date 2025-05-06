@@ -22,7 +22,7 @@ const UpdateAdManager = () => {
     useEffect(() => {
         const fetchAd = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/ads/getSingleAd/${id}`, {
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_ADS}/getSingleAd/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 const ad = response.data.ad;
@@ -52,7 +52,7 @@ const UpdateAdManager = () => {
         setError('');
         try {
             const response = await axios.patch(
-                `http://localhost:5000/api/ads/updateAd/${id}`,
+                `${process.env.REACT_APP_API_BASE_URL_ADS}/updateAd/${id}`,
                 form,
                 {
                     headers: {

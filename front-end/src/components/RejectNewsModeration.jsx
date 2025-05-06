@@ -38,7 +38,7 @@ const RejectNewsModeration = () => {
   const fetchNews = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get('http://localhost:5000/api/news/reject', {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/reject`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -66,7 +66,7 @@ const RejectNewsModeration = () => {
     try {
       setActionLoading(id);
       const token = localStorage.getItem("token");
-      await axios.patch(`http://localhost:5000/api/news/updateStatus/${id}`,
+      await axios.patch(`${process.env.REACT_APP_API_BASE_URL_NEWS}/updateStatus/${id}`,
         { status },
         {
           headers: {
@@ -145,7 +145,7 @@ const RejectNewsModeration = () => {
       try {
         setDeleteLoading(articleToDelete);
         const token = localStorage.getItem("token");
-        await axios.delete(`http://localhost:5000/api/news/deleteNewsArticleByID/${articleToDelete}`, {
+        await axios.delete(`${process.env.REACT_APP_API_BASE_URL_NEWS}/deleteNewsArticleByID/${articleToDelete}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

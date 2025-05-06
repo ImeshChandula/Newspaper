@@ -34,7 +34,7 @@ const PendingNewsModeration  = () => {
   const fetchPendingNews = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get('http://localhost:5000/api/news/pending', {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/pending`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -62,7 +62,7 @@ const PendingNewsModeration  = () => {
     try {
       setActionLoading(id);
       const token = localStorage.getItem("token");
-      await axios.patch(`http://localhost:5000/api/news/updateStatus/${id}`, 
+      await axios.patch(`${process.env.REACT_APP_API_BASE_URL_NEWS}/updateStatus/${id}`, 
         { status },
         {
           headers: {

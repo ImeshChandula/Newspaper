@@ -17,7 +17,7 @@ const NewsSection = () => {
   const fetchRecentlyNewsWithoutBreakingNews = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get('http://localhost:5000/api/news/getAllRecentlyNewsWithoutBreakingNews', {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/getAllRecentlyNewsWithoutBreakingNews`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -37,7 +37,7 @@ const NewsSection = () => {
     try {
       const [acceptRes, breakingRes] = await Promise.all([
         axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/getAllRecentlyNewsWithoutBreakingNews`),
-        axios.get("http://localhost:5000/api/news/breakingNews")
+        axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/breakingNews`)
       ]);
 
       const acceptedNews = acceptRes.data;

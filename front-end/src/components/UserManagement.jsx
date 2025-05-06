@@ -20,7 +20,7 @@ const UserManagement = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/users/getAllUsers', {
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_USERS}/getAllUsers`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -83,7 +83,7 @@ const UserManagement = () => {
   const handlePromoteToAdmin = async (username) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/users/promoteToAdmin/${username}`, {}, {
+      await axios.patch(`${process.env.REACT_APP_API_BASE_URL_USERS}/promoteToAdmin/${username}`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -99,7 +99,7 @@ const UserManagement = () => {
   const handlePromoteToSuperAdmin = async (username) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/users/promoteToSuperAdmin/${username}`, {}, {
+      await axios.patch(`${process.env.REACT_APP_API_BASE_URL_USERS}/promoteToSuperAdmin/${username}`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -119,7 +119,7 @@ const UserManagement = () => {
       async () => {
         try {
           const token = localStorage.getItem('token');
-          await axios.delete(`http://localhost:5000/api/users/deleteUser/${username}`, {
+          await axios.delete(`${process.env.REACT_APP_API_BASE_URL_USERS}/deleteUser/${username}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }

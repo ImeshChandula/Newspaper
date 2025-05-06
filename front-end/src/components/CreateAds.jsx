@@ -29,7 +29,7 @@ const CreateAds = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/ads/createAd',
+        `${process.env.REACT_APP_API_BASE_URL_ADS}/createAd`,
         form,
         {
           headers: {
