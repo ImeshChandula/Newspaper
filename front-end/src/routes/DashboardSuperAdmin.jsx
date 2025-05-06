@@ -45,7 +45,7 @@ const DashboardSuperAdmin = () => {
 
   return (
     <div className="container mt-5 dashboard-container pt-5">
-      <h1 className="dashboard-title text-black">Super Admin Dashboard</h1>
+      <h1 className="dashboard-title text-black pt-5">Super Admin Dashboard</h1>
 
       <div className="dashboard-nav">
         <div className="btn-group" role="group" aria-label="Dashboard Navigation">

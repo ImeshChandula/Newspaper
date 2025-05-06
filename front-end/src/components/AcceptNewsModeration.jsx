@@ -176,10 +176,10 @@ const AcceptNewsModeration = () => {
 
       {/* Content Preview Modal */}
       <Modal show={showContentModal} onHide={() => setShowContentModal(false)} centered size="lg">
-        <Modal.Header closeButton className='bg-dark text-white'>
+        <Modal.Header closeButton className='bg-white text-black'>
           <Modal.Title>{previewTitle}</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-dark text-white">
+        <Modal.Body className="bg-white text-black">
           <div className="content-preview">
             {previewContent.split('\n').map((paragraph, index) => (
               <p key={index}>{paragraph}</p>

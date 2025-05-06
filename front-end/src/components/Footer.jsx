@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "./css/Footer.css";
 
@@ -78,10 +78,8 @@ const Footer = () => {
             <h5 className="text-uppercase text-white">Follow Us</h5>
             <div className="d-flex gap-3 mt-2">
               {[
-                { icon: <FaFacebookF />, url: "https://facebook.com", label: "Facebook" },
-                { icon: <FaTwitter />, url: "https://twitter.com", label: "Twitter" },
-                { icon: <FaInstagram />, url: "https://instagram.com", label: "Instagram" },
-                { icon: <FaLinkedin />, url: "https://linkedin.com", label: "LinkedIn" },
+                { icon: <FaFacebookF />, url: "https://www.facebook.com/share/1C8bXjC9kx/?mibextid=wwXIfr", label: "Facebook" },
+                { icon: <FaYoutube />, url: "https://www.youtube.com/@Sivdesanews", label: "YouTube" },
               ].map(({ icon, url, label }, idx) => (
                 <motion.a
                   key={idx}

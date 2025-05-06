@@ -39,7 +39,7 @@ const Login = () => {
   };
 
   return (
-    <div className="py-5">
+    <div className="py-5 mt-5">
       <div className="login_container border border-black mt-5 bg-white">
         <h2 className="login_heading text-black">Login</h2>
 
