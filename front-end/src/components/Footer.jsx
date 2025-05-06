@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaYoutube } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "./css/Footer.css";
 
