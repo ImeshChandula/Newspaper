@@ -17,9 +17,11 @@ const CreateNewsArticle = () => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    // eslint-disable-next-line no-unused-vars
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, type, checked, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value
+    });
   };
 
   const handleSubmit = async (e) => {
