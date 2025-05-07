@@ -6,7 +6,30 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.footer-section .about-button:hover{
+.footer-section h5 {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 6px;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.footer-section h5::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40%;
+  height: 4px;
+  background-color: #fff;
+  transition: width 0.3s ease;
+}
+
+.footer-section h5:hover::after {
+  width: 100%;
+}
+
+.footer-section .about-button:hover {
   color: #fff !important;
   text-decoration: underline !important;
 }
