@@ -196,7 +196,7 @@ const getAllPendingNews = async (req, res) => {
     try {
       await News.updateBreakingNews();
 
-      const { foreignNews, breakingNews } = req.query;
+      const { foreignNews, breakingNews, category  } = req.query;
       
       const query = { 
         status: "pending" 
@@ -210,6 +210,11 @@ const getAllPendingNews = async (req, res) => {
       // Add breakingNews filter if provided in the query parameters
       if (breakingNews !== undefined) {
         query.breakingNews = breakingNews === "true";
+      }
+
+      // Add category filter if provided in the query parameters
+      if (category) {
+        query.category = category;
       }
 
       const pendingNews = await News.find(query)
@@ -230,7 +235,7 @@ const getAllAcceptNews = async (req, res) => {
     try {
       await News.updateBreakingNews();
 
-      const { foreignNews, breakingNews } = req.query;
+      const { foreignNews, breakingNews, category } = req.query;
 
       const query = { 
         status: "accept" 
@@ -244,6 +249,11 @@ const getAllAcceptNews = async (req, res) => {
       // Add breakingNews filter if provided in the query parameters
       if (breakingNews !== undefined) {
         query.breakingNews = breakingNews === "true";
+      }
+
+      // Add category filter if provided in the query parameters
+      if (category) {
+        query.category = category;
       }
 
       const acceptNews = await News.find(query).sort({ date: -1 }).populate('author', 'username email');
@@ -262,7 +272,7 @@ const getAllRejectNews = async (req, res) => {
     try {
       await News.updateBreakingNews();
 
-      const { foreignNews, breakingNews } = req.query;
+      const { foreignNews, breakingNews, category } = req.query;
       
       const query = { 
         status: "reject" 
@@ -276,6 +286,11 @@ const getAllRejectNews = async (req, res) => {
       // Add breakingNews filter if provided in the query parameters
       if (breakingNews !== undefined) {
         query.breakingNews = breakingNews === "true";
+      }
+
+      // Add category filter if provided in the query parameters
+      if (category) {
+        query.category = category;
       }
 
       const rejectNews = await News.find(query)
