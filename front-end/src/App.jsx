@@ -41,7 +41,7 @@ const App = () => {
           <Route path="/sports" element={<SportPage />} />
           <Route path="/education" element={<EducationPage />} />
           <Route path="/politics" element={<PoliticsPage />} />
-          <Route path="/foreign" element={<ForeignNews />} />
+          <Route path="/foreign-news" element={<ForeignNews />} />
           <Route path="/update-ad/:id" element={<UpdateAdManager />} />
           <Route
             path="/dashboard/editor"

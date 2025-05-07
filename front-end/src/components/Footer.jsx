@@ -39,7 +39,11 @@ const Footer = () => {
     >
       <div className="container">
 
-        <div className="row mb-4 align-items-center">
+        <motion.div
+          className="row mb-4 align-items-center"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
           <div className="col-12 col-md-6 mb-3 mb-md-0 text-center text-md-start">
             <h3 className="text-uppercase fw-bold text-white mb-0">Sivdesa News</h3>
           </div>
@@ -66,7 +70,7 @@ const Footer = () => {
               </form>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         <div className="row">
 

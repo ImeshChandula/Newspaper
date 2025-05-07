@@ -127,7 +127,7 @@ const Navbar = () => {
         <div className="collapse navbar-collapse mt-3 mt-lg-0" id="navbarNav">
           <ul className="navbar-nav ms-auto align-items-lg-center gap-2">
             <motion.div
-              className="nav-item d-lg-none w-100 mb-3"
+              className="nav-item d-lg-none mb-3"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
@@ -135,7 +135,7 @@ const Navbar = () => {
               <ProfilForSD closeNavbar={closeNavbar} />
             </motion.div>
 
-            {["/", "/sports", "/education", "/politics", "/foreign"].map((path, index) => (
+            {["/", "/sports", "/education", "/politics"].map((path, index) => (
               <motion.li
                 key={path}
                 className="nav-item"
@@ -149,6 +149,17 @@ const Navbar = () => {
               </motion.li>
             ))}
 
+            <motion.li
+              className="nav-item"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9 }}
+            >
+              <Link to="/foreign-news" className="nav-link">
+                Foreign News
+              </Link>
+            </motion.li>
+
             {/* 
 
             <motion.li
@@ -156,11 +167,7 @@ const Navbar = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
             >
-
-              About
               <GoogleTranslate id="google_translate_element_navbar" />
-              
-
             </motion.li>
             
             */}
