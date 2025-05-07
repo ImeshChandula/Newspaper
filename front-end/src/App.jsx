@@ -22,6 +22,7 @@ import EditNewsContent from "./routes/EditNewsContent.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import UpdateAdManager from "./components/UpdateAdManager.jsx";
 import ScrollToTopButton from "./components/ScrollToTopButton.jsx";
+import ForeignNews from "./pages/ForeignNews.jsx";
 
 const App = () => {
 
@@ -37,9 +38,10 @@ const App = () => {
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/register" element={<Register />} />
           <Route path="/news/:id" element={<NewsDetail />} />
-          <Route path="/sport" element={<SportPage />} />
+          <Route path="/sports" element={<SportPage />} />
           <Route path="/education" element={<EducationPage />} />
           <Route path="/politics" element={<PoliticsPage />} />
+          <Route path="/foreign" element={<ForeignNews />} />
           <Route path="/update-ad/:id" element={<UpdateAdManager />} />
           <Route
             path="/dashboard/editor"

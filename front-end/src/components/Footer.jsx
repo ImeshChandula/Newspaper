@@ -31,51 +31,76 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className="footer bg-black text-white py-5 mt-5 border-top border-secondary"
+      className="footer-section footer bg-black text-white py-5 mt-5 border-top border-secondary"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
       variants={fadeUpVariants}
     >
       <div className="container">
+
+        <div className="row mb-4 align-items-center">
+          <div className="col-12 col-md-6 mb-3 mb-md-0 text-center text-md-start">
+            <h3 className="text-uppercase fw-bold text-white mb-0">Sivdesa News</h3>
+          </div>
+
+          <div className="col-12 col-md-6">
+            <div className="d-flex flex-column flex-sm-row align-items-center justify-content-sm-start justify-content-md-end gap-2 gap-sm-3">
+
+              <h6 className="text-white mb-0 text-center text-sm-start flex-shrink-0">
+                Subscribe to Newsletter
+              </h6>
+              <form className="d-flex flex-column flex-sm-row align-items-stretch w-100" style={{ maxWidth: "100%" }}>
+                <input
+                  type="email"
+                  className="form-control bg-dark text-light border border-secondary me-0 me-sm-2 mb-2 mb-sm-0"
+                  placeholder="Enter your email"
+                  style={{
+                    flexGrow: 1,
+                    minWidth: 0
+                  }}
+                />
+                <button type="submit" className="btn btn-outline-light w-50 w-sm-auto">
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
         <div className="row">
+
           {/* About */}
-          <motion.div className="col-md-3 mb-4" variants={itemVariants}>
-            <h5 className="text-uppercase text-white">NewsPaper</h5>
-            <p>
-              Stay updated with the latest news, trends, and insights from
-              around the world.
+          <motion.div className="col-lg-3 col-md-6" variants={itemVariants}>
+            <h5 className="text-uppercase fw-bold text-white mb-3">About us</h5>
+            <p className="text-white-50">
+              Stay informed with quality news updates, global headlines, and trusted journalism every day.
             </p>
+            <Link to="#" className="text-white-50 text-decoration-none about-button">
+              Learn more →
+            </Link>
           </motion.div>
 
           {/* Quick Links */}
           <motion.div className="col-md-3 mb-4" variants={itemVariants}>
-            <h5 className="text-uppercase text-white">Quick Links</h5>
+            <h5 className="text-uppercase fw-bold text-white mt-4 mt-md-0">Quick Links</h5>
             <ul className="list-unstyled">
-              <li><Link to="/" className="footer-link text-white">Home</Link></li>
-              <li><Link to="/sport" className="footer-link text-white">Sport</Link></li>
-              <li><Link to="/education" className="footer-link text-white">Education</Link></li>
-              <li><Link to="/politics" className="footer-link text-white">Politics</Link></li>
+              <li><Link to="/" className="footer-link text-white-50 text-decoration-none">Home</Link></li>
+              <li><Link to="/sport" className="footer-link text-white-50 text-decoration-none">Sport</Link></li>
+              <li><Link to="/education" className="footer-link text-white-50 text-decoration-none">Education</Link></li>
+              <li><Link to="/politics" className="footer-link text-white-50 text-decoration-none">Politics</Link></li>
             </ul>
           </motion.div>
 
           {/* Contact Us */}
           <motion.div className="col-md-3 mb-4" variants={itemVariants}>
-            <h5 className="text-uppercase text-white">Contact Us</h5>
-            <p>
-              Email:{" "}
-              <a
-                href="mailto:info@sivdesanews.lk"
-                className="text-white text-decoration-underline"
-              >
-                info@sivdesanews.lk
-              </a>
-            </p>
+            <h5 className="text-uppercase fw-bold text-white">Contact Us</h5>
+            <p className="text-white-50 mb-1">Email: <a href="mailto:info@sivdesanews.lk" className="text-white-50 contact-links text-decoration-none">info@sivdesanews.lk</a></p>
           </motion.div>
 
           {/* Social Media */}
           <motion.div className="col-md-3 mb-4" variants={itemVariants}>
-            <h5 className="text-uppercase text-white">Follow Us</h5>
+            <h5 className="text-uppercase fw-bold text-white">Follow Us</h5>
             <div className="d-flex gap-3 mt-2">
               {[
                 { icon: <FaFacebookF />, url: "https://www.facebook.com/share/1C8bXjC9kx/?mibextid=wwXIfr", label: "Facebook" },
@@ -86,25 +111,28 @@ const Footer = () => {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white fs-5"
+                  className="social-icon text-white-50 border-white-50 border fs-5"
                   aria-label={label}
-                  {...iconHover}
                 >
                   {icon}
                 </motion.a>
               ))}
             </div>
+            <p className="text-white-50 mt-2">Connect with us on social platforms for real-time updates.</p>
           </motion.div>
         </div>
 
-        {/* Footer Bottom */}
+        {/* Footer Bottom Section */}
         <motion.div
-          className="footer-bottom text-center pt-3 border-top border-secondary mt-4"
+          className="footer-bottom border-top border-secondary pt-4 mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center text-muted"
           variants={itemVariants}
         >
-          <p className="mb-0">
-            &copy; {new Date().getFullYear()} NewsPaper. All Rights Reserved.
-          </p>
+          <p className="mb-2 mb-md-0 text-white-50">&copy; {new Date().getFullYear()} Sivdesa News. All rights reserved.</p>
+          <div className="d-flex gap-3">
+            <Link to="#" className="text-white-50 text-decoration-none">Privacy Policy</Link>
+            <Link to="#" className="text-white-50 text-decoration-none">Terms of Use</Link>
+            <Link to="#" className="text-white-50 text-decoration-none">Cookie Policy</Link>
+          </div>
         </motion.div>
       </div>
     </motion.footer>

@@ -67,7 +67,7 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className="navbar fixed-top navbar-expand-lg navbar-light bg-black shadow-sm border-bottom border-black custom-navbar pt-5"
+      className="navbar fixed-top navbar-expand-lg navbar-light bg-black shadow-sm border-bottom border-black custom-navbar"
       variants={navVariants}
       initial="hidden"
       animate="visible"
@@ -91,7 +91,6 @@ const Navbar = () => {
             />
           </Link>
         </motion.div>
-
 
         <div>
           <motion.p
@@ -136,7 +135,7 @@ const Navbar = () => {
               <ProfilForSD closeNavbar={closeNavbar} />
             </motion.div>
 
-            {["/", "/sport", "/education", "/politics"].map((path, index) => (
+            {["/", "/sports", "/education", "/politics", "/foreign"].map((path, index) => (
               <motion.li
                 key={path}
                 className="nav-item"
@@ -154,7 +153,10 @@ const Navbar = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
             >
+
+              {/* About
               <GoogleTranslate id="google_translate_element_navbar" />
+              */}
 
             </motion.li>
           </ul>
