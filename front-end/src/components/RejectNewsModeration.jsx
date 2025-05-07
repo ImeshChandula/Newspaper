@@ -36,15 +36,25 @@ const RejectNewsModeration = () => {
   const [breakingNewsToggleLoading, setBreakingNewsToggleLoading] = useState(null);
   const [foreignNewsToggleLoading, setForeignNewsToggleLoading] = useState(null);
 
+  const [filterForeign, setFilterForeign] = useState(false);
+  const [filterBreaking, setFilterBreaking] = useState(false);
+
   const fetchNews = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/reject`, {
-        headers: {
-          Authorization: `Bearer ${token}`
+
+      const params = new URLSearchParams();
+      if (filterForeign) params.append('foreignNews', filterForeign);
+      if (filterBreaking) params.append('breakingNews', filterBreaking);
+
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/reject?${params.toString()}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
         }
-      });
-      console.log("API Response:", res.data);
+      );
+
       setNews(res.data);
     } catch (error) {
       console.error('Error fetching Reject news:', error);
@@ -57,7 +67,7 @@ const RejectNewsModeration = () => {
   useEffect(() => {
     fetchNews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [filterForeign, filterBreaking]);
 
   useEffect(() => {
     console.log("Rejected news loaded:", news);
@@ -218,6 +228,34 @@ const RejectNewsModeration = () => {
   return (
     <div className="news-container">
       <h2 className="news-head text-black">Rejected News Moderation</h2>
+
+      <div className="d-flex gap-3 align-items-center my-3">
+        <div className="form-check form-switch">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="breakingNewsToggle"
+            checked={filterBreaking}
+            onChange={() => setFilterBreaking(!filterBreaking)}
+          />
+          <label className="form-check-label" htmlFor="breakingNewsToggle">
+            Breaking News Only
+          </label>
+        </div>
+        <div className="form-check form-switch">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="breakingNewsToggle"
+            checked={filterForeign}
+            onChange={() => setFilterForeign(!filterForeign)}
+          />
+          <label className="form-check-label" htmlFor="breakingNewsToggle">
+            Foreign News Only
+          </label>
+        </div>
+      </div>
+
 
       {/* Toast notifications */}
       <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1060 }}>
