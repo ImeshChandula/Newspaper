@@ -210,8 +210,12 @@ const PendingNewsModeration = () => {
       <h2 className="news-head text-black">Pending News Moderation</h2>
 
       <div className="container mb-4">
+
+        <h5 className="mb-3">Filter News</h5>
         <div className="row g-3 align-items-center">
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+          
+        <div className="col-12">
+          <div className="d-flex gap-3 flex-wrap">
             <div className="form-check form-switch">
               <input
                 className="form-check-input"
@@ -221,12 +225,12 @@ const PendingNewsModeration = () => {
                 onChange={() => setFilterBreakingNews(!filterBreakingNews)}
               />
               <label className="form-check-label" htmlFor="breakingNewsToggle">
-                Breaking News Only
+                Breaking News 
               </label>
             </div>
-          </div>
+          
 
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+          
             <div className="form-check form-switch">
               <input
                 className="form-check-input"
@@ -236,55 +240,62 @@ const PendingNewsModeration = () => {
                 onChange={() => setFilterForeignNews(!filterForeignNews)}
               />
               <label className="form-check-label" htmlFor="foreignNewsToggle">
-                Foreign News Only
+                Foreign News 
               </label>
+            </div>
+          </div>
+        </div>
+
+
+          <div className="col-12">
+            <h6>Categories:</h6>
+            <div className="d-flex gap-3 flex-wrap">
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="category-sports"
+                  checked={selectedCategories.includes('Sports')}
+                  onChange={() => toggleCategory('Sports')}
+                />
+                <label className="form-check-label" htmlFor="category-sports">
+                  Sport News 
+                </label>
+              </div>
+            </div>
+
+            <div className="d-flex gap-3 flex-wrap">
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="category-education"
+                  checked={selectedCategories.includes('Education')}
+                  onChange={() => toggleCategory('Education')}
+                />
+                <label className="form-check-label" htmlFor="category-education">
+                  Education News 
+                </label>
+              </div>
+            </div>
+
+            <div className="d-flex gap-3 flex-wrap">
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="category-politics"
+                  checked={selectedCategories.includes('Politics')}
+                  onChange={() => toggleCategory('Politics')}
+                />
+                <label className="form-check-label" htmlFor="category-politics">
+                  Political News 
+                </label>
+              </div>
             </div>
           </div>
 
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="category-sports"
-                checked={selectedCategories.includes('Sports')}
-                onChange={() => toggleCategory('Sports')}
-              />
-              <label className="form-check-label" htmlFor="category-sports">
-                Sport News Only
-              </label>
-            </div>
-          </div>
 
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="category-education"
-                checked={selectedCategories.includes('Education')}
-                onChange={() => toggleCategory('Education')}
-              />
-              <label className="form-check-label" htmlFor="category-education">
-                Education News Only
-              </label>
-            </div>
-          </div>
-
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="category-politics"
-                checked={selectedCategories.includes('Politics')}
-                onChange={() => toggleCategory('Politics')}
-              />
-              <label className="form-check-label" htmlFor="category-politics">
-                Politic News Only
-              </label>
-            </div>
-          </div>
         </div>
       </div>
 
