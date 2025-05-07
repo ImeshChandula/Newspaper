@@ -39,17 +39,30 @@ const RejectNewsModeration = () => {
   const [filterForeign, setFilterForeign] = useState(false);
   const [filterBreaking, setFilterBreaking] = useState(false);
 
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const toggleCategory = (category) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
+
+
   const fetchNews = async () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
 
-      const params = new URLSearchParams();
-      if (filterForeign) params.append('foreignNews', filterForeign);
-      if (filterBreaking) params.append('breakingNews', filterBreaking);
+      const queryParams = new URLSearchParams();
+      if (filterForeign) queryParams.append('foreignNews', filterForeign);
+      if (filterBreaking) queryParams.append('breakingNews', filterBreaking);
+
+      selectedCategories.forEach((cat) => queryParams.append('category', cat));
 
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL_NEWS}/reject?${params.toString()}`,
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/reject?${queryParams.toString()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -67,7 +80,7 @@ const RejectNewsModeration = () => {
   useEffect(() => {
     fetchNews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterForeign, filterBreaking]);
+  }, [filterForeign, filterBreaking, selectedCategories]);
 
   useEffect(() => {
     console.log("Rejected news loaded:", news);
@@ -229,33 +242,84 @@ const RejectNewsModeration = () => {
     <div className="news-container">
       <h2 className="news-head text-black">Rejected News Moderation</h2>
 
-      <div className="d-flex gap-3 align-items-center my-3">
-        <div className="form-check form-switch">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            id="breakingNewsToggle"
-            checked={filterBreaking}
-            onChange={() => setFilterBreaking(!filterBreaking)}
-          />
-          <label className="form-check-label" htmlFor="breakingNewsToggle">
-            Breaking News Only
-          </label>
-        </div>
-        <div className="form-check form-switch">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            id="breakingNewsToggle"
-            checked={filterForeign}
-            onChange={() => setFilterForeign(!filterForeign)}
-          />
-          <label className="form-check-label" htmlFor="breakingNewsToggle">
-            Foreign News Only
-          </label>
+      <div className="container my-3">
+        <div className="row g-3">
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="breakingNewsToggle"
+                checked={filterBreaking}
+                onChange={() => setFilterBreaking(!filterBreaking)}
+              />
+              <label className="form-check-label" htmlFor="breakingNewsToggle">
+                Breaking News Only
+              </label>
+            </div>
+          </div>
+
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="foreignNewsToggle"
+                checked={filterForeign}
+                onChange={() => setFilterForeign(!filterForeign)}
+              />
+              <label className="form-check-label" htmlFor="foreignNewsToggle">
+                Foreign News Only
+              </label>
+            </div>
+          </div>
+
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="category-sports"
+                checked={selectedCategories.includes('Sports')}
+                onChange={() => toggleCategory('Sports')}
+              />
+              <label className="form-check-label" htmlFor="category-sports">
+                Sport News Only
+              </label>
+            </div>
+          </div>
+
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="category-education"
+                checked={selectedCategories.includes('Education')}
+                onChange={() => toggleCategory('Education')}
+              />
+              <label className="form-check-label" htmlFor="category-education">
+                Education News Only
+              </label>
+            </div>
+          </div>
+
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="category-politics"
+                checked={selectedCategories.includes('Politics')}
+                onChange={() => toggleCategory('Politics')}
+              />
+              <label className="form-check-label" htmlFor="category-politics">
+                Politic News Only
+              </label>
+            </div>
+          </div>
         </div>
       </div>
-
 
       {/* Toast notifications */}
       <ToastContainer position="top-end" className="p-3" style={{ zIndex: 1060 }}>
