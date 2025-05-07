@@ -7,6 +7,7 @@ const newsSchema = new mongoose.Schema({
         required: true,
       },
     breakingNews: { type: Boolean, default: false},
+    foreignNews: { type: Boolean, default: false},
     title: { type: String, required: true },
     media: { type: String }, // URL for image or video
     content: { type: String, required: true },
