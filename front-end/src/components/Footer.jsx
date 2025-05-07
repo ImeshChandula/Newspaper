@@ -24,10 +24,12 @@ const Footer = () => {
     visible: { opacity: 1, y: 0 },
   };
 
+  /*
   const iconHover = {
     whileHover: { scale: 1.15, rotate: 3 },
     whileTap: { scale: 0.95 },
   };
+  */
 
   return (
     <motion.footer

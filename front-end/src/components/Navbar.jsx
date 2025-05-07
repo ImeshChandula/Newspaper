@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import ProfileDropdown from "./ProfileDropDown";
 import ProfilForSD from "./ProfileForSD";
 import "./css/Navbar.css";
-import GoogleTranslate from "../Languages/GoogleTranslate";
+//import GoogleTranslate from "../Languages/GoogleTranslate";
 import logo from "../assets/logo.png"
 
 const Navbar = () => {
