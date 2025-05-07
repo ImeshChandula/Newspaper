@@ -34,6 +34,7 @@ const RejectNewsModeration = () => {
   const [previewTitle, setPreviewTitle] = useState('');
 
   const [breakingNewsToggleLoading, setBreakingNewsToggleLoading] = useState(null);
+  const [foreignNewsToggleLoading, setForeignNewsToggleLoading] = useState(null);
 
   const fetchNews = async () => {
     try {
@@ -111,6 +112,34 @@ const RejectNewsModeration = () => {
       showNotification('Failed to update breaking news status', 'danger');
     } finally {
       setBreakingNewsToggleLoading(null);
+    }
+  };
+
+  const toggleForeignNews = async (id, currentStatus) => {
+    setForeignNewsToggleLoading(id);
+    try {
+      const token = localStorage.getItem('token');
+      await axios.patch(
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/toggleForeignNews/${id}`,
+        { foreignNews: !currentStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setNews((prev) =>
+        prev.map((article) =>
+          article._id === id ? { ...article, foreignNews: !currentStatus } : article
+        )
+      );
+
+      showNotification(
+        `Article ${!currentStatus ? 'marked as foreign news' : 'unmarked as foreign news'}`,
+        'success'
+      );
+    } catch (error) {
+      console.error('Failed to toggle foreign news status:', error);
+      showNotification('Failed to update foreign news status', 'danger');
+    } finally {
+      setForeignNewsToggleLoading(null);
     }
   };
 
@@ -341,6 +370,24 @@ const RejectNewsModeration = () => {
                   className="btn btn-outline-primary news-edit-button"
                 >
                   <i className="bi bi-pencil-square"></i> Edit content
+                </button>
+
+                <button
+                  onClick={() => toggleForeignNews(article._id, article.foreignNews)}
+                  className={`btn ${article.foreignNews ? 'btn-info' : 'btn-outline-info'} news-foreign-button`}
+                  disabled={foreignNewsToggleLoading === article._id}
+                >
+                  {foreignNewsToggleLoading === article._id ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                      Processing
+                    </>
+                  ) : (
+                    <>
+                      <i className={`bi ${article.foreignNews ? 'bi-globe' : 'bi-globe2'}`}></i>
+                      {article.foreignNews ? 'Unmark Foreign' : 'Mark Foreign'}
+                    </>
+                  )}
                 </button>
 
                 <button

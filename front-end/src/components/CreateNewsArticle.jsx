@@ -9,7 +9,8 @@ const CreateNewsArticle = () => {
     title: '',
     media: '',
     content: '',
-    breakingNews: false
+    breakingNews: false,
+    foreignNews: false,
   });
 
   const [message, setMessage] = useState('');
@@ -121,6 +122,21 @@ const CreateNewsArticle = () => {
                 Mark as Breaking News
               </label>
             </div>
+
+            <div className="mb-3 form-check">
+              <input
+                type="checkbox"
+                name="foreignNews"
+                id="foreignNews"
+                checked={formData.foreignNews}
+                onChange={handleChange}
+                className="form-check-input"
+              />
+              <label className="form-check-label" htmlFor="foreignNews">
+                Mark as Foreign News
+              </label>
+            </div>
+
 
             <button
               type="submit"

@@ -27,6 +27,7 @@ const AcceptNewsModeration = () => {
   const [previewTitle, setPreviewTitle] = useState('');
 
   const [breakingNewsToggleLoading, setBreakingNewsToggleLoading] = useState(null);
+  const [foreignNewsToggleLoading, setForeignNewsToggleLoading] = useState(null);
 
   useEffect(() => {
     fetchNews();
@@ -79,16 +80,16 @@ const AcceptNewsModeration = () => {
         { breakingNews: !currentStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
+
       // Update the news state with the updated article
-      setNews((prev) => 
-        prev.map((article) => 
+      setNews((prev) =>
+        prev.map((article) =>
           article._id === id ? { ...article, breakingNews: !currentStatus } : article
         )
       );
-      
+
       showNotification(
-        `Article ${!currentStatus ? 'marked as breaking news' : 'unmarked as breaking news'}`, 
+        `Article ${!currentStatus ? 'marked as breaking news' : 'unmarked as breaking news'}`,
         'success'
       );
     } catch (error) {
@@ -98,6 +99,35 @@ const AcceptNewsModeration = () => {
       setBreakingNewsToggleLoading(null);
     }
   };
+
+  const toggleForeignNews = async (id, currentStatus) => {
+    setForeignNewsToggleLoading(id);
+    try {
+      const token = localStorage.getItem('token');
+      await axios.patch(
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/toggleForeignNews/${id}`,
+        { foreignNews: !currentStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setNews((prev) =>
+        prev.map((article) =>
+          article._id === id ? { ...article, foreignNews: !currentStatus } : article
+        )
+      );
+
+      showNotification(
+        `Article ${!currentStatus ? 'marked as foreign news' : 'unmarked as foreign news'}`,
+        'success'
+      );
+    } catch (error) {
+      console.error('Failed to toggle foreign news status:', error);
+      showNotification('Failed to update foreign news status', 'danger');
+    } finally {
+      setForeignNewsToggleLoading(null);
+    }
+  };
+
 
   const handleEditNews = (articleId) => {
     localStorage.setItem('Edit NewsId', articleId);
@@ -127,13 +157,13 @@ const AcceptNewsModeration = () => {
     const articleDate = new Date(date);
     const expiryDate = new Date(articleDate.getTime() + 24 * 60 * 60 * 1000);
     const now = new Date();
-    
+
     if (now > expiryDate) return 'Expired';
-    
+
     const timeRemaining = expiryDate - now;
     const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
     const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-    
+
     return `${hours}h ${minutes}m remaining`;
   };
 
@@ -201,8 +231,8 @@ const AcceptNewsModeration = () => {
       ) : (
         <div className="news-card-container">
           {news.map((article) => (
-            <div 
-              key={article._id} 
+            <div
+              key={article._id}
               className={`news-card bg-white border ${article.breakingNews ? 'border-danger' : 'border-secondary'}`}
             >
               <div className="news-metadata bg-white border-bottom border-secondary d-flex justify-content-between align-items-center">
@@ -255,12 +285,34 @@ const AcceptNewsModeration = () => {
 
               <div className="news-buttons">
                 <button
+                  onClick={() => toggleForeignNews(article._id, article.foreignNews)}
+                  className={`btn ${article.foreignNews ? 'btn-info' : 'btn-outline-info'} ms-2`}
+                  disabled={foreignNewsToggleLoading === article._id}
+                >
+                  {foreignNewsToggleLoading === article._id ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Processing
+                    </>
+                  ) : (
+                    <>
+                      <i className={`bi ${article.foreignNews ? 'bi-globe2' : 'bi-globe'}`}></i>
+                      {article.foreignNews ? ' Unmark Foreign' : ' Mark Foreign'}
+                    </>
+                  )}
+                </button>
+
+                <button
                   onClick={() => handleEditNews(article._id)}
                   className="btn btn-outline-primary news-edit-button"
                 >
                   <i className="bi bi-pencil-square"></i> Edit Content
                 </button>
-                
+
                 <button
                   onClick={() => toggleBreakingNews(article._id, article.breakingNews)}
                   className={`btn ${article.breakingNews ? 'btn-warning' : 'btn-outline-warning'} news-breaking-button`}
@@ -277,12 +329,12 @@ const AcceptNewsModeration = () => {
                     </>
                   ) : (
                     <>
-                      <i className={`bi ${article.breakingNews ? 'bi-lightning-fill' : 'bi-lightning'}`}></i> 
+                      <i className={`bi ${article.breakingNews ? 'bi-lightning-fill' : 'bi-lightning'}`}></i>
                       {article.breakingNews ? 'Unmark Breaking' : 'Mark Breaking'}
                     </>
                   )}
                 </button>
-                
+
                 <button
                   onClick={() => updateStatus(article._id, 'reject')}
                   className="btn btn-danger news-reject-button"
