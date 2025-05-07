@@ -3,11 +3,15 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
+const { initializeDefaultSuperAdmin } = require("./config/CreateDefaultSuperAdmin");
 
 
 dotenv.config();
 connectDB();
 
+initializeDefaultSuperAdmin().then(() => {
+  console.log('Server initialization completed.....\n');
+});
 
 const app = express();
 app.use(express.json());
