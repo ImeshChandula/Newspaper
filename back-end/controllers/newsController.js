@@ -140,14 +140,13 @@ const getBreakingNews = async (req, res) => {
       // Manually update all expired breaking news
       await News.updateBreakingNews();
 
-      // Query for breaking news articles created in the last 24 hours
-      const breakingNews = await News.find({ 
-          breakingNews: true,
+      const query = {
           foreignNews: false,
+          breakingNews: true,
           status: "accept"
-      })
-      .sort({ date: -1 }) // Sort by newest first
-      .populate('author', 'username email');
+      };
+
+      const breakingNews = await News.find(query).sort({ date: -1 }).populate('author', 'username email');
       
       res.status(200).json(breakingNews);
   } catch (error) {
@@ -197,7 +196,23 @@ const getAllPendingNews = async (req, res) => {
     try {
       await News.updateBreakingNews();
 
-      const pendingNews = await News.find({ status: "pending" })
+      const { foreignNews, breakingNews } = req.query;
+      
+      const query = { 
+        status: "pending" 
+      };
+
+      // Add foreignNews filter if provided in the query parameters
+      if (foreignNews !== undefined) {
+        query.foreignNews = foreignNews === "true";
+      }
+
+      // Add breakingNews filter if provided in the query parameters
+      if (breakingNews !== undefined) {
+        query.breakingNews = breakingNews === "true";
+      }
+
+      const pendingNews = await News.find(query)
         .sort({ date: -1 })
         .populate('author', 'username email');
   
@@ -215,11 +230,25 @@ const getAllAcceptNews = async (req, res) => {
     try {
       await News.updateBreakingNews();
 
-      const pendingNews = await News.find({ status: "accept" })
-        .sort({ date: -1 })
-        .populate('author', 'username email');
+      const { foreignNews, breakingNews } = req.query;
+
+      const query = { 
+        status: "accept" 
+      };
+
+      // Add foreignNews filter if provided in the query parameters
+      if (foreignNews !== undefined) {
+        query.foreignNews = foreignNews === "true";
+      }
+
+      // Add breakingNews filter if provided in the query parameters
+      if (breakingNews !== undefined) {
+        query.breakingNews = breakingNews === "true";
+      }
+
+      const acceptNews = await News.find(query).sort({ date: -1 }).populate('author', 'username email');
   
-      res.status(200).json(pendingNews);
+      res.status(200).json(acceptNews);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching accept news', error: error.message });
     }
@@ -233,11 +262,27 @@ const getAllRejectNews = async (req, res) => {
     try {
       await News.updateBreakingNews();
 
-      const pendingNews = await News.find({ status: "reject" })
+      const { foreignNews, breakingNews } = req.query;
+      
+      const query = { 
+        status: "reject" 
+      };
+
+      // Add foreignNews filter if provided in the query parameters
+      if (foreignNews !== undefined) {
+        query.foreignNews = foreignNews === "true";
+      }
+
+      // Add breakingNews filter if provided in the query parameters
+      if (breakingNews !== undefined) {
+        query.breakingNews = breakingNews === "true";
+      }
+
+      const rejectNews = await News.find(query)
         .sort({ date: -1 })
         .populate('author', 'username email');
   
-      res.status(200).json(pendingNews);
+      res.status(200).json(rejectNews);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching reject news', error: error.message });
     }
