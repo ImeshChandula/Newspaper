@@ -13,6 +13,7 @@ router.get("/education/accept", newsController.getEducationAcceptNews);
 router.get("/politics/accept", newsController.getPoliticsAcceptNews);
 router.get("/sports/accept", newsController.getSportsAcceptNews);
 router.get("/getNewsArticleByID/:id", newsController.getNewsArticleByID);
+router.get("/getForeignNewsAccept", newsController.getForeignNewsAccept);
 
 router.get('/accept', authenticateUser, authorizeRoles("super_admin", "admin"), newsController.getAllAcceptNews);
 router.get("/pending",authenticateUser, authorizeRoles("super_admin", "admin"), newsController.getAllPendingNews);
@@ -25,6 +26,7 @@ router.patch("/updateStatus/:id", authenticateUser, authorizeRoles("super_admin"
 router.patch("/updateNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin", "admin"), newsController.updateNewsArticleByID);
 router.delete("/deleteNewsArticleByID/:id", authenticateUser, authorizeRoles("super_admin"), newsController.deleteNewsArticleByID);
 router.patch("/toggleBreakingNews/:id", authenticateUser, authorizeRoles("super_admin", "admin"), newsController.toggleBreakingNews);
+router.patch("/toggleForeignNews/:id", authenticateUser, authorizeRoles("super_admin", "admin"), newsController.toggleForeignNews);
 
 
 module.exports = router;

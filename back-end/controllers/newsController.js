@@ -266,7 +266,7 @@ const getAllRecentlyNewsWithoutBreakingNews = async (req, res) => {
   }
 };
 
-//@route   GET /api/news/foreignNewsAccept
+//@route   GET /api/news/getForeignNewsAccept
 //@desc    Get all Accept Foreign News Without BreakingNews
 //@access  public
 const getForeignNewsAccept = async (req, res) => {
@@ -434,5 +434,7 @@ module.exports = {
     getMyNewsArticles,
     getBreakingNews,
     toggleBreakingNews,
-    getAllRecentlyNewsWithoutBreakingNews
+    getAllRecentlyNewsWithoutBreakingNews,
+    getForeignNewsAccept,
+    toggleForeignNews,
 };
