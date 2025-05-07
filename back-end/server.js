@@ -25,13 +25,15 @@ app.use("/api/news", require("./routes/newsRoutes"));
 app.use("/api/ads", require("./routes/adRoutes"));
 
 
+//  route handler for the root path
+app.get('/', (req, res) => {
+  res.send('Its Working...!');
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({
-    status: "error",
-    message: "Something went wrong!",
-  });
+  res.status(500).json({ status: "error", message: "Something went wrong!" });
 });
 
 const PORT = process.env.PORT || 5000;
