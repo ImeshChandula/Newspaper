@@ -6,7 +6,6 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/css/NewsModeration.css';
-import '../components/css/NewsFilter.css'
 
 const AcceptNewsModeration = () => {
   const navigate = useNavigate();
@@ -30,39 +29,6 @@ const AcceptNewsModeration = () => {
   const [breakingNewsToggleLoading, setBreakingNewsToggleLoading] = useState(null);
   const [foreignNewsToggleLoading, setForeignNewsToggleLoading] = useState(null);
 
-  // State for filter options
-  const [filters, setFilters] = useState({
-    breakingNews: undefined,
-    foreignNews: undefined,
-    category: ''
-  });
-
-  // Handle checkbox changes
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target;
-    setFilters(prev => ({
-      ...prev,
-      [name]: checked ? true : undefined
-    }));
-  };
-
-  // Handle radio button changes for category
-  const handleCategoryChange = (e) => {
-    const { value } = e.target;
-    setFilters(prev => ({
-      ...prev,
-      category: value
-    }));
-  };
-
-  // Reset all filters
-  const resetFilters = () => {
-    setFilters({
-      breakingNews: undefined,
-      foreignNews: undefined,
-      category: ''
-    });
-  };
 
   useEffect(() => {
     fetchNews();
@@ -72,23 +38,9 @@ const AcceptNewsModeration = () => {
   const fetchNews = async () => {
     setLoading(true);
     try {
-      // Build query parameters
-      const params = new URLSearchParams();
-      if (filters.breakingNews !== undefined) {
-        params.append('breakingNews', filters.breakingNews);
-      }
-      
-      if (filters.foreignNews !== undefined) {
-        params.append('foreignNews', filters.foreignNews);
-      }
-      
-      if (filters.category) {
-        params.append('category', filters.category);
-      }
-
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL_NEWS}/accept${params.toString()}`,
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/accept`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setNews(response.data);
@@ -267,86 +219,6 @@ const AcceptNewsModeration = () => {
         </Modal.Body>
       </Modal>
 
-      {/* Filters */}
-      <div className="filter-section">
-        <h3>Filter News</h3>
-        
-        {/* Checkbox filters */}
-        <div className="checkbox-filters">
-          <label>
-            <input
-              type="checkbox"
-              name="breakingNews"
-              checked={filters.breakingNews === true}
-              onChange={handleCheckboxChange}
-            />
-            Breaking News
-          </label>
-          
-          <label>
-            <input
-              type="checkbox"
-              name="foreignNews"
-              checked={filters.foreignNews === true}
-              onChange={handleCheckboxChange}
-            />
-            Foreign News
-          </label>
-        </div>
-        
-        {/* Category filters */}
-        <div className="category-filters">
-          <h4>Categories</h4>
-          
-          <label>
-            <input
-              type="radio"
-              name="category"
-              value=""
-              checked={filters.category === ''}
-              onChange={handleCategoryChange}
-            />
-            All Categories
-          </label>
-          
-          <label>
-            <input
-              type="radio"
-              name="category"
-              value="Education"
-              checked={filters.category === 'Education'}
-              onChange={handleCategoryChange}
-            />
-            Education
-          </label>
-          
-          <label>
-            <input
-              type="radio"
-              name="category"
-              value="Politics"
-              checked={filters.category === 'Politics'}
-              onChange={handleCategoryChange}
-            />
-            Politics
-          </label>
-          
-          <label>
-            <input
-              type="radio"
-              name="category"
-              value="Sports"
-              checked={filters.category === 'Sports'}
-              onChange={handleCategoryChange}
-            />
-            Sports
-          </label>
-        </div>
-        
-        <button onClick={resetFilters} className="reset-btn">
-          Reset Filters
-        </button>
-      </div>
 
       {loading ? (
         <div className="d-flex justify-content-center my-5">
