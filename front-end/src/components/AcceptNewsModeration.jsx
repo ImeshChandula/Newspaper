@@ -38,7 +38,7 @@ const AcceptNewsModeration = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/news/accept`,
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/accept`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setNews(response.data);
@@ -55,7 +55,7 @@ const AcceptNewsModeration = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.patch(
-        `${process.env.REACT_APP_API_URL}/news/updateStatus/${id}`,
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/updateStatus/${id}`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -75,7 +75,7 @@ const AcceptNewsModeration = () => {
       const token = localStorage.getItem('token');
       // eslint-disable-next-line no-unused-vars
       const response = await axios.patch(
-        `${process.env.REACT_APP_API_URL}/news/toggleBreakingNews/${id}`,
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/toggleBreakingNews/${id}`,
         { breakingNews: !currentStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
