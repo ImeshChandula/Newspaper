@@ -148,17 +148,22 @@ const Navbar = () => {
                 </Link>
               </motion.li>
             ))}
+
+            {/* 
+
             <motion.li
               className="nav-item"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
             >
 
-              {/* About
+              About
               <GoogleTranslate id="google_translate_element_navbar" />
-              */}
+              
 
             </motion.li>
+            
+            */}
           </ul>
         </div>
 
