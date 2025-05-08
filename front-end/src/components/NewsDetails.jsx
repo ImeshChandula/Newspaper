@@ -146,14 +146,21 @@ const NewsDetail = () => {
                         )
                     )}
 
-                    <motion.p
-                        className="lead text-center text-black"
+                    <motion.div
+                        className="lead text-black mt-4"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 0.6 }}
                     >
-                        {newsItem.content}
-                    </motion.p>
+                        {newsItem.content
+                            .split(/\r?\n/)
+                            .filter(paragraph => paragraph.trim() !== "")
+                            .map((paragraph, index) => (
+                                <p key={index} className="mb-3 text-justify">
+                                    {paragraph}
+                                </p>
+                            ))}
+                    </motion.div>
 
                     <motion.div
                         className="d-flex justify-content-between flex-wrap small text-black mt-4 border-top pt-2"
