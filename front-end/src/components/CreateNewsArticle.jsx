@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../components/css/CreateNewsArticle.css';
 
@@ -15,17 +15,64 @@ const CreateNewsArticle = () => {
 
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [mediaError, setMediaError] = useState('');
+
+  // Check if media URL contains blocked social media links
+  const validateMediaUrl = (url) => {
+    if (!url) return true;
+    
+    const blockedDomains = [
+      // Social media platforms
+      'facebook.com', 'fb.com', 'fb.me', 'facebook.me',
+      'instagram.com', 'instagr.am', 'instagram',
+      'tiktok.com', 'tiktok', 'vm.tiktok.com',
+      
+      // File hosting services
+      'mega.nz', 'mega.io', 'mega.co.nz',
+      'mediafire.com', 'mfi.re'
+    ];
+    
+    const lowercaseUrl = url.toLowerCase();
+    return !blockedDomains.some(domain => lowercaseUrl.includes(domain));
+  };
 
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
+    const newValue = type === 'checkbox' ? checked : value;
+
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: newValue
     });
+
+    // Clear media error when user starts modifying the field
+    if (name === 'media') {
+      setMediaError('');
+    }
+
   };
+
+
+  // Validate media URL whenever it changes
+  useEffect(() => {
+    if (formData.media && !validateMediaUrl(formData.media)) {
+      setMediaError('Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed');
+    } else {
+      setMediaError('');
+    }
+  }, [formData.media]);
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check for invalid social media links before submission
+    if (!validateMediaUrl(formData.media)) {
+      setMediaError('Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed');
+      return; // Prevent form submission
+    }
+
     setLoading(true);
     setMessage('');
 
@@ -42,7 +89,7 @@ const CreateNewsArticle = () => {
         }
       );
       console.log("News article created successfully!");
-      setMessage('News Created Success');
+      setMessage('News Article Created Successfully.');
       setFormData({ category: '', title: '', media: '', content: '', breakingNews: false });
     } catch (error) {
       setMessage(error.response?.data?.message || 'Something Went Wrong');
@@ -94,8 +141,16 @@ const CreateNewsArticle = () => {
                 placeholder="Ex: Google Drive link / YouTube link / Google Image,Video link"
                 value={formData.media}
                 onChange={handleChange}
-                className="form-control bg-white text-black border-secondary"
+                className={`form-control bg-white text-black border-secondary ${mediaError ? 'is-invalid' : ''}`}
               />
+              {mediaError && (
+                <div className="invalid-feedback">
+                  {mediaError}
+                </div>
+              )}
+              <small className="form-text text-muted">
+              Note: Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed
+              </small>
             </div>
 
             <div className="mb-4">
@@ -139,11 +194,10 @@ const CreateNewsArticle = () => {
               </label>
             </div>
 
-
             <button
               type="submit"
               className="btn btn-primary w-100"
-              disabled={loading}
+              disabled={loading || mediaError}
             >
               {loading ? 'Creating...' : 'Create News'}
             </button>

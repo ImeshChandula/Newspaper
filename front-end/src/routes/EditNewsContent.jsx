@@ -19,6 +19,7 @@ const EditNewsContent = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
+  const [mediaError, setMediaError] = useState('');
 
   useEffect(() => {
     const id = location.state?.articleId;
@@ -41,7 +42,36 @@ const EditNewsContent = () => {
         setMessage('No article ID found. Please select an article to edit.');
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
+
+  // Check if media URL contains blocked social media and file hosting links
+  const validateMediaUrl = (url) => {
+    if (!url) return true;
+    
+    const blockedDomains = [
+      // Social media platforms
+      'facebook.com', 'fb.com', 'fb.me', 'facebook.me',
+      'instagram.com', 'instagr.am', 'instagram',
+      'tiktok.com', 'tiktok', 'vm.tiktok.com',
+      
+      // File hosting services
+      'mega.nz', 'mega.io', 'mega.co.nz',
+      'mediafire.com', 'mfi.re'
+    ];
+    
+    const lowercaseUrl = url.toLowerCase();
+    return !blockedDomains.some(domain => lowercaseUrl.includes(domain));
+  };
+
+  // Validate media URL whenever it changes
+  useEffect(() => {
+    if (formData.media && !validateMediaUrl(formData.media)) {
+      setMediaError('Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed');
+    } else {
+      setMediaError('');
+    }
+  }, [formData.media]);
 
   const fetchArticleData = async (id) => {
     setFetchLoading(true);
@@ -51,10 +81,20 @@ const EditNewsContent = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const article = res.data;
+
+      // Check if the existing media URL is valid
+      const mediaUrl = article.media || '';
+      const isMediaValid = validateMediaUrl(mediaUrl);
+
+      // Set error message if existing media URL is invalid
+      if (!isMediaValid) {
+        setMediaError('Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed');
+      }
+
       setFormData({
         category: article.category || '',
         title: article.title || '',
-        media: article.media || '',
+        media: mediaUrl,
         content: article.content || '',
       });
     } catch (error) {
@@ -84,11 +124,24 @@ const EditNewsContent = () => {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    
+    // Clear media error when user starts modifying the field
+    if (name === 'media') {
+      setMediaError('');
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check for invalid social media links before submission
+    if (!validateMediaUrl(formData.media)) {
+      setMediaError('Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed');
+      return; // Prevent form submission
+    }
+
     setLoading(true);
     setMessage('');
 
@@ -174,8 +227,16 @@ const EditNewsContent = () => {
                   placeholder="Enter media URL"
                   value={formData.media}
                   onChange={handleChange}
-                  className="form-control bgwhite border-secondary"
+                  className={`form-control bg-white border-secondary ${mediaError ? 'is-invalid' : ''}`}
                 />
+                {mediaError && (
+                  <div className="invalid-feedback">
+                    {mediaError}
+                  </div>
+                )}
+                <small className="form-text text-muted">
+                  Note: Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed
+                </small>
               </div>
 
               <div className="mb-4">
@@ -195,7 +256,7 @@ const EditNewsContent = () => {
                 <button
                   type="submit"
                   className="btn btn-primary w-100"
-                  disabled={loading}
+                  disabled={loading || mediaError}
                 >
                   {loading ? 'Updating...' : 'Update Article'}
                 </button>
