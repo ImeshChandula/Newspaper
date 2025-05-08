@@ -91,7 +91,7 @@ const CreateNewsArticle = () => {
               <input
                 type="text"
                 name="media"
-                placeholder="Media URL"
+                placeholder="Ex: Google Drive link / YouTube link / Google Image,Video link"
                 value={formData.media}
                 onChange={handleChange}
                 className="form-control bg-white text-black border-secondary"
