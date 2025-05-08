@@ -276,22 +276,157 @@ const RejectNewsModeration = () => {
     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   };
 
+  // Extract Google Drive file ID from URL
+  const getDriveFileId = (url) => {
+    if (!url) return null;
+    
+    // Handle different Google Drive URL formats
+    // Format 1: https://drive.google.com/file/d/{fileId}/view
+    // Format 2: https://drive.google.com/open?id={fileId}
+    // Format 3: https://docs.google.com/document/d/{fileId}/edit
+    
+    let fileId = null;
+    
+    if (url.includes('drive.google.com/file/d/')) {
+      const match = url.match(/\/file\/d\/([^/]+)/);
+      if (match && match[1]) fileId = match[1];
+    } else if (url.includes('drive.google.com/open?id=')) {
+      const urlObj = new URL(url);
+      fileId = urlObj.searchParams.get('id');
+    } else if (url.includes('docs.google.com')) {
+      const match = url.match(/\/d\/([^/]+)/);
+      if (match && match[1]) fileId = match[1];
+    }
+    
+    return fileId;
+  };
+  
+  // Check if URL is a Google Drive URL
+  const isDriveUrl = (url) => {
+    if (!url) return false;
+    return url.includes('drive.google.com') || url.includes('docs.google.com');
+  };
+  
+  // Function to detect media type from URL
+  const detectMediaType = (url) => {
+    if (!url) return 'unknown';
+    
+    // Normalize to lowercase for easier matching
+    const urlLower = url.toLowerCase();
+    
+    // Check for direct image URLs
+    if (urlLower.match(/\.(jpeg|jpg|gif|png|webp|svg)(\?.*)?$/)) {
+      return 'image';
+    }
+    
+    // Check for direct video URLs
+    if (urlLower.match(/\.(mp4|webm|ogg|mov|avi)(\?.*)?$/)) {
+      return 'direct-video';
+    }
+    
+    // Check for YouTube
+    if (isYouTubeUrl(url)) {
+      return 'youtube';
+    }
+    
+    // Check for Google Drive
+    if (isDriveUrl(url)) {
+      return 'google-drive';
+    }
+    
+    // Check for Vimeo links
+    if (urlLower.includes('vimeo.com')) {
+      return 'vimeo';
+    }
+    
+    // Check for Dailymotion links
+    if (urlLower.includes('dailymotion.com') || urlLower.includes('dai.ly')) {
+      return 'dailymotion';
+    }
+
+    // Check for common social media domains
+    if (urlLower.includes('facebook.com') || urlLower.includes('fb.watch')) {
+      return 'facebook';
+    }
+    
+    if (urlLower.includes('instagram.com')) {
+      return 'instagram';
+    }
+    
+    if (urlLower.includes('twitter.com') || urlLower.includes('x.com')) {
+      return 'twitter';
+    }
+    
+    if (urlLower.includes('tiktok.com')) {
+      return 'tiktok';
+    }
+    
+    // Unknown media type
+    return 'unknown';
+  };
+
   const handleMediaClick = (mediaUrl) => {
-    // Check if it's a YouTube URL
-    if (isYouTubeUrl(mediaUrl)) {
-      setPreviewType('video');
-      // Extract video ID from YouTube URL
-      const videoId = getYouTubeId(mediaUrl);
-      
-      if (videoId) {
-        setPreviewUrl(`https://www.youtube.com/embed/${videoId}`);
+    const mediaType = detectMediaType(mediaUrl);
+    
+    switch (mediaType) {
+      case 'youtube':
+        setPreviewType('video');
+        const videoId = getYouTubeId(mediaUrl);
+        if (videoId) {
+          setPreviewUrl(`https://www.youtube.com/embed/${videoId}`);
+          setShowImageModal(true);
+        }
+        break;
+        
+      case 'google-drive':
+        setPreviewType('iframe');
+        const fileId = getDriveFileId(mediaUrl);
+        if (fileId) {
+          // For Google Drive files, we need to use the preview URL
+          setPreviewUrl(`https://drive.google.com/file/d/${fileId}/preview`);
+          setShowImageModal(true);
+        }
+        break;
+        
+      case 'vimeo':
+        setPreviewType('video');
+        // Extract Vimeo ID
+        const vimeoId = mediaUrl.match(/vimeo\.com\/(\d+)/);
+        if (vimeoId && vimeoId[1]) {
+          setPreviewUrl(`https://player.vimeo.com/video/${vimeoId[1]}`);
+          setShowImageModal(true);
+        }
+        break;
+        
+      case 'dailymotion':
+        setPreviewType('video');
+        // Extract Dailymotion ID
+        let dailymotionId = null;
+        if (mediaUrl.includes('dailymotion.com/video/')) {
+          dailymotionId = mediaUrl.split('/video/')[1].split('_')[0];
+        } else if (mediaUrl.includes('dai.ly/')) {
+          dailymotionId = mediaUrl.split('dai.ly/')[1];
+        }
+        
+        if (dailymotionId) {
+          setPreviewUrl(`https://www.dailymotion.com/embed/video/${dailymotionId}`);
+          setShowImageModal(true);
+        }
+        break;
+        
+      case 'direct-video':
+        setPreviewType('direct-video');
+        setPreviewUrl(mediaUrl);
         setShowImageModal(true);
-      }
-    } else {
-      // It's a regular image
-      setPreviewType('image');
-      setPreviewUrl(mediaUrl);
-      setShowImageModal(true);
+        break;
+        
+      case 'image':
+      default:
+        // Regular image or unknown type - just show the URL
+        setPreviewType('image');
+        setPreviewUrl(mediaUrl);
+        setShowImageModal(true);
+        break;
     }
   };
 
@@ -301,49 +436,147 @@ const RejectNewsModeration = () => {
     setShowContentModal(true);
   };
 
-  // Render media with proper thumbnail for videos
+  // Get a generic placeholder image for URLs that don't have a good thumbnail
+  const getGenericThumbnail = (mediaType) => {
+    // Return different placeholder icons based on the media type
+    switch (mediaType) {
+      case 'google-drive':
+        return 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png';
+      case 'vimeo':
+        return 'https://i.vimeocdn.com/favicon/main-touch_180';
+      case 'dailymotion':
+        return 'https://static1.dmcdn.net/images/dailymotion-logo-ogtag.png.v2833aa4c8597b6734';
+      case 'facebook':
+        return 'https://static.xx.fbcdn.net/rsrc.php/yD/r/d4ZIVX-5C-b.ico';
+      case 'instagram':
+        return 'https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png';
+      case 'twitter':
+      case 'x':
+        return 'https://abs.twimg.com/responsive-web/client-web/icon-ios.b1fc727a.png';
+      case 'tiktok':
+        return 'https://sf16-sg.tiktokcdn.com/obj/eden-sg/uvkuhvgvs9/static/tiktok_webapp_login/intro.png';
+      case 'direct-video':
+        return 'https://cdn-icons-png.flaticon.com/512/3607/3607404.png';
+      default:
+        return 'https://cdn-icons-png.flaticon.com/512/3137/3137065.png';
+    }
+  };
+
+  // Function to extract the best thumbnail for a URL
+  const getBestThumbnailUrl = (mediaUrl) => {
+    const mediaType = detectMediaType(mediaUrl);
+    
+    switch (mediaType) {
+      case 'youtube':
+        const videoId = getYouTubeId(mediaUrl);
+        if (videoId) {
+          return getYouTubeThumbnailUrl(videoId);
+        }
+        break;
+        
+      case 'vimeo':
+        // Vimeo doesn't have a simple thumbnail API like YouTube
+        // We'll use a generic thumbnail for now
+        return getGenericThumbnail('vimeo');
+        
+      case 'google-drive':
+        // Google Drive uses an API that requires auth, so we'll use a generic icon
+        return getGenericThumbnail('google-drive');
+        
+      case 'direct-video':
+        // For direct videos, show a video icon
+        return getGenericThumbnail('direct-video');
+        
+      case 'image':
+        // For images, use the image itself
+        return mediaUrl;
+        
+      default:
+        // For unknown types, use a generic link icon
+        return getGenericThumbnail(mediaType);
+    }
+  };
+
+  // Get a human-readable label for the media type
+  const getMediaTypeLabel = (mediaType) => {
+    switch (mediaType) {
+      case 'youtube': return 'YouTube Video';
+      case 'google-drive': return 'Google Drive File';
+      case 'vimeo': return 'Vimeo Video';
+      case 'dailymotion': return 'Dailymotion Video';
+      case 'facebook': return 'Facebook Content';
+      case 'instagram': return 'Instagram Content';
+      case 'twitter': return 'Twitter/X Post';
+      case 'tiktok': return 'TikTok Video';
+      case 'direct-video': return 'Video File';
+      case 'image': return 'Image';
+      default: return 'External Media';
+    }
+  };
+
+  // Get the appropriate icon for the media type
+  const getMediaTypeIcon = (mediaType) => {
+    switch (mediaType) {
+      case 'youtube': return 'bi-youtube';
+      case 'google-drive': return 'bi-google';
+      case 'vimeo': return 'bi-vimeo';
+      case 'dailymotion': return 'bi-camera-video';
+      case 'facebook': return 'bi-facebook';
+      case 'instagram': return 'bi-instagram';
+      case 'twitter': return 'bi-twitter';
+      case 'tiktok': return 'bi-tiktok';
+      case 'direct-video': return 'bi-file-earmark-play';
+      case 'image': return 'bi-image';
+      default: return 'bi-link-45deg';
+    }
+  };
+
+  // Get the background color for the media type badge
+  const getMediaBadgeColor = (mediaType) => {
+    switch (mediaType) {
+      case 'youtube': return 'rgba(255,0,0,0.8)';
+      case 'google-drive': return 'rgba(0,112,237,0.8)';
+      case 'vimeo': return 'rgba(26,183,234,0.8)';
+      case 'dailymotion': return 'rgba(0,170,255,0.8)';
+      case 'facebook': return 'rgba(24,119,242,0.8)';
+      case 'instagram': return 'rgba(225,48,108,0.8)';
+      case 'twitter': return 'rgba(29,161,242,0.8)';
+      case 'tiktok': return 'rgba(0,0,0,0.8)';
+      case 'direct-video': return 'rgba(92,45,145,0.8)';
+      case 'image': return 'rgba(45,156,219,0.8)';
+      default: return 'rgba(108,117,125,0.8)';
+    }
+  };
+
+  // Render media with proper thumbnail for various types
   const renderMediaThumbnail = (mediaUrl) => {
     if (!mediaUrl) return null;
     
-    if (isYouTubeUrl(mediaUrl)) {
-      const videoId = getYouTubeId(mediaUrl);
-      if (videoId) {
-        return (
-          <div className="news-media-container position-relative">
-            <img
-              src={getYouTubeThumbnailUrl(videoId)}
-              alt="YouTube video thumbnail"
-              className="news-media"
-              style={{ cursor: 'pointer', objectFit: 'cover', height: '200px', width: '100%' }}
-              onClick={() => handleMediaClick(mediaUrl)}
-            />
-            <div 
-              className="position-absolute top-0 end-0 m-2"
-              style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '4px', padding: '2px 8px' }}
-            >
-              <i className="bi bi-zoom-in text-white"></i>
-            </div>
-            <div 
-              className="position-absolute bottom-0 start-50 translate-middle-x mb-2 px-3 py-1"
-              style={{ backgroundColor: 'rgba(255,0,0,0.8)', borderRadius: '4px', color: 'white' }}
-            >
-              <i className="bi bi-youtube me-1"></i>
-              YouTube Video
-            </div>
-          </div>
-        );
-      }
-    }
+    const mediaType = detectMediaType(mediaUrl);
+    const thumbnailUrl = getBestThumbnailUrl(mediaUrl);
+    const mediaLabel = getMediaTypeLabel(mediaType);
+    const mediaIcon = getMediaTypeIcon(mediaType);
+    const badgeColor = getMediaBadgeColor(mediaType);
     
-    // Regular image
     return (
       <div className="news-media-container position-relative">
         <img
-          src={mediaUrl}
-          alt="News media"
+          src={thumbnailUrl}
+          alt={`${mediaLabel} thumbnail`}
           className="news-media"
-          style={{ cursor: 'pointer', objectFit: 'cover', height: '200px', width: '100%' }}
+          style={{ 
+            cursor: 'pointer', 
+            objectFit: 'cover', 
+            height: '200px', 
+            width: '100%',
+            backgroundColor: mediaType !== 'image' ? '#f8f9fa' : 'transparent'
+          }}
           onClick={() => handleMediaClick(mediaUrl)}
+          onError={(e) => {
+            // If image fails to load, use a generic icon
+            e.target.onerror = null;
+            e.target.src = getGenericThumbnail(mediaType);
+          }}
         />
         <div
           className="position-absolute top-0 end-0 m-2"
@@ -351,9 +584,20 @@ const RejectNewsModeration = () => {
         >
           <i className="bi bi-zoom-in text-white"></i>
         </div>
+        {mediaType !== 'image' && (
+          <div
+            className="position-absolute bottom-0 start-50 translate-middle-x mb-2 px-3 py-1"
+            style={{ backgroundColor: badgeColor, borderRadius: '4px', color: 'white' }}
+          >
+            <i className={`${mediaIcon} me-1`}></i>
+            {mediaLabel}
+          </div>
+        )}
       </div>
     );
   };
+
+  
 
 
   return (
