@@ -26,7 +26,7 @@ const RejectNewsModeration = () => {
 
   // Image preview modal state
   const [showImageModal, setShowImageModal] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
+  //const [previewImage, setPreviewImage] = useState("");
 
   // Content preview modal state
   const [showContentModal, setShowContentModal] = useState(false);
@@ -36,18 +36,43 @@ const RejectNewsModeration = () => {
   const [breakingNewsToggleLoading, setBreakingNewsToggleLoading] = useState(null);
   const [foreignNewsToggleLoading, setForeignNewsToggleLoading] = useState(null);
 
-  const [filterForeign, setFilterForeign] = useState(false);
-  const [filterBreaking, setFilterBreaking] = useState(false);
+  // Filter states
+  const [filters, setFilters] = useState({
+    breakingNews: false,
+    foreignNews: false,
+    localNews: false,
+    categories: []
+  });
 
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  // Available categories
+  const availableCategories = ['Sports', 'Education', 'Politics'];
 
-  const toggleCategory = (category) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
+  // Handle filter changes
+  const handleFilterChange = (type, value) => {
+    if (type === 'category') {
+      setFilters(prev => {
+        const updatedCategories = prev.categories.includes(value)
+          ? prev.categories.filter(cat => cat !== value)
+          : [...prev.categories, value];
+        
+        return { ...prev, categories: updatedCategories };
+      });
+    } else {
+      setFilters(prev => ({ ...prev, [type]: value }));
+    }
   };
+
+  // Reset all filters
+  const resetFilters = () => {
+    setFilters({
+      breakingNews: false,
+      foreignNews: false,
+      localNews: false,
+      categories: []
+    });
+  };
+
+  
 
 
   const fetchNews = async () => {
@@ -56,11 +81,10 @@ const RejectNewsModeration = () => {
       const token = localStorage.getItem("token");
 
       const queryParams = new URLSearchParams();
-      if (filterForeign) queryParams.append('foreignNews', filterForeign);
-      if (filterBreaking) queryParams.append('breakingNews', filterBreaking);
-
-      selectedCategories.forEach((cat) => queryParams.append('category', cat));
-
+      if (filters.breakingNews) queryParams.append('breakingNews', 'true');
+      if (filters.foreignNews) queryParams.append('foreignNews', 'true');
+      if (filters.localNews) queryParams.append('foreignNews', 'false');
+      filters.categories.forEach(cat => queryParams.append('category', cat));
       const res = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL_NEWS}/reject?${queryParams.toString()}`,
         {
@@ -80,7 +104,7 @@ const RejectNewsModeration = () => {
   useEffect(() => {
     fetchNews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterForeign, filterBreaking, selectedCategories]);
+  }, [filters]);
 
   useEffect(() => {
     console.log("Rejected news loaded:", news);
@@ -225,10 +249,36 @@ const RejectNewsModeration = () => {
     setShowToast(true);
   };
 
-  // Function to open image in modal
-  const handleImageClick = (imageUrl) => {
-    setPreviewImage(imageUrl);
-    setShowImageModal(true);
+  const [previewType, setPreviewType] = useState('image'); // 'image' or 'video'
+  const [previewUrl, setPreviewUrl] = useState('');
+
+  const handleMediaClick = (mediaUrl) => {
+    // Check if it's a YouTube URL
+    if (mediaUrl && (
+      mediaUrl.includes('youtube.com') || 
+      mediaUrl.includes('youtu.be')
+    )) {
+      setPreviewType('video');
+      // Extract video ID from YouTube URL
+      let videoId = '';
+      
+      if (mediaUrl.includes('youtube.com/watch')) {
+        const urlParams = new URLSearchParams(new URL(mediaUrl).search);
+        videoId = urlParams.get('v');
+      } else if (mediaUrl.includes('youtu.be/')) {
+        videoId = mediaUrl.split('youtu.be/')[1].split('?')[0];
+      }
+      
+      if (videoId) {
+        setPreviewUrl(`https://www.youtube.com/embed/${videoId}`);
+        setShowImageModal(true);
+      }
+    } else {
+      // It's a regular image
+      setPreviewType('image');
+      setPreviewUrl(mediaUrl);
+      setShowImageModal(true);
+    }
   };
 
   const handleContentClick = (title, content) => {
@@ -253,80 +303,72 @@ const RejectNewsModeration = () => {
                 className="form-check-input"
                 type="checkbox"
                 id="breakingNewsToggle"
-                checked={filterBreaking}
-                onChange={() => setFilterBreaking(!filterBreaking)}
+                checked={filters.breakingNews}
+                onChange={() => handleFilterChange('breakingNews', !filters.breakingNews)}
               />
               <label className="form-check-label" htmlFor="breakingNewsToggle">
                 Breaking News 
               </label>
             </div>
           
-
-          
             <div className="form-check form-switch">
               <input
                 className="form-check-input"
                 type="checkbox"
                 id="foreignNewsToggle"
-                checked={filterForeign}
-                onChange={() => setFilterForeign(!filterForeign)}
+                checked={filters.foreignNews}
+                onChange={() => handleFilterChange('foreignNews', !filters.foreignNews)}
               />
               <label className="form-check-label" htmlFor="foreignNewsToggle">
                 Foreign News 
               </label>
+            </div>
+
+            <div className="form-check form-switch">
+                <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="localNewsToggle"
+                    checked={filters.localNews}
+                    onChange={() => handleFilterChange('localNews', !filters.localNews)}
+                  />
+                <label className="form-check-label" htmlFor="localNewsToggle">
+                    Local News
+                </label>
             </div>
           </div>
         </div>
           
 
 
-          <div className="col-12">
-            <h6>Categories:</h6>
-            <div className="d-flex gap-3 flex-wrap">
-              <div className="form-check form-switch">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="category-sports"
-                  checked={selectedCategories.includes('Sports')}
-                  onChange={() => toggleCategory('Sports')}
-                />
-                <label className="form-check-label" htmlFor="category-sports">
-                  Sport News 
-                </label>
+        <div className="col-12">
+              <h6>Categories:</h6>
+              <div className="d-flex gap-3 flex-wrap">
+                {availableCategories.map(category => (
+                  <div className="form-check" key={category}>
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id={`category-${category.toLowerCase()}`}
+                      checked={filters.categories.includes(category)}
+                      onChange={() => handleFilterChange('category', category)}
+                    />
+                    <label className="form-check-label" htmlFor={`category-${category.toLowerCase()}`}>
+                      {category}
+                    </label>
+                  </div>
+                ))}
               </div>
             </div>
-
-            <div className="d-flex gap-3 flex-wrap">
-              <div className="form-check form-switch">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="category-education"
-                  checked={selectedCategories.includes('Education')}
-                  onChange={() => toggleCategory('Education')}
-                />
-                <label className="form-check-label" htmlFor="category-education">
-                  Education News 
-                </label>
-              </div>
+            
+            <div className="col-12">
+              <button 
+                className="btn btn-outline-secondary"
+                onClick={resetFilters}
+              >
+                <i className="bi bi-x-circle me-1"></i> Reset Filters
+              </button>
             </div>
-
-            <div className="d-flex gap-3 flex-wrap">
-              <div className="form-check form-switch">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="category-politics"
-                  checked={selectedCategories.includes('Politics')}
-                  onChange={() => toggleCategory('Politics')}
-                />
-                <label className="form-check-label" htmlFor="category-politics">
-                  Political News 
-                </label>
-              </div>
-            </div>
-          </div>
 
 
         </div>
@@ -377,23 +419,30 @@ const RejectNewsModeration = () => {
         </Modal.Footer>
       </Modal>
 
-      {/* Image preview modal */}
-      <Modal
-        show={showImageModal}
-        onHide={() => setShowImageModal(false)}
-        centered
-        size="lg"
-      >
+      {/* Media Preview Modal */}
+      <Modal show={showImageModal} onHide={() => setShowImageModal(false)} centered size="lg">
         <Modal.Header closeButton className='bg-white text-black'>
-          <Modal.Title>Image Preview</Modal.Title>
+          <Modal.Title>{previewType === 'video' ? 'Video Preview' : 'Image Preview'}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center bg-white">
-          <img
-            src={previewImage}
-            alt="Full size preview"
-            className="img-fluid"
-            style={{ maxHeight: '70vh' }}
-          />
+          {previewType === 'video' ? (
+            <div className="ratio ratio-16x9">
+              <iframe
+                src={previewUrl}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          ) : (
+            <img
+              src={previewUrl}
+              alt='Preview of the uploaded file'
+              className="img-fluid"
+              style={{ maxHeight: '70vh' }}
+            />
+          )}
         </Modal.Body>
       </Modal>
 
@@ -454,7 +503,7 @@ const RejectNewsModeration = () => {
                       height: '200px',
                       width: '100%'
                     }}
-                    onClick={() => handleImageClick(article.media)}
+                    onClick={() => handleMediaClick(article.media)}
                   />
                   <div
                     className="position-absolute top-0 end-0 m-2"
