@@ -264,24 +264,38 @@ const AcceptNewsModeration = () => {
       return 'youtube';
     }
     
-    // Check for Google Drive
+    // More specific Google Drive detection
     if (isDriveUrl(url)) {
-      return 'google-drive';
+      // Try to determine if it's a Drive image or video
+      if (urlLower.match(/\.(jpeg|jpg|gif|png|webp|svg)/) || 
+          url.includes('drive.google.com/uc?') || 
+          url.includes('docs.google.com/uc?')) {
+        return 'google-drive-image';
+      } else if (urlLower.match(/\.(mp4|webm|ogg|mov|avi)/)) {
+        return 'google-drive-video';
+      } else {
+        return 'google-drive';
+      }
     }
     
-    // Check for Vimeo links
+    // More specific Facebook detection
+    if (urlLower.includes('facebook.com') || urlLower.includes('fb.watch')) {
+      if (url.includes('facebook.com/photo') || url.includes('fb.com/photo')) {
+        return 'facebook-image';
+      } else if (url.includes('facebook.com/watch') || url.includes('fb.watch')) {
+        return 'facebook-video';
+      } else {
+        return 'facebook';
+      }
+    }
+    
+    // Other media types remain the same
     if (urlLower.includes('vimeo.com')) {
       return 'vimeo';
     }
     
-    // Check for Dailymotion links
     if (urlLower.includes('dailymotion.com') || urlLower.includes('dai.ly')) {
       return 'dailymotion';
-    }
-
-    // Check for common social media domains
-    if (urlLower.includes('facebook.com') || urlLower.includes('fb.watch')) {
-      return 'facebook';
     }
     
     if (urlLower.includes('instagram.com')) {
@@ -299,6 +313,30 @@ const AcceptNewsModeration = () => {
     // Unknown media type
     return 'unknown';
   };
+
+  // Function to get embedded content for Facebook
+const getFacebookEmbedHtml = (url) => {
+  return `<iframe 
+    src="https://www.facebook.com/plugins/post.php?href=${encodeURIComponent(url)}&show_text=true" 
+    width="100%" 
+    height="300" 
+    style="border:none;overflow:hidden" 
+    scrolling="no" 
+    frameborder="0" 
+    allowfullscreen="true" 
+    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+  </iframe>`;
+};
+
+// Function to get embedded content for Google Drive
+const getGoogleDriveEmbedUrl = (url) => {
+  const fileId = getDriveFileId(url);
+  if (fileId) {
+    return `https://drive.google.com/file/d/${fileId}/preview`;
+  }
+  return null;
+};
+  
 
   const handleMediaClick = (mediaUrl) => {
     const mediaType = detectMediaType(mediaUrl);
@@ -454,9 +492,13 @@ const AcceptNewsModeration = () => {
     switch (mediaType) {
       case 'youtube': return 'YouTube Video';
       case 'google-drive': return 'Google Drive File';
+      case 'google-drive-image': return 'Google Drive Image';
+      case 'google-drive-video': return 'Google Drive Video';
       case 'vimeo': return 'Vimeo Video';
       case 'dailymotion': return 'Dailymotion Video';
       case 'facebook': return 'Facebook Content';
+      case 'facebook-image': return 'Facebook Image';
+      case 'facebook-video': return 'Facebook Video';
       case 'instagram': return 'Instagram Content';
       case 'twitter': return 'Twitter/X Post';
       case 'tiktok': return 'TikTok Video';
@@ -470,10 +512,16 @@ const AcceptNewsModeration = () => {
   const getMediaTypeIcon = (mediaType) => {
     switch (mediaType) {
       case 'youtube': return 'bi-youtube';
-      case 'google-drive': return 'bi-google';
+      case 'google-drive': 
+      case 'google-drive-image':
+      case 'google-drive-video':
+        return 'bi-google';
       case 'vimeo': return 'bi-vimeo';
       case 'dailymotion': return 'bi-camera-video';
-      case 'facebook': return 'bi-facebook';
+      case 'facebook': 
+      case 'facebook-image':
+      case 'facebook-video':
+        return 'bi-facebook';
       case 'instagram': return 'bi-instagram';
       case 'twitter': return 'bi-twitter';
       case 'tiktok': return 'bi-tiktok';
@@ -487,10 +535,16 @@ const AcceptNewsModeration = () => {
   const getMediaBadgeColor = (mediaType) => {
     switch (mediaType) {
       case 'youtube': return 'rgba(255,0,0,0.8)';
-      case 'google-drive': return 'rgba(0,112,237,0.8)';
+      case 'google-drive':
+      case 'google-drive-image':
+      case 'google-drive-video':
+        return 'rgba(0,112,237,0.8)';
       case 'vimeo': return 'rgba(26,183,234,0.8)';
       case 'dailymotion': return 'rgba(0,170,255,0.8)';
-      case 'facebook': return 'rgba(24,119,242,0.8)';
+      case 'facebook':
+      case 'facebook-image':
+      case 'facebook-video':
+        return 'rgba(24,119,242,0.8)';
       case 'instagram': return 'rgba(225,48,108,0.8)';
       case 'twitter': return 'rgba(29,161,242,0.8)';
       case 'tiktok': return 'rgba(0,0,0,0.8)';
@@ -511,43 +565,127 @@ const AcceptNewsModeration = () => {
     const mediaIcon = getMediaTypeIcon(mediaType);
     const badgeColor = getMediaBadgeColor(mediaType);
     
-    return (
-      <div className="news-media-container position-relative">
-        <img
-          src={thumbnailUrl}
-          alt={`${mediaLabel} thumbnail`}
-          className="news-media"
-          style={{ 
-            cursor: 'pointer', 
-            objectFit: 'cover', 
-            height: '200px', 
-            width: '100%',
-            backgroundColor: mediaType !== 'image' ? '#f8f9fa' : 'transparent'
-          }}
-          onClick={() => handleMediaClick(mediaUrl)}
-          onError={(e) => {
-            // If image fails to load, use a generic icon
-            e.target.onerror = null;
-            e.target.src = getGenericThumbnail(mediaType);
-          }}
-        />
-        <div
-          className="position-absolute top-0 end-0 m-2"
-          style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '4px', padding: '2px 8px' }}
-        >
-          <i className="bi bi-zoom-in text-white"></i>
-        </div>
-        {mediaType !== 'image' && (
-          <div
-            className="position-absolute bottom-0 start-50 translate-middle-x mb-2 px-3 py-1"
-            style={{ backgroundColor: badgeColor, borderRadius: '4px', color: 'white' }}
-          >
-            <i className={`${mediaIcon} me-1`}></i>
-            {mediaLabel}
+    // Handle specific media types directly
+    switch (mediaType) {
+      case 'facebook-image':
+      case 'facebook-video':
+        return (
+          <div className="news-media-container position-relative">
+            <div dangerouslySetInnerHTML={{ 
+              __html: getFacebookEmbedHtml(mediaUrl) 
+            }} />
+            <div
+              className="position-absolute top-0 end-0 m-2"
+              style={{ backgroundColor: badgeColor, borderRadius: '4px', padding: '2px 8px', color: 'white' }}
+            >
+              <i className={`${mediaIcon} me-1`}></i>
+              {mediaLabel}
+            </div>
           </div>
-        )}
-      </div>
-    );
+        );
+        
+      case 'google-drive-image':
+        return (
+          <div className="news-media-container position-relative">
+            <img
+              src={mediaUrl}
+              alt="Google Drive"
+              className="news-media"
+              style={{ 
+                cursor: 'pointer', 
+                objectFit: 'contain', 
+                height: '300px', 
+                width: '100%'
+              }}
+              onClick={() => handleMediaClick(mediaUrl)}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = getGenericThumbnail('google-drive');
+              }}
+            />
+            <div
+              className="position-absolute top-0 end-0 m-2"
+              style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '4px', padding: '2px 8px' }}
+            >
+              <i className="bi bi-zoom-in text-white"></i>
+            </div>
+            <div
+              className="position-absolute bottom-0 start-50 translate-middle-x mb-2 px-3 py-1"
+              style={{ backgroundColor: badgeColor, borderRadius: '4px', color: 'white' }}
+            >
+              <i className={`${mediaIcon} me-1`}></i>
+              {mediaLabel}
+            </div>
+          </div>
+        );
+        
+      case 'google-drive-video':
+      case 'google-drive':
+        const embedUrl = getGoogleDriveEmbedUrl(mediaUrl);
+        if (embedUrl) {
+          return (
+            <div className="news-media-container position-relative">
+              <div className="ratio ratio-16x9">
+                <iframe
+                  src={embedUrl}
+                  title="Google Drive content"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div
+                className="position-absolute top-0 end-0 m-2"
+                style={{ backgroundColor: badgeColor, borderRadius: '4px', padding: '2px 8px', color: 'white' }}
+              >
+                <i className={`${mediaIcon} me-1`}></i>
+                {mediaLabel}
+              </div>
+            </div>
+          );
+        }
+        // If we can't embed, fall through to default
+        
+      default:
+        // Default behavior for other media types (unchanged)
+        return (
+          <div className="news-media-container position-relative">
+            <img
+              src={thumbnailUrl}
+              alt={`${mediaLabel} thumbnail`}
+              className="news-media"
+              style={{ 
+                cursor: 'pointer', 
+                objectFit: 'cover', 
+                height: '200px', 
+                width: '100%',
+                backgroundColor: mediaType !== 'image' ? '#f8f9fa' : 'transparent'
+              }}
+              onClick={() => handleMediaClick(mediaUrl)}
+              onError={(e) => {
+                // If image fails to load, use a generic icon
+                e.target.onerror = null;
+                e.target.src = getGenericThumbnail(mediaType);
+              }}
+            />
+            <div
+              className="position-absolute top-0 end-0 m-2"
+              style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '4px', padding: '2px 8px' }}
+            >
+              <i className="bi bi-zoom-in text-white"></i>
+            </div>
+            {mediaType !== 'image' && (
+              <div
+                className="position-absolute bottom-0 start-50 translate-middle-x mb-2 px-3 py-1"
+                style={{ backgroundColor: badgeColor, borderRadius: '4px', color: 'white' }}
+              >
+                <i className={`${mediaIcon} me-1`}></i>
+                {mediaLabel}
+              </div>
+            )}
+          </div>
+        );
+    }
   };
 
 
