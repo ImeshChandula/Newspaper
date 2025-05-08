@@ -114,15 +114,36 @@ const NewsDetail = () => {
                     </div>
 
                     {newsItem.media && (
-                        <motion.img
-                            src={newsItem.media}
-                            alt={newsItem.title}
-                            className="img-fluid rounded mb-4 w-100"
-                            style={{ maxHeight: "200px", objectFit: "contain" }}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.5, delay: 0.5 }}
-                        />
+                        newsItem.media.includes("youtube.com") || newsItem.media.includes("youtu.be") ? (
+                            <motion.div
+                                className="ratio ratio-16x9"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.4, delay: 0.2 }}
+                            >
+                                <iframe
+                                    className="card-img-top"
+                                    src={
+                                        newsItem.media.includes("watch?v=")
+                                            ? newsItem.media.replace("watch?v=", "embed/")
+                                            : newsItem.media.includes("youtu.be/")
+                                                ? "https://www.youtube.com/embed/" + newsItem.media.split("/").pop()
+                                                : newsItem.media
+                                    }
+                                    title={newsItem.title}
+                                    allowFullScreen
+                                />
+                            </motion.div>
+                        ) : (
+                            <motion.img
+                                src={newsItem.media}
+                                className="card-img-top news-image"
+                                alt={newsItem.title}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.4, delay: 0.2 }}
+                            />
+                        )
                     )}
 
                     <motion.p
