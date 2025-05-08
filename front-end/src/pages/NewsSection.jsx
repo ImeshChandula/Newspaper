@@ -65,7 +65,7 @@ const NewsSection = () => {
   };
 
   return (
-    <div className="container bg-white text-black mt-5 pb-0 mb-0">
+    <div className="container bg-white text-black mt-3 pb-0 mb-0">
       <motion.h2
         className="border-bottom pb-2"
         initial={{ opacity: 0, y: -20 }}

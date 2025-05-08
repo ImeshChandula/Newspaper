@@ -147,7 +147,7 @@ const AdSection = () => {
   }
 
   return (
-    <div className="container-fluid pt-5 mt-5">
+    <div className="container-fluid pt-5 mt-3">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3 className="text-dark mb-0">📢 Sponsored Ads</h3>
         <button
