@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
     FacebookShareButton,
-    TwitterShareButton,
     WhatsappShareButton,
     EmailShareButton,
     FacebookIcon,
-    TwitterIcon,
     WhatsappIcon,
     EmailIcon,
 } from "react-share";
