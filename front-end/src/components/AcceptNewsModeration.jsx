@@ -635,8 +635,8 @@ const getGoogleDriveEmbedUrl = (url) => {
                 ></iframe>
               </div>
               <div
-                className="position-absolute top-0 end-0 m-2"
-                style={{ backgroundColor: badgeColor, borderRadius: '4px', padding: '2px 8px', color: 'white' }}
+                className="position-absolute bottom-0 start-50 translate-middle-x mb-2 px-3 py-1"
+                style={{ backgroundColor: badgeColor, borderRadius: '4px', color: 'white' }}
               >
                 <i className={`${mediaIcon} me-1`}></i>
                 {mediaLabel}
