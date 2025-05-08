@@ -100,7 +100,7 @@ const BreakingNews = () => {
     <div className="container mt-5 pb-0 mb-0">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 mb-md-4">
         <motion.h2
-          className="border-bottom pb-2 mb-3 mb-md-0 mt-5 text-black"
+          className="border-bottom pb-2 mb-3 mb-md-0 mt-3 text-black"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -148,39 +148,43 @@ const BreakingNews = () => {
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.3 }}
               >
-                {item.media && (
-                  item.media.includes("youtube.com") || item.media.includes("youtu.be") ? (
-                    <motion.div
-                      className="ratio ratio-16x9"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.4, delay: 0.2 }}
-                    >
-                      <iframe
-                        className="card-img-top"
-                        src={
-                          item.media.includes("watch?v=")
-                            ? item.media.replace("watch?v=", "embed/")
-                            : item.media.includes("youtu.be/")
-                              ? "https://www.youtube.com/embed/" + item.media.split("/").pop()
-                              : item.media
-                        }
-                        title={item.title}
-                        allowFullScreen
+                {item.media.includes("youtube.com") || item.media.includes("youtu.be") ? (
+                  <motion.div
+                    className="position-relative"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                  >
+                    <Link to={`/news/${item._id}`}>
+                      <img
+                        src={`https://img.youtube.com/vi/${item.media.includes("watch?v=")
+                          ? item.media.split("watch?v=")[1].split("&")[0]
+                          : item.media.includes("youtu.be/")
+                            ? item.media.split("youtu.be/")[1].split("?")[0]
+                            : ""
+                          }/hqdefault.jpg`}
+                        alt={item.title}
+                        className="card-img-top news-image"
                       />
-                    </motion.div>
-                  ) : (
-                    <motion.img
-                      src={item.media}
-                      className="card-img-top news-image"
-                      alt={item.title}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.4, delay: 0.2 }}
-                    />
-                  )
+                      <div
+                        className="position-absolute bottom-0 start-0 p-1 px-2 text-white small fw-semibold"
+                        style={{ backgroundColor: "rgba(250, 0, 0, 0.91)", borderTopRightRadius: "4px" }}
+                      >
+                        YouTube Video
+                      </div>
+                    </Link>
+                  </motion.div>
+                ) : (
+                  <motion.img
+                    src={item.media}
+                    className="card-img-top news-image"
+                    alt={item.title}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                  />
                 )}
-                
+
                 <div className="card-body d-flex flex-column">
                   <motion.h5
                     className="card-title fs-6 fs-md-5 fw-bold text-black"

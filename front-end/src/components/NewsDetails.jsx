@@ -12,6 +12,22 @@ const NewsDetail = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate(); // Hook to navigate to previous page
 
+    const getYouTubeEmbedUrl = (url) => {
+        try {
+            const parsedUrl = new URL(url);
+            if (parsedUrl.hostname.includes("youtube.com")) {
+                const videoId = parsedUrl.searchParams.get("v");
+                if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+            } else if (parsedUrl.hostname.includes("youtu.be")) {
+                const videoId = parsedUrl.pathname.split("/").pop();
+                if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+            }
+        } catch (err) {
+            console.error("Invalid YouTube URL:", url);
+        }
+        return url;
+    };
+
     useEffect(() => {
         const fetchNewsItem = async () => {
             try {
@@ -123,16 +139,11 @@ const NewsDetail = () => {
                             >
                                 <iframe
                                     className="card-img-top"
-                                    src={
-                                        newsItem.media.includes("watch?v=")
-                                            ? newsItem.media.replace("watch?v=", "embed/")
-                                            : newsItem.media.includes("youtu.be/")
-                                                ? "https://www.youtube.com/embed/" + newsItem.media.split("/").pop()
-                                                : newsItem.media
-                                    }
+                                    src={getYouTubeEmbedUrl(newsItem.media)}
                                     title={newsItem.title}
                                     allowFullScreen
                                 />
+
                             </motion.div>
                         ) : (
                             <motion.img
