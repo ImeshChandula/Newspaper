@@ -31,14 +31,36 @@ const NewsCardForHome = ({ news }) => {
                         transition={{ duration: 0.3 }}
                     >
                         {item.media && (
-                            <motion.img
-                                src={item.media}
-                                className="card-img-top news-image"
-                                alt={item.title}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.4, delay: 0.2 }}
-                            />
+                            item.media.includes("youtube.com") || item.media.includes("youtu.be") ? (
+                                <motion.div
+                                    className="ratio ratio-16x9"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.4, delay: 0.2 }}
+                                >
+                                    <iframe
+                                        className="card-img-top"
+                                        src={
+                                            item.media.includes("watch?v=")
+                                                ? item.media.replace("watch?v=", "embed/")
+                                                : item.media.includes("youtu.be/")
+                                                    ? "https://www.youtube.com/embed/" + item.media.split("/").pop()
+                                                    : item.media
+                                        }
+                                        title={item.title}
+                                        allowFullScreen
+                                    />
+                                </motion.div>
+                            ) : (
+                                <motion.img
+                                    src={item.media}
+                                    className="card-img-top news-image"
+                                    alt={item.title}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.4, delay: 0.2 }}
+                                />
+                            )
                         )}
                         <div className="card-body d-flex flex-column">
                             <motion.h5

@@ -64,13 +64,10 @@ const ShareButton = ({ url, title }) => {
                             zIndex: 1000,
                         }}
                     >
-                        <div className="d-flex flex-wrap gap-2 mb-2 justify-content-start">
+                        <div className="d-flex flex-wrap gap-2 mb-2 justify-content-center">
                             <FacebookShareButton url={url} quote={title}>
                                 <FacebookIcon size={32} round />
                             </FacebookShareButton>
-                            <TwitterShareButton url={url} title={title}>
-                                <TwitterIcon size={32} round />
-                            </TwitterShareButton>
                             <WhatsappShareButton url={url} title={title}>
                                 <WhatsappIcon size={32} round />
                             </WhatsappShareButton>
