@@ -188,22 +188,35 @@ const AcceptNewsModeration = () => {
   const [previewType, setPreviewType] = useState('image'); // 'image' or 'video'
   const [previewUrl, setPreviewUrl] = useState('');
 
+  // Function to extract YouTube video ID from URL
+  const getYouTubeId = (url) => {
+    if (!url) return null;
+    
+    // Match patterns like youtube.com/watch?v=VIDEO_ID or youtu.be/VIDEO_ID
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  // Function to check if URL is a YouTube URL
+  const isYouTubeUrl = (url) => {
+    if (!url) return false;
+    return url.includes('youtube.com') || url.includes('youtu.be');
+  };
+
+  // Function to get YouTube thumbnail URL from video ID
+  const getYouTubeThumbnailUrl = (videoId) => {
+    // Use the high quality thumbnail (hqdefault)
+    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  };
+
   const handleMediaClick = (mediaUrl) => {
     // Check if it's a YouTube URL
-    if (mediaUrl && (
-      mediaUrl.includes('youtube.com') || 
-      mediaUrl.includes('youtu.be')
-    )) {
+    if (isYouTubeUrl(mediaUrl)) {
       setPreviewType('video');
       // Extract video ID from YouTube URL
-      let videoId = '';
-      
-      if (mediaUrl.includes('youtube.com/watch')) {
-        const urlParams = new URLSearchParams(new URL(mediaUrl).search);
-        videoId = urlParams.get('v');
-      } else if (mediaUrl.includes('youtu.be/')) {
-        videoId = mediaUrl.split('youtu.be/')[1].split('?')[0];
-      }
+      const videoId = getYouTubeId(mediaUrl);
       
       if (videoId) {
         setPreviewUrl(`https://www.youtube.com/embed/${videoId}`);
@@ -239,6 +252,65 @@ const AcceptNewsModeration = () => {
 
     return `${hours}h ${minutes}m remaining`;
   };
+
+
+  // Render media with proper thumbnail for videos
+  const renderMediaThumbnail = (mediaUrl) => {
+    if (!mediaUrl) return null;
+    
+    if (isYouTubeUrl(mediaUrl)) {
+      const videoId = getYouTubeId(mediaUrl);
+      if (videoId) {
+        return (
+          <div className="news-media-container position-relative">
+            <img
+              src={getYouTubeThumbnailUrl(videoId)}
+              alt="YouTube video thumbnail"
+              className="news-media"
+              style={{ cursor: 'pointer', objectFit: 'cover', height: '200px', width: '100%' }}
+              onClick={() => handleMediaClick(mediaUrl)}
+            />
+            <div 
+              className="position-absolute top-0 end-0 m-2"
+              style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '4px', padding: '2px 8px' }}
+            >
+              <i className="bi bi-zoom-in text-white"></i>
+            </div>
+            <div 
+              className="position-absolute bottom-0 start-50 translate-middle-x mb-2 px-3 py-1"
+              style={{ backgroundColor: 'rgba(255,0,0,0.8)', borderRadius: '4px', color: 'white' }}
+            >
+              <i className="bi bi-youtube me-1"></i>
+              YouTube Video
+            </div>
+          </div>
+        );
+      }
+    }
+    
+    // Regular image
+    return (
+      <div className="news-media-container position-relative">
+        <img
+          src={mediaUrl}
+          alt="News media"
+          className="news-media"
+          style={{ cursor: 'pointer', objectFit: 'cover', height: '200px', width: '100%' }}
+          onClick={() => handleMediaClick(mediaUrl)}
+        />
+        <div
+          className="position-absolute top-0 end-0 m-2"
+          style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '4px', padding: '2px 8px' }}
+        >
+          <i className="bi bi-zoom-in text-white"></i>
+        </div>
+      </div>
+    );
+  };
+
+
+
+
 
   return (
     <div className="news-container">
@@ -419,23 +491,8 @@ const AcceptNewsModeration = () => {
 
               <h3 className="news-title text-black">{article.title}</h3>
 
-              {article.media && (
-                <div className="news-media-container position-relative">
-                  <img
-                    src={article.media}
-                    alt='Preview of the uploaded file'
-                    className="news-media"
-                    style={{ cursor: 'pointer', objectFit: 'cover', height: '200px', width: '100%' }}
-                    onClick={() => handleMediaClick(article.media)}
-                  />
-                  <div
-                    className="position-absolute top-0 end-0 m-2"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '4px', padding: '2px 8px' }}
-                  >
-                    <i className="bi bi-zoom-in text-white"></i>
-                  </div>
-                </div>
-              )}
+              {/* Media content */}
+              {article.media && renderMediaThumbnail(article.media)}
 
               <p className="news-content text-black">{article.content.slice(0, 120)}...</p>
               <div className="d-flex justify-content-end mb-2">
