@@ -101,8 +101,30 @@ const Footer = () => {
           {/* Contact Us */}
           <motion.div className="col-md-3 mb-4" variants={itemVariants}>
             <h5 className="text-uppercase fw-bold text-white">Contact Us</h5>
-            <p className="text-white-50 mb-1">Email: <a href="mailto:info@sivdesanews.lk" className="text-white-50 contact-links text-decoration-none">info@sivdesanews.lk</a></p>
+            <p className="text-white-50 mb-1">
+              Email:{" "}
+              <a
+                href="mailto:info@sivdesanews.lk"
+                className="text-white-50 contact-links text-decoration-none"
+              >
+                info@sivdesanews.lk
+              </a>
+            </p>
+            <p className="text-white-50 mb-1">
+              Contact:{" "}
+              <a
+                href="tel:+94717070068"
+                className="text-white-50 contact-links text-decoration-none"
+              >
+                071 707 0068
+              </a>
+            </p>
+            <p className="text-white-50 mb-1">
+              Location:{" "}
+              <span className="text-white-50 contact-links text-decoration-none">Kandy, Sri Lanka</span>
+            </p>
           </motion.div>
+
 
           {/* Social Media */}
           <motion.div className="col-md-3 mb-4" variants={itemVariants}>
