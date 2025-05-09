@@ -27,9 +27,12 @@ const HistoryOfArticle = () => {
         return;
       }
 
-      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/myArticles`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL_NEWS}/myArticles`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       setArticles(response.data || []);
     } catch (err) {
@@ -43,6 +46,28 @@ const HistoryOfArticle = () => {
   useEffect(() => {
     fetchUserArticles();
   }, []);
+
+  // Extracts media thumbnail from YouTube or Google Drive, else return original or placeholder
+  const getMediaThumbnail = (mediaUrl) => {
+    if (!mediaUrl) return "https://via.placeholder.com/400x200?text=No+Image";
+
+    // YouTube Thumbnail
+    const youtubeRegex = /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/;
+    const youtubeMatch = mediaUrl.match(youtubeRegex);
+    if (youtubeMatch && youtubeMatch[1]) {
+      return `https://img.youtube.com/vi/${youtubeMatch[1]}/hqdefault.jpg`;
+    }
+
+    // Google Drive Thumbnail
+    const driveRegex = /(?:drive\.google\.com\/file\/d\/|open\?id=)([\w-]+)/;
+    const driveMatch = mediaUrl.match(driveRegex);
+    if (driveMatch && driveMatch[1]) {
+      return `https://drive.google.com/thumbnail?id=${driveMatch[1]}`;
+    }
+
+    // Default: image or fallback
+    return mediaUrl;
+  };
 
   return (
     <div className="container bg-white">
@@ -62,7 +87,7 @@ const HistoryOfArticle = () => {
             <div key={article._id} className="col-md-6 col-lg-4">
               <div className="card h-100 shadow-sm border border-black bg-white text-black">
                 <img
-                  src={article.media || "https://via.placeholder.com/400x200?text=No+Image"}
+                  src={getMediaThumbnail(article.media)}
                   className="card-img-top"
                   alt={article.title}
                   style={{ height: "200px", objectFit: "cover" }}
