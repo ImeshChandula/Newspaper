@@ -26,6 +26,7 @@ const CreateNewsArticle = () => {
       'facebook.com', 'fb.com', 'fb.me', 'facebook.me',
       'instagram.com', 'instagr.am', 'instagram',
       'tiktok.com', 'tiktok', 'vm.tiktok.com',
+      'vimeo.com', 'dailymotion.com', 'dai.ly',
       
       // File hosting services
       'mega.nz', 'mega.io', 'mega.co.nz',
@@ -138,7 +139,7 @@ const CreateNewsArticle = () => {
               <input
                 type="text"
                 name="media"
-                placeholder="Ex: Google Drive link / YouTube link / Google Image,Video link"
+                placeholder="Ex: Google Drive link / YouTube link / Google Image or Video link"
                 value={formData.media}
                 onChange={handleChange}
                 className={`form-control bg-white text-black border-secondary ${mediaError ? 'is-invalid' : ''}`}

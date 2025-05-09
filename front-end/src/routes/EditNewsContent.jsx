@@ -54,6 +54,7 @@ const EditNewsContent = () => {
       'facebook.com', 'fb.com', 'fb.me', 'facebook.me',
       'instagram.com', 'instagr.am', 'instagram',
       'tiktok.com', 'tiktok', 'vm.tiktok.com',
+      'vimeo.com', 'dailymotion.com', 'dai.ly',
       
       // File hosting services
       'mega.nz', 'mega.io', 'mega.co.nz',
