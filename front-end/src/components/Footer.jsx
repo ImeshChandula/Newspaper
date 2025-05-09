@@ -88,7 +88,7 @@ const Footer = () => {
             <h5 className="text-uppercase fw-bold mt-4 mt-md-0">Quick Links</h5>
             <ul className="list-unstyled">
               <li><Link to="/" className="footer-link text-white-50 text-decoration-none d-flex align-items-center"><FaHome className="me-2" /> Home</Link></li>
-              <li><Link to="/sport" className="footer-link text-white-50 text-decoration-none d-flex align-items-center"><FaBook className="me-2" /> Sport</Link></li>
+              <li><Link to="/sports" className="footer-link text-white-50 text-decoration-none d-flex align-items-center"><FaBook className="me-2" /> Sport</Link></li>
               <li><Link to="/education" className="footer-link text-white-50 text-decoration-none d-flex align-items-center"><FaGraduationCap className="me-2" /> Education</Link></li>
               <li><Link to="/politics" className="footer-link text-white-50 text-decoration-none d-flex align-items-center"><FaGavel className="me-2" /> Politics</Link></li>
             </ul>
