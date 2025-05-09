@@ -34,11 +34,6 @@ const NewsCardForHome = ({ news }) => {
         return match ? match[1] : null;
     };
 
-    const getGoogleDriveEmbedUrl = (url) => {
-        const fileId = getGoogleDriveFileId(url);
-        return fileId ? `https://drive.google.com/file/d/${fileId}/preview` : null;
-    };
-
     const getGoogleDriveThumbnail = (url) => {
         const fileId = getGoogleDriveFileId(url);
         return fileId ? `https://drive.google.com/thumbnail?id=${fileId}` : null;
@@ -53,7 +48,7 @@ const NewsCardForHome = ({ news }) => {
 
                 const thumbnail = isYouTube
                     ? getYouTubeThumbnail(media)
-                    : isDrive && !isDriveVideo
+                    : isDrive
                         ? getGoogleDriveThumbnail(media)
                         : media;
 
@@ -72,31 +67,19 @@ const NewsCardForHome = ({ news }) => {
                         >
                             {media && (
                                 <div className="position-relative">
-                                    {isDriveVideo ? (
-                                        <iframe
-                                            src={getGoogleDriveEmbedUrl(media)}
-                                            title={title}
-                                            className="w-100"
-                                            height="200"
-                                            allow="autoplay"
-                                            allowFullScreen
-                                            style={{ border: "none" }}
-                                        />
-                                    ) : (
-                                        <motion.img
-                                            src={thumbnail}
-                                            alt={title}
-                                            className="card-img-top news-image"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            transition={{ duration: 0.4, delay: 0.2 }}
-                                            onError={(e) => {
-                                                e.target.onerror = null;
-                                                e.target.src = "/fallback.jpg";
-                                            }}
-                                        />
-                                    )}
-                                    {(isYouTube || isDrive) && (
+                                    <motion.img
+                                        src={thumbnail}
+                                        alt={title}
+                                        className="card-img-top news-image"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.4, delay: 0.2 }}
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = "/fallback.jpg";
+                                        }}
+                                    />
+                                    {(isYouTube || isDriveVideo) && (
                                         <div
                                             className="position-absolute bottom-0 start-0 p-1 px-2 text-white small fw-semibold"
                                             style={{
