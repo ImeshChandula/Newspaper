@@ -265,7 +265,8 @@ const TrackSubmittedAds = () => {
                                 cursor: 'pointer', 
                                 objectFit: 'cover', 
                                 height: '200px', 
-                                width: '100%'
+                                width: '100%',
+                                backgroundColor: '#f8f9fa'
                             }}
                             onClick={() => handleMediaClick(mediaUrl)}
                             onError={(e) => {
@@ -286,14 +287,22 @@ const TrackSubmittedAds = () => {
                 if (embedUrl) {
                     return (
                         <div className="news-media-container">
-                            <div className="ratio ratio-16x9 rounded-top" style={{ height: '200px', overflow: 'hidden' }}>
-                                <iframe
-                                    src={embedUrl}
-                                    title="Google Drive content"
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                ></iframe>
+                            <div 
+                                className="ratio ratio-16x9 rounded-top" 
+                                style={{ 
+                                    cursor: 'pointer', 
+                                    objectFit: 'cover', 
+                                    height: '200px', 
+                                    width: '100%',
+                                    backgroundColor: '#f8f9fa'
+                                }}>
+                                    <iframe
+                                        src={embedUrl}
+                                        title="Google Drive content"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    ></iframe>
                             </div>
                         </div>
                     );
@@ -304,9 +313,11 @@ const TrackSubmittedAds = () => {
                         <div 
                             className="d-flex align-items-center justify-content-center rounded-top"
                             style={{ 
-                                height: '200px',
-                                backgroundColor: '#f8f9fa',
-                                cursor: 'pointer'
+                                cursor: 'pointer', 
+                                objectFit: 'cover', 
+                                height: '200px', 
+                                width: '100%',
+                                backgroundColor: '#f8f9fa'
                             }}
                             onClick={() => handleMediaClick(mediaUrl)}
                         >
@@ -326,9 +337,11 @@ const TrackSubmittedAds = () => {
                         <div 
                             className="d-flex align-items-center justify-content-center rounded-top"
                             style={{ 
-                                height: '200px',
-                                backgroundColor: '#f8f9fa',
-                                cursor: 'pointer'
+                                cursor: 'pointer', 
+                                objectFit: 'cover', 
+                                height: '200px', 
+                                width: '100%',
+                                backgroundColor: '#f8f9fa'
                             }}
                             onClick={() => handleMediaClick(mediaUrl)}
                         >

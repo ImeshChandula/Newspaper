@@ -117,6 +117,7 @@ const BreakingNews = () => {
     return id ? `https://drive.google.com/thumbnail?id=${id}` : null;
   };
 
+  // eslint-disable-next-line no-unused-vars
   const getDriveEmbedUrl = (url) => {
     const id = getDriveFileId(url);
     return id ? `https://drive.google.com/file/d/${id}/preview` : null;
