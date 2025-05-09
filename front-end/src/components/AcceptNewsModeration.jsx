@@ -85,7 +85,7 @@ const AcceptNewsModeration = () => {
       setNews(response.data);
     } catch (error) {
       console.error('Error fetching accepted news:', error);
-      showNotification('fetchAcceptedFail', 'danger');
+      showNotification('Failed to load Accepted news articles', 'danger');
     } finally {
       setLoading(false);
     }
