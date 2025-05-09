@@ -1,13 +1,15 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+require('dotenv').config();
+
 
 // Create a default Super Admin
 const createDefaultSuperAdmin = async () => {
     try {
-        const existingSuperAdmin = await User.findOne({ username: "superAdmin" });
+        const existingSuperAdmin = await User.findOne({ username: process.env.SUPER_ADMIN_USERNAME });
         if (!existingSuperAdmin) {
-          const defaultUsername = "superAdmin";
-          const defaultPassword = "super123";
+          const defaultUsername = process.env.SUPER_ADMIN_USERNAME || "superAdmin";
+          const defaultPassword = process.env.SUPER_ADMIN_PASSWORD || "super@123";
           const defaultRole = "super_admin";
   
           const salt = await bcrypt.genSalt(10);
