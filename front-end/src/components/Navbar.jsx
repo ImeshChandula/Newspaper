@@ -155,7 +155,7 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
             >
-              <Link to="/foreign-news" className="nav-link">
+              <Link to="/foreign-news" className="nav-link" onClick={closeNavbar}>
                 Foreign News
               </Link>
             </motion.li>
