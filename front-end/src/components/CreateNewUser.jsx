@@ -101,7 +101,9 @@ const CreateNewUser = () => {
 
           <div className="register_buttons">
             <button type="submit" className="register_submit_button">Submit</button>
-            <button type="button" className="register_Back_button" onClick={() => { navigate("/"); }}>Back</button>
+            {!user && (
+              <button type="button" className="register_Back_button" onClick={() => { navigate("/"); }}>Back</button>
+            )}
           </div>
 
           {!user && (
