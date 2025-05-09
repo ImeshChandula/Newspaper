@@ -102,15 +102,13 @@ const NewsCardForHome = ({ news }) => {
                                             style={{
                                                 backgroundColor: isYouTube
                                                     ? "rgba(250, 0, 0, 0.91)"
-                                                    : "rgba(66, 133, 244, 0.9)",
+                                                    : "",
                                                 borderTopRightRadius: "4px",
                                             }}
                                         >
                                             {isYouTube
                                                 ? "YouTube Video"
-                                                : isDriveVideo
-                                                    ? "Google Drive"
-                                                    : ""}
+                                                : ""}
                                         </div>
                                     )}
                                 </div>

@@ -99,8 +99,8 @@ const BreakingNews = () => {
       const id = url.includes("watch?v=")
         ? url.split("watch?v=")[1].split("&")[0]
         : url.includes("youtu.be/")
-        ? url.split("youtu.be/")[1].split("?")[0]
-        : "";
+          ? url.split("youtu.be/")[1].split("?")[0]
+          : "";
       return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
     } catch {
       return "";
@@ -173,15 +173,13 @@ const BreakingNews = () => {
                 </div>
               </Link>
             ) : isDriveVideo ? (
-              <iframe
-                src={getDriveEmbedUrl(item.media)}
-                title={item.title}
-                className="w-100"
-                height="200"
-                allow="autoplay"
-                allowFullScreen
-                style={{ border: "none" }}
-              />
+              <Link to={`/news/${item._id}`}>
+                <img
+                  src={getDriveThumbnail(item.media)}
+                  alt={item.title}
+                  className="card-img-top news-image"
+                />
+              </Link>
             ) : (
               <img
                 src={isDrive ? getDriveThumbnail(item.media) : item.media}
