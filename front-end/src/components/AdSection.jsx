@@ -146,6 +146,26 @@ const AdSection = () => {
     );
   }
 
+  const extractDriveFileId = (url) => {
+    const match = url.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]{10,})/);
+    return match ? match[1] : null;
+  };
+
+  const getGoogleDriveThumbnail = (url, isVideo = false) => {
+    const fileId = extractDriveFileId(url);
+    if (!fileId) return url;
+
+    return isVideo
+      ? `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`
+      : `https://drive.google.com/thumbnail?id=${fileId}`;
+  };
+
+  const isGoogleDriveLink = (url) => /drive\.google\.com/.test(url);
+
+  const isVideoFile = (url) =>
+    /\.(mp4|webm|ogg)$/i.test(url) || url.includes('video');
+
+
   return (
     <div className="container-fluid pt-5 mt-3">
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -199,7 +219,10 @@ const AdSection = () => {
                 <div
                   className="card text-white w-100 h-100 mx-2 border-0 shadow-lg"
                   style={{
-                    background: `url(${ad.media}) center/cover no-repeat`,
+                    background: `url(${isGoogleDriveLink(ad.media)
+                      ? getGoogleDriveThumbnail(ad.media, isVideoFile(ad.media))
+                      : ad.media
+                      }) center/cover no-repeat`,
                     borderRadius: '1rem',
                   }}
                 >
