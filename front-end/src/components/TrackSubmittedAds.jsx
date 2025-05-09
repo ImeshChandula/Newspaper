@@ -1,5 +1,7 @@
+/* eslint-disable no-useless-escape */
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
 
 const TrackSubmittedAds = () => {
@@ -114,6 +116,260 @@ const TrackSubmittedAds = () => {
         }
     };
 
+    const [previewType, setPreviewType] = useState('image'); // 'image' or 'video'
+    const [previewUrl, setPreviewUrl] = useState('');
+    const [showImageModal, setShowImageModal] = useState(false);
+
+    // Extract Google Drive file ID from URL
+    const getDriveFileId = (url) => {
+        if (!url) return null;
+        
+        // Handle different Google Drive URL formats
+        // Format 1: https://drive.google.com/file/d/{fileId}/view
+        // Format 2: https://drive.google.com/open?id={fileId}
+        // Format 3: https://docs.google.com/document/d/{fileId}/edit
+        
+        let fileId = null;
+        
+        if (url.includes('drive.google.com/file/d/')) {
+        const match = url.match(/\/file\/d\/([^/]+)/);
+        if (match && match[1]) fileId = match[1];
+        } else if (url.includes('drive.google.com/open?id=')) {
+        const urlObj = new URL(url);
+        fileId = urlObj.searchParams.get('id');
+        } else if (url.includes('docs.google.com')) {
+        const match = url.match(/\/d\/([^/]+)/);
+        if (match && match[1]) fileId = match[1];
+        }
+        
+        return fileId;
+    };
+    
+    // Check if URL is a Google Drive URL
+    const isDriveUrl = (url) => {
+        if (!url) return false;
+        return url.includes('drive.google.com') || url.includes('docs.google.com');
+    };
+    
+    // Function to detect media type from URL
+    // Function to detect media type from URL
+    const detectMediaType = (url) => {
+        if (!url) return 'unknown';
+        
+        // Normalize to lowercase for easier matching
+        const urlLower = url.toLowerCase();
+        
+        // Check for direct image URLs
+        if (urlLower.match(/\.(jpeg|jpg|gif|png|webp|svg)(\?.*)?$/)) {
+            return 'image';
+        }
+        
+        // Check for direct video URLs
+        if (urlLower.match(/\.(mp4|webm|ogg|mov|avi)(\?.*)?$/)) {
+            return 'direct-video';
+        }
+        
+        // More specific Google Drive detection
+        if (isDriveUrl(url)) {
+            // Try to determine if it's a Drive image or video
+            if (urlLower.match(/\.(jpeg|jpg|gif|png|webp|svg)/) || 
+                url.includes('drive.google.com/uc?') || 
+                url.includes('docs.google.com/uc?')) {
+                return 'google-drive-image';
+            } else if (urlLower.match(/\.(mp4|webm|ogg|mov|avi)/)) {
+                return 'google-drive-video';
+            } else {
+                return 'google-drive';
+            }
+        }
+        
+        // Unknown media type
+        return 'unknown';
+    };
+
+    // Function to get embedded content for Google Drive
+    const getGoogleDriveEmbedUrl = (url) => {
+        const fileId = getDriveFileId(url);
+        if (fileId) {
+            return `https://drive.google.com/file/d/${fileId}/preview`;
+        }
+        return null;
+    };
+    
+    // Function to get direct image URL for Google Drive images
+    const getGoogleDriveImageUrl = (url) => {
+        const fileId = getDriveFileId(url);
+        if (fileId) {
+            return `https://lh3.googleusercontent.com/d/${fileId}`;
+        }
+        return url; // Return original URL if cannot be formatted
+    };
+  
+    const handleMediaClick = (mediaUrl) => {
+        const mediaType = detectMediaType(mediaUrl);
+        
+        switch (mediaType) {
+            case 'google-drive':
+            case 'google-drive-video':
+                setPreviewType('iframe');
+                const embedUrl = getGoogleDriveEmbedUrl(mediaUrl);
+                if (embedUrl) {
+                    setPreviewUrl(embedUrl);
+                    setShowImageModal(true);
+                }
+                break;
+                
+            case 'google-drive-image':
+                setPreviewType('image');
+                // Get the formatted direct image URL
+                const imageUrl = getGoogleDriveImageUrl(mediaUrl);
+                setPreviewUrl(imageUrl);
+                setShowImageModal(true);
+                break;
+                
+            case 'direct-video':
+                setPreviewType('direct-video');
+                setPreviewUrl(mediaUrl);
+                setShowImageModal(true);
+                break;
+                
+            case 'image':
+            default:
+                // Regular image or unknown type - just show the URL
+                setPreviewType('image');
+                setPreviewUrl(mediaUrl);
+                setShowImageModal(true);
+                break;
+        }
+    };
+
+    // Render media with proper thumbnail for various types
+    const renderMediaThumbnail = (mediaUrl) => {
+        if (!mediaUrl) return null;
+        
+        const mediaType = detectMediaType(mediaUrl);
+        
+        // Handle specific media types directly
+        switch (mediaType) {
+            case 'google-drive-image': {
+                // Get the formatted direct image URL for Google Drive images
+                const formattedUrl = getGoogleDriveImageUrl(mediaUrl);
+                
+                return (
+                    <div className="news-media-container">
+                        <img
+                            src={formattedUrl}
+                            alt="Google Drive"
+                            className="news-media rounded-top"
+                            style={{ 
+                                cursor: 'pointer', 
+                                objectFit: 'cover', 
+                                height: '200px', 
+                                width: '100%'
+                            }}
+                            onClick={() => handleMediaClick(mediaUrl)}
+                            onError={(e) => {
+                                console.error("Failed to load Google Drive image");
+                                e.target.onerror = null;
+                                e.target.src = "https://via.placeholder.com/400x200?text=Image+Not+Available";
+                            }}
+                            crossOrigin="anonymous"
+                        />
+                    </div>
+                );
+            }
+                
+            case 'google-drive-video':
+            case 'google-drive': {
+                // Get the embed URL for Google Drive files
+                const embedUrl = getGoogleDriveEmbedUrl(mediaUrl);
+                if (embedUrl) {
+                    return (
+                        <div className="news-media-container">
+                            <div className="ratio ratio-16x9 rounded-top" style={{ height: '200px', overflow: 'hidden' }}>
+                                <iframe
+                                    src={embedUrl}
+                                    title="Google Drive content"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                ></iframe>
+                            </div>
+                        </div>
+                    );
+                }
+                // If we can't embed, show placeholder
+                return (
+                    <div className="news-media-container">
+                        <div 
+                            className="d-flex align-items-center justify-content-center rounded-top"
+                            style={{ 
+                                height: '200px',
+                                backgroundColor: '#f8f9fa',
+                                cursor: 'pointer'
+                            }}
+                            onClick={() => handleMediaClick(mediaUrl)}
+                        >
+                            <div className="text-center">
+                                <i className="bi bi-file-earmark-text fs-1"></i>
+                                <p>Google Drive File</p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+                
+            case 'direct-video': {
+                // For direct videos, show a placeholder with video icon
+                return (
+                    <div className="news-media-container">
+                        <div 
+                            className="d-flex align-items-center justify-content-center rounded-top"
+                            style={{ 
+                                height: '200px',
+                                backgroundColor: '#f8f9fa',
+                                cursor: 'pointer'
+                            }}
+                            onClick={() => handleMediaClick(mediaUrl)}
+                        >
+                            <div className="text-center">
+                                <i className="bi bi-film fs-1"></i>
+                                <p>Video</p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+                
+            case 'image':
+            default: {
+                // For regular images or unknown types
+                return (
+                    <div className="news-media-container">
+                        <img
+                            src={mediaUrl}
+                            alt="Media"
+                            className="news-media rounded-top"
+                            style={{ 
+                                cursor: 'pointer', 
+                                objectFit: 'cover', 
+                                height: '200px', 
+                                width: '100%',
+                                backgroundColor: '#f8f9fa'
+                            }}
+                            onClick={() => handleMediaClick(mediaUrl)}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "https://via.placeholder.com/400x200?text=Image+Not+Available";
+                            }}
+                        />
+                    </div>
+                );
+            }
+        }
+    };
+
+
 
     return (
         <div className="container">
@@ -133,6 +389,48 @@ const TrackSubmittedAds = () => {
                 </div>
             </div>
 
+            {/* Media Preview Modal */}
+            <Modal show={showImageModal} onHide={() => setShowImageModal(false)} centered size="lg">
+                <Modal.Header closeButton className='bg-white text-black'>
+                <Modal.Title>
+                    {previewType === 'iframe' ? 'Document Preview' : 
+                     previewType === 'direct-video' ? 'Video Preview' : 
+                     'Image Preview'}
+                </Modal.Title>
+                </Modal.Header>
+                    <Modal.Body className="text-center bg-white p-0">
+                    {previewType === 'iframe' ? (
+                        <div className="ratio ratio-16x9">
+                            <iframe
+                                src={previewUrl}
+                                title="Document Preview"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            ></iframe>
+                        </div>
+                    ) : previewType === 'direct-video' ? (
+                        <div className="ratio ratio-16x9">
+                            <video controls>
+                                <source src={previewUrl} type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    ) : (
+                        <img
+                            src={previewUrl}
+                            alt='Preview of the uploaded file'
+                            className="img-fluid"
+                            style={{ maxHeight: '70vh' }}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "https://via.placeholder.com/800x600?text=Image+Not+Available";
+                            }}
+                        />
+                    )}
+                </Modal.Body>
+            </Modal>
+
             {loading ? (
                 <div className="text-center text-black">Loading ads...</div>
             ) : (
@@ -143,14 +441,10 @@ const TrackSubmittedAds = () => {
                         ads.map((ad) => (
                             <div key={ad._id} className="col">
                                 <div className="card h-100 shadow bg-white text-muted border border-secondary rounded-4">
-                                    {ad.media && (
-                                        <img
-                                            src={ad.media}
-                                            className="card-img-top rounded-top"
-                                            alt="Ad"
-                                            style={{ height: '200px', objectFit: 'cover' }}
-                                        />
-                                    )}
+                                    
+                                    {/* Media content */}
+                                    {ad.media && renderMediaThumbnail(ad.media)}
+                                    
                                     <div className="card-body d-flex flex-column">
                                         <h5 className="card-title text-black fw-bold">{ad.title}</h5>
 
