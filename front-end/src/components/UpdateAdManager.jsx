@@ -18,6 +18,35 @@ const UpdateAdManager = () => {
 
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const [mediaError, setMediaError] = useState('');
+
+    // Check if URL contains blocked social media and file hosting links
+  const validateUrl = (url) => {
+    if (!url) return true;
+    
+    const blockedDomains = [
+      // Social media platforms
+      'facebook.com', 'fb.com', 'fb.me', 'facebook.me',
+      'instagram.com', 'instagr.am', 'instagram',
+      'tiktok.com', 'tiktok', 'vm.tiktok.com',
+      
+      // File hosting services
+      'mega.nz', 'mega.io', 'mega.co.nz',
+      'mediafire.com', 'mfi.re'
+    ];
+    
+    const lowercaseUrl = url.toLowerCase();
+    return !blockedDomains.some(domain => lowercaseUrl.includes(domain));
+  };
+
+  // Validate URLs whenever they change
+  useEffect(() => {
+    if (form.media && !validateUrl(form.media)) {
+      setMediaError('Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed');
+    } else {
+      setMediaError('');
+    }
+  }, [form.media]);
 
     useEffect(() => {
         const fetchAd = async () => {
@@ -44,10 +73,24 @@ const UpdateAdManager = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm(prev => ({ ...prev, [name]: value }));
+
+        // Clear specific error when user starts modifying the field
+    if (name === 'media') {
+        setMediaError('');
+      }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Validate both URLs before submission
+        const isMediaValid = validateUrl(form.media);
+
+        if (!isMediaValid) {
+            setMediaError('Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed');
+            return; // Prevent form submission
+        }
+        
         setMessage('');
         setError('');
         try {
@@ -65,10 +108,12 @@ const UpdateAdManager = () => {
             setTimeout(() => navigate('/dashboard/super-admin'), 1500);
         } catch (err) {
             setError(err.response?.data?.msg || "❌ Failed to update ad");
-        }
+        } 
     };
 
     const handleCancel = () => navigate(-1);
+
+
 
     return (
         <div className="container pt-5 mt-5">
@@ -122,12 +167,20 @@ const UpdateAdManager = () => {
                         <input
                             type="text"
                             name="media"
-                            className="form-control border border-black"
+                            className={`form-control border border-black ${mediaError ? 'is-invalid' : ''}`}
                             value={form.media}
                             onChange={handleChange}
                             required
-                            placeholder="https://example.com/media.jpg"
+                            placeholder="Ex: Google Drive link / Image link"
                         />
+                        {mediaError && (
+                            <div className="invalid-feedback">
+                                {mediaError}
+                            </div>
+                        )}
+                        <small className="form-text text-muted">
+                            Note: Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed
+                        </small>
                     </div>
 
                     <div className="col-md-6">
