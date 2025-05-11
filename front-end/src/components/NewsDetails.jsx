@@ -100,7 +100,7 @@ const NewsDetail = () => {
         const { media, title } = newsItem;
 
         const mediaWrapperStyle = {
-            height: "250px",
+            height: "400px",
             maxHeight: "90vh",
             overflow: "hidden",
             borderRadius: "12px",
@@ -113,7 +113,7 @@ const NewsDetail = () => {
         };
 
         const imageStyle = {
-            objectFit: "cover",
+            objectFit: "contain",
             width: "100%",
             height: "100%",
             borderRadius: "12px",
