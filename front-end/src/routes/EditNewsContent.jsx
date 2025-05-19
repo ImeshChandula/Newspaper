@@ -228,6 +228,7 @@ const EditNewsContent = () => {
                   <option value="Education">Education</option>
                   <option value="Politics">Politics</option>
                   <option value="Sports">Sports</option>
+                  <option value="Other">Others</option>
                 </select>
               </div>
 

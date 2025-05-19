@@ -141,7 +141,7 @@ const UserManagement = () => {
       </div>
     </div>
   );
-  
+
   if (error) return (
     <div className="error-message alert-danger" role="alert">
       {error}
@@ -151,7 +151,7 @@ const UserManagement = () => {
   return (
     <div className="container mt-4">
       <h2 className="mb-4 text-center text-black">User Management</h2>
-      
+
       {users.length === 0 ? (
         <div className="alert alert-info text-black" role="alert">
           No users found.
@@ -171,10 +171,9 @@ const UserManagement = () => {
                 <tr key={user._id}>
                   <td className='bg-white text-black border border-black'>{user.username}</td>
                   <td className='bg-white border border-black'>
-                    <span className={`role-badge ${
-                      user.role === 'super_admin' ? 'bg-danger' : 
+                    <span className={`role-badge ${user.role === 'super_admin' ? 'bg-danger' :
                       user.role === 'admin' ? 'bg-warning' : 'bg-secondary'
-                    }`}>
+                      }`}>
                       {user.role}
                     </span>
                   </td>
@@ -219,11 +218,10 @@ const UserManagement = () => {
         <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
-              <div className={`modal-header ${
-                modalContent.type === 'success' ? 'bg-success text-white' : 
-                modalContent.type === 'danger' ? 'bg-danger text-white' : 
-                modalContent.type === 'confirm' ? 'bg-warning' : 'bg-primary text-white'
-              }`}>
+              <div className={`modal-header ${modalContent.type === 'success' ? 'bg-success text-white' :
+                modalContent.type === 'danger' ? 'bg-danger text-white' :
+                  modalContent.type === 'confirm' ? 'bg-warning' : 'bg-primary text-white'
+                }`}>
                 <h5 className="modal-title">{modalContent.title}</h5>
                 <button type="button" className="btn-close" onClick={handleCloseModal} aria-label="Close"></button>
               </div>

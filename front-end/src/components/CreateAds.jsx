@@ -21,43 +21,43 @@ const CreateAds = () => {
   // Check if URL contains blocked social media and file hosting links
   const validateUrl = (url) => {
     if (!url) return true;
-    
+
     const blockedDomains = [
       // Social media platforms
       'facebook.com', 'fb.com', 'fb.me', 'facebook.me',
       'instagram.com', 'instagr.am', 'instagram',
       'tiktok.com', 'tiktok', 'vm.tiktok.com',
       'vimeo.com', 'dailymotion.com', 'dai.ly',
-      
+
       // File hosting services
       'mega.nz', 'mega.io', 'mega.co.nz',
       'mediafire.com', 'mfi.re',
 
       // Cloud storage domains
-      'dropbox.com', 'dropboxusercontent.com','we.tl', 'wetransfer.com',
-      '1fichier.com','anonfiles.com','zippyshare.com','uploadfiles.io',
-      'file.io','pixeldrain.com','filedropper.com','sendspace.com',
-      'files.fm','box.com','icloud.com', 'icloud-drive.com','pcloud.com',
-      'mediafireusercontent.com','openload.co', 'oload.tv', 'streamango.com','rapidgator.net',
-      'nitroflare.com','turbobit.net','katfile.com','uploadhaven.com',
-      'filefactory.com','letitbit.net','4shared.com','depositfiles.com',
-      'sendit.cloud','solidfiles.com','ge.tt','yandex.disk', 'disk.yandex.com',
-      'mail.ru', 'cloud.mail.ru','terabox.com', 'teraboxapp.com', 'mirrobox.com',
+      'dropbox.com', 'dropboxusercontent.com', 'we.tl', 'wetransfer.com',
+      '1fichier.com', 'anonfiles.com', 'zippyshare.com', 'uploadfiles.io',
+      'file.io', 'pixeldrain.com', 'filedropper.com', 'sendspace.com',
+      'files.fm', 'box.com', 'icloud.com', 'icloud-drive.com', 'pcloud.com',
+      'mediafireusercontent.com', 'openload.co', 'oload.tv', 'streamango.com', 'rapidgator.net',
+      'nitroflare.com', 'turbobit.net', 'katfile.com', 'uploadhaven.com',
+      'filefactory.com', 'letitbit.net', '4shared.com', 'depositfiles.com',
+      'sendit.cloud', 'solidfiles.com', 'ge.tt', 'yandex.disk', 'disk.yandex.com',
+      'mail.ru', 'cloud.mail.ru', 'terabox.com', 'teraboxapp.com', 'mirrobox.com',
 
       // Other
-      'twitter.com', 'x.com', 't.co','threads.net',
-  	  'snapchat.com', 'snap.com','pinterest.com','linkedin.com',
-      'reddit.com', 'redd.it', 'tumblr.com','discord.com', 'discord.gg',
-      'wechat.com','line.me','quora.com',
-      'twitch.tv','liveleak.com','metacafe.com','bit.tube','peer.tube',
-      'rumble.com','odysee.com','bitchute.com','dtube.video','bandcamp.com',
+      'twitter.com', 'x.com', 't.co', 'threads.net',
+      'snapchat.com', 'snap.com', 'pinterest.com', 'linkedin.com',
+      'reddit.com', 'redd.it', 'tumblr.com', 'discord.com', 'discord.gg',
+      'wechat.com', 'line.me', 'quora.com',
+      'twitch.tv', 'liveleak.com', 'metacafe.com', 'bit.tube', 'peer.tube',
+      'rumble.com', 'odysee.com', 'bitchute.com', 'dtube.video', 'bandcamp.com',
 
       // Optional
-      'bit.ly', 'goo.gl', 'tinyurl.com', 'is.gd', 'shorte.st', 
+      'bit.ly', 'goo.gl', 'tinyurl.com', 'is.gd', 'shorte.st',
       'adf.ly', 't.ly', 'cutt.ly', 'rebrand.ly',
 
     ];
-    
+
     const lowercaseUrl = url.toLowerCase();
     return !blockedDomains.some(domain => lowercaseUrl.includes(domain));
   };

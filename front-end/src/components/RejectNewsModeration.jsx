@@ -45,7 +45,7 @@ const RejectNewsModeration = () => {
   });
 
   // Available categories
-  const availableCategories = ['Sports', 'Education', 'Politics'];
+  const availableCategories = ['Sports', 'Education', 'Politics', 'Other'];
 
   // Handle filter changes
   const handleFilterChange = (type, value) => {
@@ -54,7 +54,7 @@ const RejectNewsModeration = () => {
         const updatedCategories = prev.categories.includes(value)
           ? prev.categories.filter(cat => cat !== value)
           : [...prev.categories, value];
-        
+
         return { ...prev, categories: updatedCategories };
       });
     } else {
@@ -72,9 +72,6 @@ const RejectNewsModeration = () => {
     });
   };
 
-  
-
-
   const fetchNews = async () => {
     setLoading(true);
     try {
@@ -85,7 +82,7 @@ const RejectNewsModeration = () => {
       if (filters.foreignNews) queryParams.append('foreignNews', 'true');
       if (filters.localNews) queryParams.append('foreignNews', 'false');
       filters.categories.forEach(cat => queryParams.append('category', cat));
-      
+
       const res = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL_NEWS}/reject?${queryParams.toString()}`,
         {
@@ -256,11 +253,11 @@ const RejectNewsModeration = () => {
   // Function to extract YouTube video ID from URL
   const getYouTubeId = (url) => {
     if (!url) return null;
-    
+
     // Match patterns like youtube.com/watch?v=VIDEO_ID or youtu.be/VIDEO_ID
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    
+
     return (match && match[2].length === 11) ? match[2] : null;
   };
 
@@ -279,14 +276,14 @@ const RejectNewsModeration = () => {
   // Extract Google Drive file ID from URL
   const getDriveFileId = (url) => {
     if (!url) return null;
-    
+
     // Handle different Google Drive URL formats
     // Format 1: https://drive.google.com/file/d/{fileId}/view
     // Format 2: https://drive.google.com/open?id={fileId}
     // Format 3: https://docs.google.com/document/d/{fileId}/edit
-    
+
     let fileId = null;
-    
+
     if (url.includes('drive.google.com/file/d/')) {
       const match = url.match(/\/file\/d\/([^/]+)/);
       if (match && match[1]) fileId = match[1];
@@ -297,44 +294,44 @@ const RejectNewsModeration = () => {
       const match = url.match(/\/d\/([^/]+)/);
       if (match && match[1]) fileId = match[1];
     }
-    
+
     return fileId;
   };
-  
+
   // Check if URL is a Google Drive URL
   const isDriveUrl = (url) => {
     if (!url) return false;
     return url.includes('drive.google.com') || url.includes('docs.google.com');
   };
-  
+
   // Function to detect media type from URL
   const detectMediaType = (url) => {
     if (!url) return 'unknown';
-    
+
     // Normalize to lowercase for easier matching
     const urlLower = url.toLowerCase();
-    
+
     // Check for direct image URLs
     if (urlLower.match(/\.(jpeg|jpg|gif|png|webp|svg)(\?.*)?$/)) {
       return 'image';
     }
-    
+
     // Check for direct video URLs
     if (urlLower.match(/\.(mp4|webm|ogg|mov|avi)(\?.*)?$/)) {
       return 'direct-video';
     }
-    
+
     // Check for YouTube
     if (isYouTubeUrl(url)) {
       return 'youtube';
     }
-    
+
     // More specific Google Drive detection
     if (isDriveUrl(url)) {
       // Try to determine if it's a Drive image or video
-      if (urlLower.match(/\.(jpeg|jpg|gif|png|webp|svg)/) || 
-          url.includes('drive.google.com/uc?') || 
-          url.includes('docs.google.com/uc?')) {
+      if (urlLower.match(/\.(jpeg|jpg|gif|png|webp|svg)/) ||
+        url.includes('drive.google.com/uc?') ||
+        url.includes('docs.google.com/uc?')) {
         return 'google-drive-image';
       } else if (urlLower.match(/\.(mp4|webm|ogg|mov|avi)/)) {
         return 'google-drive-video';
@@ -342,7 +339,7 @@ const RejectNewsModeration = () => {
         return 'google-drive';
       }
     }
-    
+
     // More specific Facebook detection
     if (urlLower.includes('facebook.com') || urlLower.includes('fb.watch')) {
       if (url.includes('facebook.com/photo') || url.includes('fb.com/photo')) {
@@ -353,35 +350,35 @@ const RejectNewsModeration = () => {
         return 'facebook';
       }
     }
-    
+
     // Other media types remain the same
     if (urlLower.includes('vimeo.com')) {
       return 'vimeo';
     }
-    
+
     if (urlLower.includes('dailymotion.com') || urlLower.includes('dai.ly')) {
       return 'dailymotion';
     }
-    
+
     if (urlLower.includes('instagram.com')) {
       return 'instagram';
     }
-    
+
     if (urlLower.includes('twitter.com') || urlLower.includes('x.com')) {
       return 'twitter';
     }
-    
+
     if (urlLower.includes('tiktok.com')) {
       return 'tiktok';
     }
-    
+
     // Unknown media type
     return 'unknown';
   };
 
   // Function to get embedded content for Facebook
-const getFacebookEmbedHtml = (url) => {
-  return `<iframe 
+  const getFacebookEmbedHtml = (url) => {
+    return `<iframe 
     src="https://www.facebook.com/plugins/post.php?href=${encodeURIComponent(url)}&show_text=true" 
     width="100%" 
     height="300" 
@@ -391,20 +388,20 @@ const getFacebookEmbedHtml = (url) => {
     allowfullscreen="true" 
     allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
   </iframe>`;
-};
+  };
 
-// Function to get embedded content for Google Drive
-const getGoogleDriveEmbedUrl = (url) => {
-  const fileId = getDriveFileId(url);
-  if (fileId) {
-    return `https://drive.google.com/file/d/${fileId}/preview`;
-  }
-  return null;
-};
+  // Function to get embedded content for Google Drive
+  const getGoogleDriveEmbedUrl = (url) => {
+    const fileId = getDriveFileId(url);
+    if (fileId) {
+      return `https://drive.google.com/file/d/${fileId}/preview`;
+    }
+    return null;
+  };
 
   const handleMediaClick = (mediaUrl) => {
     const mediaType = detectMediaType(mediaUrl);
-    
+
     switch (mediaType) {
       case 'youtube':
         setPreviewType('video');
@@ -414,7 +411,7 @@ const getGoogleDriveEmbedUrl = (url) => {
           setShowImageModal(true);
         }
         break;
-        
+
       case 'google-drive':
         setPreviewType('iframe');
         const fileId = getDriveFileId(mediaUrl);
@@ -424,7 +421,7 @@ const getGoogleDriveEmbedUrl = (url) => {
           setShowImageModal(true);
         }
         break;
-        
+
       case 'vimeo':
         setPreviewType('video');
         // Extract Vimeo ID
@@ -434,7 +431,7 @@ const getGoogleDriveEmbedUrl = (url) => {
           setShowImageModal(true);
         }
         break;
-        
+
       case 'dailymotion':
         setPreviewType('video');
         // Extract Dailymotion ID
@@ -444,19 +441,19 @@ const getGoogleDriveEmbedUrl = (url) => {
         } else if (mediaUrl.includes('dai.ly/')) {
           dailymotionId = mediaUrl.split('dai.ly/')[1];
         }
-        
+
         if (dailymotionId) {
           setPreviewUrl(`https://www.dailymotion.com/embed/video/${dailymotionId}`);
           setShowImageModal(true);
         }
         break;
-        
+
       case 'direct-video':
         setPreviewType('direct-video');
         setPreviewUrl(mediaUrl);
         setShowImageModal(true);
         break;
-        
+
       case 'image':
       default:
         // Regular image or unknown type - just show the URL
@@ -502,7 +499,7 @@ const getGoogleDriveEmbedUrl = (url) => {
   // Function to extract the best thumbnail for a URL
   const getBestThumbnailUrl = (mediaUrl) => {
     const mediaType = detectMediaType(mediaUrl);
-    
+
     switch (mediaType) {
       case 'youtube':
         const videoId = getYouTubeId(mediaUrl);
@@ -510,24 +507,24 @@ const getGoogleDriveEmbedUrl = (url) => {
           return getYouTubeThumbnailUrl(videoId);
         }
         break;
-        
+
       case 'vimeo':
         // Vimeo doesn't have a simple thumbnail API like YouTube
         // We'll use a generic thumbnail for now
         return getGenericThumbnail('vimeo');
-        
+
       case 'google-drive':
         // Google Drive uses an API that requires auth, so we'll use a generic icon
         return getGenericThumbnail('google-drive');
-        
+
       case 'direct-video':
         // For direct videos, show a video icon
         return getGenericThumbnail('direct-video');
-        
+
       case 'image':
         // For images, use the image itself
         return mediaUrl;
-        
+
       default:
         // For unknown types, use a generic link icon
         return getGenericThumbnail(mediaType);
@@ -559,13 +556,13 @@ const getGoogleDriveEmbedUrl = (url) => {
   const getMediaTypeIcon = (mediaType) => {
     switch (mediaType) {
       case 'youtube': return 'bi-youtube';
-      case 'google-drive': 
+      case 'google-drive':
       case 'google-drive-image':
       case 'google-drive-video':
         return 'bi-google';
       case 'vimeo': return 'bi-vimeo';
       case 'dailymotion': return 'bi-camera-video';
-      case 'facebook': 
+      case 'facebook':
       case 'facebook-image':
       case 'facebook-video':
         return 'bi-facebook';
@@ -604,21 +601,21 @@ const getGoogleDriveEmbedUrl = (url) => {
   // Render media with proper thumbnail for various types
   const renderMediaThumbnail = (mediaUrl) => {
     if (!mediaUrl) return null;
-    
+
     const mediaType = detectMediaType(mediaUrl);
     const thumbnailUrl = getBestThumbnailUrl(mediaUrl);
     const mediaLabel = getMediaTypeLabel(mediaType);
     const mediaIcon = getMediaTypeIcon(mediaType);
     const badgeColor = getMediaBadgeColor(mediaType);
-    
+
     // Handle specific media types directly
     switch (mediaType) {
       case 'facebook-image':
       case 'facebook-video':
         return (
           <div className="news-media-container position-relative">
-            <div dangerouslySetInnerHTML={{ 
-              __html: getFacebookEmbedHtml(mediaUrl) 
+            <div dangerouslySetInnerHTML={{
+              __html: getFacebookEmbedHtml(mediaUrl)
             }} />
             <div
               className="position-absolute top-0 end-0 m-2"
@@ -629,7 +626,7 @@ const getGoogleDriveEmbedUrl = (url) => {
             </div>
           </div>
         );
-        
+
       case 'google-drive-image':
         return (
           <div className="news-media-container position-relative">
@@ -637,10 +634,10 @@ const getGoogleDriveEmbedUrl = (url) => {
               src={mediaUrl}
               alt="Google Drive"
               className="news-media"
-              style={{ 
-                cursor: 'pointer', 
-                objectFit: 'contain', 
-                height: '300px', 
+              style={{
+                cursor: 'pointer',
+                objectFit: 'contain',
+                height: '300px',
                 width: '100%'
               }}
               onClick={() => handleMediaClick(mediaUrl)}
@@ -664,7 +661,7 @@ const getGoogleDriveEmbedUrl = (url) => {
             </div>
           </div>
         );
-        
+
       case 'google-drive-video':
       case 'google-drive':
         const embedUrl = getGoogleDriveEmbedUrl(mediaUrl);
@@ -690,8 +687,8 @@ const getGoogleDriveEmbedUrl = (url) => {
             </div>
           );
         }
-        // If we can't embed, fall through to default
-        
+      // If we can't embed, fall through to default
+
       default:
         // Default behavior for other media types (unchanged)
         return (
@@ -700,10 +697,10 @@ const getGoogleDriveEmbedUrl = (url) => {
               src={thumbnailUrl}
               alt={`${mediaLabel} thumbnail`}
               className="news-media"
-              style={{ 
-                cursor: 'pointer', 
-                objectFit: 'cover', 
-                height: '200px', 
+              style={{
+                cursor: 'pointer',
+                objectFit: 'cover',
+                height: '200px',
                 width: '100%',
                 backgroundColor: mediaType !== 'image' ? '#f8f9fa' : 'transparent'
               }}
@@ -742,82 +739,82 @@ const getGoogleDriveEmbedUrl = (url) => {
       <h2 className="news-head text-black">Rejected News Moderation</h2>
 
       <div className="container my-4">
-      <h5 className="mb-3">Filter News</h5>
-      <div className="row g-3">
+        <h5 className="mb-3">Filter News</h5>
+        <div className="row g-3">
 
-        <div className="col-12">
-          <div className="d-flex gap-3 flex-wrap">
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="breakingNewsToggle"
-                checked={filters.breakingNews}
-                onChange={() => handleFilterChange('breakingNews', !filters.breakingNews)}
-              />
-              <label className="form-check-label" htmlFor="breakingNewsToggle">
-                Breaking News 
-              </label>
-            </div>
-          
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="foreignNewsToggle"
-                checked={filters.foreignNews}
-                onChange={() => handleFilterChange('foreignNews', !filters.foreignNews)}
-              />
-              <label className="form-check-label" htmlFor="foreignNewsToggle">
-                Foreign News 
-              </label>
-            </div>
-
-            <div className="form-check form-switch">
+          <div className="col-12">
+            <div className="d-flex gap-3 flex-wrap">
+              <div className="form-check form-switch">
                 <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="localNewsToggle"
-                    checked={filters.localNews}
-                    onChange={() => handleFilterChange('localNews', !filters.localNews)}
-                  />
-                <label className="form-check-label" htmlFor="localNewsToggle">
-                    Local News
+                  className="form-check-input"
+                  type="checkbox"
+                  id="breakingNewsToggle"
+                  checked={filters.breakingNews}
+                  onChange={() => handleFilterChange('breakingNews', !filters.breakingNews)}
+                />
+                <label className="form-check-label" htmlFor="breakingNewsToggle">
+                  Breaking News
                 </label>
-            </div>
-          </div>
-        </div>
-          
+              </div>
 
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="foreignNewsToggle"
+                  checked={filters.foreignNews}
+                  onChange={() => handleFilterChange('foreignNews', !filters.foreignNews)}
+                />
+                <label className="form-check-label" htmlFor="foreignNewsToggle">
+                  Foreign News
+                </label>
+              </div>
 
-        <div className="col-12">
-              <h6>Categories:</h6>
-              <div className="d-flex gap-3 flex-wrap">
-                {availableCategories.map(category => (
-                  <div className="form-check" key={category}>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id={`category-${category.toLowerCase()}`}
-                      checked={filters.categories.includes(category)}
-                      onChange={() => handleFilterChange('category', category)}
-                    />
-                    <label className="form-check-label" htmlFor={`category-${category.toLowerCase()}`}>
-                      {category}
-                    </label>
-                  </div>
-                ))}
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="localNewsToggle"
+                  checked={filters.localNews}
+                  onChange={() => handleFilterChange('localNews', !filters.localNews)}
+                />
+                <label className="form-check-label" htmlFor="localNewsToggle">
+                  Local News
+                </label>
               </div>
             </div>
-            
-            <div className="col-12">
-              <button 
-                className="btn btn-outline-secondary"
-                onClick={resetFilters}
-              >
-                <i className="bi bi-x-circle me-1"></i> Reset Filters
-              </button>
+          </div>
+
+
+
+          <div className="col-12">
+            <h6>Categories:</h6>
+            <div className="d-flex gap-3 flex-wrap">
+              {availableCategories.map(category => (
+                <div className="form-check" key={category}>
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id={`category-${category.toLowerCase()}`}
+                    checked={filters.categories.includes(category)}
+                    onChange={() => handleFilterChange('category', category)}
+                  />
+                  <label className="form-check-label" htmlFor={`category-${category.toLowerCase()}`}>
+                    {category}
+                  </label>
+                </div>
+              ))}
             </div>
+          </div>
+
+          <div className="col-12">
+            <button
+              className="btn btn-outline-secondary"
+              onClick={resetFilters}
+            >
+              <i className="bi bi-x-circle me-1"></i> Reset Filters
+            </button>
+          </div>
 
 
         </div>

@@ -21,57 +21,57 @@ const UpdateAdManager = () => {
     const [mediaError, setMediaError] = useState('');
 
     // Check if URL contains blocked social media and file hosting links
-  const validateUrl = (url) => {
-    if (!url) return true;
-    
-    const blockedDomains = [
-      // Social media platforms
-      'facebook.com', 'fb.com', 'fb.me', 'facebook.me',
-      'instagram.com', 'instagr.am', 'instagram',
-      'tiktok.com', 'tiktok', 'vm.tiktok.com',
-      'vimeo.com', 'dailymotion.com', 'dai.ly',
-      
-      // File hosting services
-      'mega.nz', 'mega.io', 'mega.co.nz',
-      'mediafire.com', 'mfi.re',
+    const validateUrl = (url) => {
+        if (!url) return true;
 
-      // Cloud storage domains
-      'dropbox.com', 'dropboxusercontent.com','we.tl', 'wetransfer.com',
-      '1fichier.com','anonfiles.com','zippyshare.com','uploadfiles.io',
-      'file.io','pixeldrain.com','filedropper.com','sendspace.com',
-      'files.fm','box.com','icloud.com', 'icloud-drive.com','pcloud.com',
-      'mediafireusercontent.com','openload.co', 'oload.tv', 'streamango.com','rapidgator.net',
-      'nitroflare.com','turbobit.net','katfile.com','uploadhaven.com',
-      'filefactory.com','letitbit.net','4shared.com','depositfiles.com',
-      'sendit.cloud','solidfiles.com','ge.tt','yandex.disk', 'disk.yandex.com',
-      'mail.ru', 'cloud.mail.ru','terabox.com', 'teraboxapp.com', 'mirrobox.com',
+        const blockedDomains = [
+            // Social media platforms
+            'facebook.com', 'fb.com', 'fb.me', 'facebook.me',
+            'instagram.com', 'instagr.am', 'instagram',
+            'tiktok.com', 'tiktok', 'vm.tiktok.com',
+            'vimeo.com', 'dailymotion.com', 'dai.ly',
 
-      // Other
-      'twitter.com', 'x.com', 't.co','threads.net',
-  	  'snapchat.com', 'snap.com','pinterest.com','linkedin.com',
-      'reddit.com', 'redd.it', 'tumblr.com','discord.com', 'discord.gg',
-      'wechat.com','line.me','quora.com',
-      'twitch.tv','liveleak.com','metacafe.com','bit.tube','peer.tube',
-      'rumble.com','odysee.com','bitchute.com','dtube.video','bandcamp.com',
+            // File hosting services
+            'mega.nz', 'mega.io', 'mega.co.nz',
+            'mediafire.com', 'mfi.re',
 
-      // Optional
-      'bit.ly', 'goo.gl', 'tinyurl.com', 'is.gd', 'shorte.st', 
-      'adf.ly', 't.ly', 'cutt.ly', 'rebrand.ly',
+            // Cloud storage domains
+            'dropbox.com', 'dropboxusercontent.com', 'we.tl', 'wetransfer.com',
+            '1fichier.com', 'anonfiles.com', 'zippyshare.com', 'uploadfiles.io',
+            'file.io', 'pixeldrain.com', 'filedropper.com', 'sendspace.com',
+            'files.fm', 'box.com', 'icloud.com', 'icloud-drive.com', 'pcloud.com',
+            'mediafireusercontent.com', 'openload.co', 'oload.tv', 'streamango.com', 'rapidgator.net',
+            'nitroflare.com', 'turbobit.net', 'katfile.com', 'uploadhaven.com',
+            'filefactory.com', 'letitbit.net', '4shared.com', 'depositfiles.com',
+            'sendit.cloud', 'solidfiles.com', 'ge.tt', 'yandex.disk', 'disk.yandex.com',
+            'mail.ru', 'cloud.mail.ru', 'terabox.com', 'teraboxapp.com', 'mirrobox.com',
 
-    ];
-    
-    const lowercaseUrl = url.toLowerCase();
-    return !blockedDomains.some(domain => lowercaseUrl.includes(domain));
-  };
+            // Other
+            'twitter.com', 'x.com', 't.co', 'threads.net',
+            'snapchat.com', 'snap.com', 'pinterest.com', 'linkedin.com',
+            'reddit.com', 'redd.it', 'tumblr.com', 'discord.com', 'discord.gg',
+            'wechat.com', 'line.me', 'quora.com',
+            'twitch.tv', 'liveleak.com', 'metacafe.com', 'bit.tube', 'peer.tube',
+            'rumble.com', 'odysee.com', 'bitchute.com', 'dtube.video', 'bandcamp.com',
 
-  // Validate URLs whenever they change
-  useEffect(() => {
-    if (form.media && !validateUrl(form.media)) {
-      setMediaError('Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed');
-    } else {
-      setMediaError('');
-    }
-  }, [form.media]);
+            // Optional
+            'bit.ly', 'goo.gl', 'tinyurl.com', 'is.gd', 'shorte.st',
+            'adf.ly', 't.ly', 'cutt.ly', 'rebrand.ly',
+
+        ];
+
+        const lowercaseUrl = url.toLowerCase();
+        return !blockedDomains.some(domain => lowercaseUrl.includes(domain));
+    };
+
+    // Validate URLs whenever they change
+    useEffect(() => {
+        if (form.media && !validateUrl(form.media)) {
+            setMediaError('Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed');
+        } else {
+            setMediaError('');
+        }
+    }, [form.media]);
 
     useEffect(() => {
         const fetchAd = async () => {
@@ -100,9 +100,9 @@ const UpdateAdManager = () => {
         setForm(prev => ({ ...prev, [name]: value }));
 
         // Clear specific error when user starts modifying the field
-    if (name === 'media') {
-        setMediaError('');
-      }
+        if (name === 'media') {
+            setMediaError('');
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -115,7 +115,7 @@ const UpdateAdManager = () => {
             setMediaError('Facebook, Instagram, TikTok, Mega, and Mediafire links are not allowed');
             return; // Prevent form submission
         }
-        
+
         setMessage('');
         setError('');
         try {
@@ -133,7 +133,7 @@ const UpdateAdManager = () => {
             setTimeout(() => navigate('/dashboard/super-admin'), 1500);
         } catch (err) {
             setError(err.response?.data?.msg || "❌ Failed to update ad");
-        } 
+        }
     };
 
     const handleCancel = () => navigate(-1);

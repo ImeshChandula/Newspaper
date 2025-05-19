@@ -59,9 +59,11 @@ const ProfileDropdown = () => {
 
                 {!user ? (
                     <li>
+                        {/*
                         <Link className="dropdown-item btn-dashboard" to="/login">
                             Login
                         </Link>
+                        */}
                     </li>
                 ) : (
                     <li>

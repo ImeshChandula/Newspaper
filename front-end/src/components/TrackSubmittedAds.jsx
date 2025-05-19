@@ -123,57 +123,57 @@ const TrackSubmittedAds = () => {
     // Extract Google Drive file ID from URL
     const getDriveFileId = (url) => {
         if (!url) return null;
-        
+
         // Handle different Google Drive URL formats
         // Format 1: https://drive.google.com/file/d/{fileId}/view
         // Format 2: https://drive.google.com/open?id={fileId}
         // Format 3: https://docs.google.com/document/d/{fileId}/edit
-        
+
         let fileId = null;
-        
+
         if (url.includes('drive.google.com/file/d/')) {
-        const match = url.match(/\/file\/d\/([^/]+)/);
-        if (match && match[1]) fileId = match[1];
+            const match = url.match(/\/file\/d\/([^/]+)/);
+            if (match && match[1]) fileId = match[1];
         } else if (url.includes('drive.google.com/open?id=')) {
-        const urlObj = new URL(url);
-        fileId = urlObj.searchParams.get('id');
+            const urlObj = new URL(url);
+            fileId = urlObj.searchParams.get('id');
         } else if (url.includes('docs.google.com')) {
-        const match = url.match(/\/d\/([^/]+)/);
-        if (match && match[1]) fileId = match[1];
+            const match = url.match(/\/d\/([^/]+)/);
+            if (match && match[1]) fileId = match[1];
         }
-        
+
         return fileId;
     };
-    
+
     // Check if URL is a Google Drive URL
     const isDriveUrl = (url) => {
         if (!url) return false;
         return url.includes('drive.google.com') || url.includes('docs.google.com');
     };
-    
+
     // Function to detect media type from URL
     // Function to detect media type from URL
     const detectMediaType = (url) => {
         if (!url) return 'unknown';
-        
+
         // Normalize to lowercase for easier matching
         const urlLower = url.toLowerCase();
-        
+
         // Check for direct image URLs
         if (urlLower.match(/\.(jpeg|jpg|gif|png|webp|svg)(\?.*)?$/)) {
             return 'image';
         }
-        
+
         // Check for direct video URLs
         if (urlLower.match(/\.(mp4|webm|ogg|mov|avi)(\?.*)?$/)) {
             return 'direct-video';
         }
-        
+
         // More specific Google Drive detection
         if (isDriveUrl(url)) {
             // Try to determine if it's a Drive image or video
-            if (urlLower.match(/\.(jpeg|jpg|gif|png|webp|svg)/) || 
-                url.includes('drive.google.com/uc?') || 
+            if (urlLower.match(/\.(jpeg|jpg|gif|png|webp|svg)/) ||
+                url.includes('drive.google.com/uc?') ||
                 url.includes('docs.google.com/uc?')) {
                 return 'google-drive-image';
             } else if (urlLower.match(/\.(mp4|webm|ogg|mov|avi)/)) {
@@ -182,7 +182,7 @@ const TrackSubmittedAds = () => {
                 return 'google-drive';
             }
         }
-        
+
         // Unknown media type
         return 'unknown';
     };
@@ -195,7 +195,7 @@ const TrackSubmittedAds = () => {
         }
         return null;
     };
-    
+
     // Function to get direct image URL for Google Drive images
     const getGoogleDriveImageUrl = (url) => {
         const fileId = getDriveFileId(url);
@@ -204,10 +204,10 @@ const TrackSubmittedAds = () => {
         }
         return url; // Return original URL if cannot be formatted
     };
-  
+
     const handleMediaClick = (mediaUrl) => {
         const mediaType = detectMediaType(mediaUrl);
-        
+
         switch (mediaType) {
             case 'google-drive':
             case 'google-drive-video':
@@ -218,7 +218,7 @@ const TrackSubmittedAds = () => {
                     setShowImageModal(true);
                 }
                 break;
-                
+
             case 'google-drive-image':
                 setPreviewType('image');
                 // Get the formatted direct image URL
@@ -226,13 +226,13 @@ const TrackSubmittedAds = () => {
                 setPreviewUrl(imageUrl);
                 setShowImageModal(true);
                 break;
-                
+
             case 'direct-video':
                 setPreviewType('direct-video');
                 setPreviewUrl(mediaUrl);
                 setShowImageModal(true);
                 break;
-                
+
             case 'image':
             default:
                 // Regular image or unknown type - just show the URL
@@ -246,25 +246,25 @@ const TrackSubmittedAds = () => {
     // Render media with proper thumbnail for various types
     const renderMediaThumbnail = (mediaUrl) => {
         if (!mediaUrl) return null;
-        
+
         const mediaType = detectMediaType(mediaUrl);
-        
+
         // Handle specific media types directly
         switch (mediaType) {
             case 'google-drive-image': {
                 // Get the formatted direct image URL for Google Drive images
                 const formattedUrl = getGoogleDriveImageUrl(mediaUrl);
-                
+
                 return (
                     <div className="news-media-container">
                         <img
                             src={formattedUrl}
                             alt="Google Drive"
                             className="news-media rounded-top"
-                            style={{ 
-                                cursor: 'pointer', 
-                                objectFit: 'cover', 
-                                height: '200px', 
+                            style={{
+                                cursor: 'pointer',
+                                objectFit: 'cover',
+                                height: '200px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
                             }}
@@ -279,7 +279,7 @@ const TrackSubmittedAds = () => {
                     </div>
                 );
             }
-                
+
             case 'google-drive-video':
             case 'google-drive': {
                 // Get the embed URL for Google Drive files
@@ -287,22 +287,22 @@ const TrackSubmittedAds = () => {
                 if (embedUrl) {
                     return (
                         <div className="news-media-container">
-                            <div 
-                                className="ratio ratio-16x9 rounded-top" 
-                                style={{ 
-                                    cursor: 'pointer', 
-                                    objectFit: 'cover', 
-                                    height: '200px', 
+                            <div
+                                className="ratio ratio-16x9 rounded-top"
+                                style={{
+                                    cursor: 'pointer',
+                                    objectFit: 'cover',
+                                    height: '200px',
                                     width: '100%',
                                     backgroundColor: '#f8f9fa'
                                 }}>
-                                    <iframe
-                                        src={embedUrl}
-                                        title="Google Drive content"
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                    ></iframe>
+                                <iframe
+                                    src={embedUrl}
+                                    title="Google Drive content"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                ></iframe>
                             </div>
                         </div>
                     );
@@ -310,12 +310,12 @@ const TrackSubmittedAds = () => {
                 // If we can't embed, show placeholder
                 return (
                     <div className="news-media-container">
-                        <div 
+                        <div
                             className="d-flex align-items-center justify-content-center rounded-top"
-                            style={{ 
-                                cursor: 'pointer', 
-                                objectFit: 'cover', 
-                                height: '200px', 
+                            style={{
+                                cursor: 'pointer',
+                                objectFit: 'cover',
+                                height: '200px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
                             }}
@@ -329,17 +329,17 @@ const TrackSubmittedAds = () => {
                     </div>
                 );
             }
-                
+
             case 'direct-video': {
                 // For direct videos, show a placeholder with video icon
                 return (
                     <div className="news-media-container">
-                        <div 
+                        <div
                             className="d-flex align-items-center justify-content-center rounded-top"
-                            style={{ 
-                                cursor: 'pointer', 
-                                objectFit: 'cover', 
-                                height: '200px', 
+                            style={{
+                                cursor: 'pointer',
+                                objectFit: 'cover',
+                                height: '200px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
                             }}
@@ -353,7 +353,7 @@ const TrackSubmittedAds = () => {
                     </div>
                 );
             }
-                
+
             case 'image':
             default: {
                 // For regular images or unknown types
@@ -363,10 +363,10 @@ const TrackSubmittedAds = () => {
                             src={mediaUrl}
                             alt="Media"
                             className="news-media rounded-top"
-                            style={{ 
-                                cursor: 'pointer', 
-                                objectFit: 'cover', 
-                                height: '200px', 
+                            style={{
+                                cursor: 'pointer',
+                                objectFit: 'cover',
+                                height: '200px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
                             }}
@@ -405,13 +405,13 @@ const TrackSubmittedAds = () => {
             {/* Media Preview Modal */}
             <Modal show={showImageModal} onHide={() => setShowImageModal(false)} centered size="lg">
                 <Modal.Header closeButton className='bg-white text-black'>
-                <Modal.Title>
-                    {previewType === 'iframe' ? 'Document Preview' : 
-                     previewType === 'direct-video' ? 'Video Preview' : 
-                     'Image Preview'}
-                </Modal.Title>
+                    <Modal.Title>
+                        {previewType === 'iframe' ? 'Document Preview' :
+                            previewType === 'direct-video' ? 'Video Preview' :
+                                'Image Preview'}
+                    </Modal.Title>
                 </Modal.Header>
-                    <Modal.Body className="text-center bg-white p-0">
+                <Modal.Body className="text-center bg-white p-0">
                     {previewType === 'iframe' ? (
                         <div className="ratio ratio-16x9">
                             <iframe
@@ -454,10 +454,10 @@ const TrackSubmittedAds = () => {
                         ads.map((ad) => (
                             <div key={ad._id} className="col">
                                 <div className="card h-100 shadow bg-white text-muted border border-secondary rounded-4">
-                                    
+
                                     {/* Media content */}
                                     {ad.media && renderMediaThumbnail(ad.media)}
-                                    
+
                                     <div className="card-body d-flex flex-column">
                                         <h5 className="card-title text-black fw-bold">{ad.title}</h5>
 

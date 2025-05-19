@@ -23,6 +23,7 @@ import ScrollToTop from "./components/ScrollToTop.jsx";
 import UpdateAdManager from "./components/UpdateAdManager.jsx";
 import ScrollToTopButton from "./components/ScrollToTopButton.jsx";
 import ForeignNews from "./pages/ForeignNews.jsx";
+import OtherNews from "./pages/OtherNews.jsx";
 
 const App = () => {
 
@@ -30,7 +31,7 @@ const App = () => {
   return (
     <div className="bg-white">
       <Navbar />
-      <ScrollToTop/>
+      <ScrollToTop />
       <div className="container mt-4 bg-white">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/education" element={<EducationPage />} />
           <Route path="/politics" element={<PoliticsPage />} />
           <Route path="/foreign-news" element={<ForeignNews />} />
+          <Route path="/other-news" element={<OtherNews />} />
           <Route path="/update-ad/:id" element={<UpdateAdManager />} />
           <Route
             path="/dashboard/editor"
@@ -67,7 +69,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route 
+          <Route
             path="/editNews"
             element={
               <ProtectedRoute allowedRoles={["super_admin", "admin"]}>
@@ -76,7 +78,7 @@ const App = () => {
             }
           />
         </Routes>
-        <ScrollToTopButton/>
+        <ScrollToTopButton />
       </div>
       <Footer />
     </div>

@@ -22,7 +22,7 @@ const ProfilForSD = ({ closeNavbar }) => {
       default:
         // Handle unexpected role or fallback
         navigate("/unauthorized"); // Redirect to home or another appropriate page
-         break;
+        break;
     }
     closeNavbar();
   };
@@ -45,9 +45,11 @@ const ProfilForSD = ({ closeNavbar }) => {
       <ul className="list-unstyled mb-0">
         {!user ? (
           <li>
+            {/*
             <Link to="/login" className="btn btn-outline-warning w-100" onClick={closeNavbar}>
               Login
             </Link>
+           */}
           </li>
         ) : (
           <>

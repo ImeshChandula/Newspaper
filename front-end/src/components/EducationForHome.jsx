@@ -24,8 +24,8 @@ const EducationForHome = () => {
     }, []);
 
 
-  return (
-    <div className="home-page">
+    return (
+        <div className="home-page">
             <motion.h2
                 className="border-bottom pb-2 text-black"
                 initial={{ opacity: 0, y: -20 }}
@@ -61,7 +61,7 @@ const EducationForHome = () => {
                 )}
             </div>
         </div>
-  )
+    )
 }
 
 export default EducationForHome
