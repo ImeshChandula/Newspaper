@@ -13,12 +13,12 @@ const registerUser = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
       }
 
-  const { username, password, role } = req.body;
+  const { username, email, password, role } = req.body;
 
   try {
-    let user = await User.findOne({ username });
+    let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).json({ msg: "User already exists" });
+      return res.status(400).json({ message: "User already exists" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -26,15 +26,16 @@ const registerUser = async (req, res) => {
 
     user = new User({
       username,
+      email,
       password: hashedPassword,
       role: role || "editor", // Default role
     });
 
     await user.save();
 
-    res.status(201).json({ msg: "User registered successfully" });
-  } catch (err) {
-    console.error(err.message);
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (error) {
+    console.error(error.message);
     res.status(500).send("Server Error");
   }
 };
@@ -48,12 +49,12 @@ const registerAdmin = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-const { username, password, role } = req.body;
+const { username, email, password, role } = req.body;
 
 try {
-  let user = await User.findOne({ username });
+  let user = await User.findOne({ email });
   if (user) {
-    return res.status(400).json({ msg: "Admin already exists" });
+    return res.status(400).json({ message: "Admin already exists" });
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -61,15 +62,16 @@ try {
 
   user = new User({
     username,
+    email,
     password: hashedPassword,
     role: role || "admin", // Default role
   });
 
   await user.save();
 
-  res.status(201).json({ msg: "Admin registered successfully" });
-} catch (err) {
-  console.error(err.message);
+  res.status(201).json({ message: "Admin registered successfully" });
+} catch (error) {
+  console.error(error.message);
   res.status(500).send("Server Error");
 }
 };
@@ -84,20 +86,23 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
   try {
-    let user = await User.findOne({ username });
+    let user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ msg: "Invalid credentials (Not User)" });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: "Invalid credentials" });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const payload = { id: user.id, username: user.username, role: user.role };
+    const payload = { 
+      id: user.id, 
+      username: user.username, 
+      role: user.role };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
 

@@ -6,7 +6,7 @@ import "../components/css/Login.css";
 const Login = () => {
   const { login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
@@ -45,9 +45,9 @@ const Login = () => {
 
         <form onSubmit={handleSubmit} className="login_form">
           <input
-            type="text"
-            name="username"
-            placeholder="Username"
+            type=""
+            name="email"
+            placeholder="Gmail"
             className="login_input"
             onChange={handleChange}
           />

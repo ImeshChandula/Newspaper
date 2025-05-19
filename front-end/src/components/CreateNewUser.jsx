@@ -9,6 +9,7 @@ const CreateNewUser = () => {
   const navigate = useNavigate();
   const [editor, setEditor] = useState({
     username: "",
+    email: "",
     password: "",
   });
 
@@ -48,7 +49,7 @@ const CreateNewUser = () => {
       });
 
       setMessage("User added successfully!");
-      setEditor({ username: "", password: "" });
+      setEditor({ username: "", email: "", password: "" });
 
       setTimeout(() => goToNavigate(), 2000);
     } catch (error) {
@@ -76,6 +77,16 @@ const CreateNewUser = () => {
             name="username"
             placeholder="User Name"
             value={editor.username}
+            onChange={handleChange}
+            className="register_input"
+            required
+          />
+
+          <input
+            type="text"
+            name="email"
+            placeholder="Gmail"
+            value={editor.email}
             onChange={handleChange}
             className="register_input"
             required
