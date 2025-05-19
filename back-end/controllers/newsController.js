@@ -505,6 +505,7 @@ const getNewsArticleByID = async (req, res) => {
       }
 
       const updateNewsData = {
+        author: req.user.id,
         title: req.body.title || news.title,
         media: req.body.media || news.media,
         content: req.body.content || news.content,
