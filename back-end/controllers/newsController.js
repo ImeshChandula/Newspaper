@@ -130,6 +130,75 @@ const getSportsAcceptNews = async (req, res) => {
     }
 };
 
+//Newly added categories (local, other, article)
+
+//@route   GET /api/news/local/accept
+//@desc    Get all accept news articles in Local category, sorted by latest
+//@access  Public
+const getLocalAcceptNews = async (req, res) => {
+    try {
+        await News.updateBreakingNews();
+
+        const query = {
+          breakingNews: false,
+          foreignNews: false,
+          category: "Local",
+          status: "accept"
+        };
+
+        const newsArticles = await News.find(query).sort({ date: -1 }).populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
+
+
+//@route   GET /api/news/other/accept
+//@desc    Get all accept news articles in Other category, sorted by latest
+//@access  Public
+const getOtherAcceptNews = async (req, res) => {
+    try {
+        await News.updateBreakingNews();
+
+        const query = {
+          breakingNews: false,
+          foreignNews: false,
+          category: "Other",
+          status: "accept"
+        };
+
+        const newsArticles = await News.find(query).sort({ date: -1 }).populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
+
+
+//@route   GET /api/news/article/accept
+//@desc    Get all accept news articles in Article category, sorted by latest
+//@access  Public
+const getArticleAcceptNews = async (req, res) => {
+    try {
+        await News.updateBreakingNews();
+
+        const query = {
+          breakingNews: false,
+          foreignNews: false,
+          category: "Article",
+          status: "accept"
+        };
+
+        const newsArticles = await News.find(query).sort({ date: -1 }).populate('author', 'username email');
+
+        res.status(200).json(newsArticles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving news articles', error: error.message });
+    }
+};
 
 
 //@route   GET /api/news/breaking
@@ -484,6 +553,9 @@ module.exports = {
     getEducationAcceptNews,
     getPoliticsAcceptNews,
     getSportsAcceptNews,
+    getLocalAcceptNews,      // New export
+    getOtherAcceptNews,      // New export
+    getArticleAcceptNews,    // New export
     getAllPendingNews,
     getAllAcceptNews,
     getAllRejectNews,

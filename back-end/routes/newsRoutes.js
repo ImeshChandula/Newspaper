@@ -12,6 +12,9 @@ router.get("/getAllRecentlyNewsWithoutBreakingNews", newsController.getAllRecent
 router.get("/education/accept", newsController.getEducationAcceptNews);
 router.get("/politics/accept", newsController.getPoliticsAcceptNews);
 router.get("/sports/accept", newsController.getSportsAcceptNews);
+router.get("/local/accept", newsController.getLocalAcceptNews);
+router.get("/other/accept", newsController.getOtherAcceptNews);
+router.get("/article/accept", newsController.getArticleAcceptNews);
 router.get("/getNewsArticleByID/:id", newsController.getNewsArticleByID);
 router.get("/getForeignNewsAccept", newsController.getForeignNewsAccept);
 
