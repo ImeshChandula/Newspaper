@@ -135,7 +135,7 @@ const Navbar = () => {
               <ProfilForSD closeNavbar={closeNavbar} />
             </motion.div>
 
-            {["/", "/sports", "/education", "/politics"].map((path, index) => (
+            {["/", "/sports", "/education", "/politics", "/local"].map((path, index) => (
               <motion.li
                 key={path}
                 className="nav-item"
@@ -168,6 +168,17 @@ const Navbar = () => {
             >
               <Link to="/other-news" className="nav-link" onClick={closeNavbar}>
                 Other News
+              </Link>
+            </motion.li>
+
+            <motion.li
+              className="nav-item"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9 }}
+            >
+              <Link to="/articles" className="nav-link" onClick={closeNavbar}>
+                Articles
               </Link>
             </motion.li>
 

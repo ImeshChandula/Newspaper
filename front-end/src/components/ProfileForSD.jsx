@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FaUserCircle } from "react-icons/fa";
 
@@ -7,8 +7,9 @@ const ProfilForSD = ({ closeNavbar }) => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  if (!user) return null; // Don't render if user is not logged in
+
   const goToDashboard = () => {
-    if (!user) return;
     switch (user.role) {
       case "editor":
         navigate("/dashboard/editor");
@@ -20,8 +21,7 @@ const ProfilForSD = ({ closeNavbar }) => {
         navigate("/dashboard/super-admin");
         break;
       default:
-        // Handle unexpected role or fallback
-        navigate("/unauthorized"); // Redirect to home or another appropriate page
+        navigate("/unauthorized");
         break;
     }
     closeNavbar();
@@ -30,6 +30,7 @@ const ProfilForSD = ({ closeNavbar }) => {
   const handleLogout = () => {
     logout();
     closeNavbar();
+    navigate("/"); // Optionally navigate to home after logout
   };
 
   return (
@@ -37,8 +38,8 @@ const ProfilForSD = ({ closeNavbar }) => {
       <div className="d-flex align-items-center mb-3">
         <FaUserCircle size={50} className="text-warning me-3" />
         <div>
-          <h5 className="mb-0 text-warning fw-bold">{user ? user.username : "Guest"}</h5>
-          <small className="text-warning">{user ? user.role : "Visitor"}</small>
+          <h5 className="mb-0 text-warning fw-bold">{user.username}</h5>
+          <small className="text-warning">{user.role}</small>
         </div>
       </div>
 

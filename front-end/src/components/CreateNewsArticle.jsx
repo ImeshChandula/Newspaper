@@ -142,7 +142,9 @@ const CreateNewsArticle = () => {
                 <option value="Education">Education</option>
                 <option value="Politics">Politics</option>
                 <option value="Sports">Sports</option>
+                <option value="Local">Local</option>
                 <option value="Other">Others</option>
+                <option value="Article">Article</option>
               </select>
             </div>
 

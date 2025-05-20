@@ -24,6 +24,8 @@ import UpdateAdManager from "./components/UpdateAdManager.jsx";
 import ScrollToTopButton from "./components/ScrollToTopButton.jsx";
 import ForeignNews from "./pages/ForeignNews.jsx";
 import OtherNews from "./pages/OtherNews.jsx";
+import LocalNews from "./pages/LocalNews.jsx";
+import Article from "./pages/Articles.jsx";
 
 const App = () => {
 
@@ -44,6 +46,8 @@ const App = () => {
           <Route path="/politics" element={<PoliticsPage />} />
           <Route path="/foreign-news" element={<ForeignNews />} />
           <Route path="/other-news" element={<OtherNews />} />
+          <Route path="/local" element={<LocalNews />} />
+          <Route path="/articles" element={<Article />} />
           <Route path="/update-ad/:id" element={<UpdateAdManager />} />
           <Route
             path="/dashboard/editor"

@@ -8,8 +8,9 @@ const ProfileDropdown = () => {
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    if (!user) return null; // Hide component if user is not logged in
+
     const goToDashboard = () => {
-        if (!user) return;
         switch (user.role) {
             case "editor":
                 navigate("/dashboard/editor");
@@ -21,8 +22,7 @@ const ProfileDropdown = () => {
                 navigate("/dashboard/super-admin");
                 break;
             default:
-                // Handle unexpected role or fallback
-                navigate("/unauthorized"); // Redirect to home or another appropriate page
+                navigate("/unauthorized");
                 break;
         }
     };
@@ -37,25 +37,23 @@ const ProfileDropdown = () => {
                 id="profileDropdown"
             >
                 <FaUserCircle className="me-2" size={22} />
-                {user ? user.username : "Guest"}
+                {user.username}
             </button>
 
             <ul className="dropdown-menu dropdown-menu-end profile-menu" aria-labelledby="profileDropdown">
                 <li className="dropdown-item-text fw-bold text-warning">
-                    {user ? user.username : "Guest"}
+                    {user.username}
                 </li>
                 <li className="dropdown-item-text text-warning small">
-                    {user ? user.role : "Visitor"}
+                    {user.role}
                 </li>
                 <li><hr className="dropdown-divider" /></li>
 
-                {user && (
-                    <li>
-                        <button className="dropdown-item btn-dashboard" onClick={goToDashboard}>
-                            Dash Board
-                        </button>
-                    </li>
-                )}
+                <li>
+                    <button className="dropdown-item btn-dashboard" onClick={goToDashboard}>
+                        Dashboard
+                    </button>
+                </li>
 
                 {!user ? (
                     <li>

@@ -38,7 +38,7 @@ const AcceptNewsModeration = () => {
   });
 
   // Available categories
-  const availableCategories = ['Sports', 'Education', 'Politics', 'Other'];
+  const availableCategories = ['Sports', 'Education', 'Politics', 'Local', 'Other', 'Article'];
 
   // Handle filter changes
   const handleFilterChange = (type, value) => {
@@ -737,7 +737,7 @@ const AcceptNewsModeration = () => {
                   onChange={() => handleFilterChange('localNews', !filters.localNews)}
                 />
                 <label className="form-check-label" htmlFor="localNewsToggle">
-                  Local News
+                  Without Breaking & Foreign News
                 </label>
               </div>
 
