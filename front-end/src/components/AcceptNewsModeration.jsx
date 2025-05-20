@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Globe, LandPlot, Zap } from 'lucide-react';
 import Modal from 'react-bootstrap/Modal';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
@@ -711,7 +712,7 @@ const AcceptNewsModeration = () => {
                   onChange={() => handleFilterChange('breakingNews', !filters.breakingNews)}
                 />
                 <label className="form-check-label" htmlFor="breakingNewsToggle">
-                  Breaking News
+                  <Zap size={15} /> Breaking News
                 </label>
               </div>
 
@@ -724,7 +725,7 @@ const AcceptNewsModeration = () => {
                   onChange={() => handleFilterChange('foreignNews', !filters.foreignNews)}
                 />
                 <label className="form-check-label" htmlFor="foreignNewsToggle">
-                  Foreign News
+                  <Globe size={15}/> Foreign News
                 </label>
               </div>
 
@@ -737,7 +738,7 @@ const AcceptNewsModeration = () => {
                   onChange={() => handleFilterChange('localNews', !filters.localNews)}
                 />
                 <label className="form-check-label" htmlFor="localNewsToggle">
-                  Without Breaking & Foreign News
+                  <LandPlot size={15}/> Local News 
                 </label>
               </div>
 

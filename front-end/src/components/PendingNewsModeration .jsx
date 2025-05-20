@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Globe, LandPlot, Zap } from 'lucide-react';
 
 const PendingNewsModeration = () => {
 
@@ -719,7 +720,7 @@ const PendingNewsModeration = () => {
                   onChange={() => handleFilterChange('breakingNews', !filters.breakingNews)}
                 />
                 <label className="form-check-label" htmlFor="breakingNewsToggle">
-                  Breaking News
+                  <Zap size={15} /> Breaking News
                 </label>
               </div>
 
@@ -734,7 +735,7 @@ const PendingNewsModeration = () => {
                   onChange={() => handleFilterChange('foreignNews', !filters.foreignNews)}
                 />
                 <label className="form-check-label" htmlFor="foreignNewsToggle">
-                  Foreign News
+                  <Globe size={15} /> Foreign News
                 </label>
               </div>
 
@@ -747,7 +748,7 @@ const PendingNewsModeration = () => {
                   onChange={() => handleFilterChange('localNews', !filters.localNews)}
                 />
                 <label className="form-check-label" htmlFor="localNewsToggle">
-                  Without Breaking & Foreign News
+                  <LandPlot size={15} /> Local News
                 </label>
               </div>
             </div>
