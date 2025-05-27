@@ -123,7 +123,7 @@ const AdSection = () => {
 
       <div
         className="ad-carousel mx-auto"
-        style={{ maxWidth: '90%', height: '250px' }}
+        style={{ maxWidth: '1000px', height: '250px' }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
