@@ -263,7 +263,7 @@ const TrackSubmittedAds = () => {
                             className="news-media rounded-top"
                             style={{
                                 cursor: 'pointer',
-                                objectFit: 'cover',
+                                objectFit: 'contain',
                                 height: '200px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
@@ -291,7 +291,7 @@ const TrackSubmittedAds = () => {
                                 className="ratio ratio-16x9 rounded-top"
                                 style={{
                                     cursor: 'pointer',
-                                    objectFit: 'cover',
+                                    objectFit: 'contain',
                                     height: '200px',
                                     width: '100%',
                                     backgroundColor: '#f8f9fa'
@@ -314,7 +314,7 @@ const TrackSubmittedAds = () => {
                             className="d-flex align-items-center justify-content-center rounded-top"
                             style={{
                                 cursor: 'pointer',
-                                objectFit: 'cover',
+                                objectFit: 'contain',
                                 height: '200px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
@@ -338,7 +338,7 @@ const TrackSubmittedAds = () => {
                             className="d-flex align-items-center justify-content-center rounded-top"
                             style={{
                                 cursor: 'pointer',
-                                objectFit: 'cover',
+                                objectFit: 'contain',
                                 height: '200px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
@@ -365,7 +365,7 @@ const TrackSubmittedAds = () => {
                             className="news-media rounded-top"
                             style={{
                                 cursor: 'pointer',
-                                objectFit: 'cover',
+                                objectFit: 'contain',
                                 height: '200px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
