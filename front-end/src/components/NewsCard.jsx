@@ -124,7 +124,7 @@ const NewsCard = ({ news }) => {
                                 </Link>
                             </div>
                             <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-muted bg-white">
-                                <span>By {author?.username || "Unknown"}</span>
+                                {/*<span>By {author?.username || "Unknown"}</span>*/}
                                 <span>{formatDate(date)}</span>
                             </div>
                         </motion.div>
