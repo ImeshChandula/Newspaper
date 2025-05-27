@@ -12,7 +12,7 @@ const Home = () => {
     <div className="home-page bg-white text-black min-vh-100 py-4">
       <div className="container">
 
-        <div className="row">
+        <div className="row mt-2">
           <div className="col-12">
             <AdSection />
           </div>
@@ -24,7 +24,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="row mt-5">
+        <div className="row">
           <div className="col-12">
             <NewsSection />
           </div>

@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import './css/AdSection.css';
 
 const AdSection = () => {
   const [ads, setAds] = useState([]);
   const [error, setError] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const impressionSet = useRef(new Set());
-  const carouselRef = useRef(null);
   const token = localStorage.getItem('token');
 
   const touchStartX = useRef(null);
@@ -55,30 +56,15 @@ const AdSection = () => {
     trackImpression(ads[0]._id);
 
     const autoplayInterval = setInterval(() => {
-      setActiveIndex(prev => {
+      setActiveIndex((prev) => {
         const next = (prev + 1) % ads.length;
         trackImpression(ads[next]._id);
         return next;
       });
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(autoplayInterval);
   }, [ads]);
-
-  useEffect(() => {
-    const carouselNode = carouselRef.current;
-    if (!carouselNode || !ads.length) return;
-
-    const items = carouselNode.querySelectorAll('.carousel-item');
-    items.forEach(item => item.classList.remove('active'));
-    if (items[activeIndex]) items[activeIndex].classList.add('active');
-
-    const indicators = carouselNode.querySelectorAll('.carousel-indicators button');
-    indicators.forEach((indicator, idx) => {
-      indicator.classList.toggle('active', idx === activeIndex);
-      indicator.setAttribute('aria-current', idx === activeIndex ? 'true' : 'false');
-    });
-  }, [activeIndex, ads]);
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
@@ -96,13 +82,13 @@ const AdSection = () => {
 
     if (Math.abs(deltaX) > threshold) {
       if (deltaX > 0) {
-        setActiveIndex(prev => {
+        setActiveIndex((prev) => {
           const next = (prev + 1) % ads.length;
           trackImpression(ads[next]._id);
           return next;
         });
       } else {
-        setActiveIndex(prev => {
+        setActiveIndex((prev) => {
           const next = prev === 0 ? ads.length - 1 : prev - 1;
           trackImpression(ads[next]._id);
           return next;
@@ -121,131 +107,113 @@ const AdSection = () => {
     return match ? match[1] : null;
   };
 
-  const getGoogleDriveThumbnail = (url, isVideo = false) => {
+  const getGoogleDriveThumbnail = (url) => {
     const fileId = extractDriveFileId(url);
     if (!fileId) return url;
     return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
   };
 
   const isGoogleDriveLink = (url) => /drive\.google\.com/.test(url);
-  const isVideoFile = (url) => /\.(mp4|webm|ogg)$/i.test(url) || url.includes('video');
 
   return (
-    <div className="container-fluid pt-5 mt-3">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h3 className="text-dark mb-0">📢 Sponsored Ads</h3>
-      </div>
+    <div className="container py-5">
+      <h3 className="text-start mb-4">📢 Sponsored Ads</h3>
 
       {error && <div className="alert alert-danger">{error}</div>}
 
       <div
-        id="adsCarousel"
-        className="carousel slide position-relative"
-        style={{ height: '200px' }}
-        ref={carouselRef}
+        className="ad-carousel mx-auto"
+        style={{ maxWidth: '90%', height: '250px' }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
-        <div className="carousel-indicators mb-0">
+        {/* Slides */}
+        {ads.map((ad, idx) => {
+          const isActive = idx === activeIndex;
+          return (
+            <div
+              key={ad._id}
+              className={`ad-slide ${isActive ? 'active' : ''}`}
+              style={{
+                backgroundImage: `url(${isGoogleDriveLink(ad.media)
+                  ? getGoogleDriveThumbnail(ad.media)
+                  : ad.media
+                  })`,
+              }}
+              aria-hidden={!isActive}
+              role="tabpanel"
+            >
+              <div className="ad-overlay p-4 d-flex flex-column justify-content-end h-100 rounded">
+                <h5 className="fw-bold text-white text-shadow">{ad.title}</h5>
+                <p
+                  className="text-white text-shadow mb-3"
+                  style={{
+                    lineHeight: '1.2em',
+                    maxHeight: '3.6em',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: 'vertical',
+                  }}
+                >
+                  {ad.content}
+                </p>
+                <button
+                  className="btn btn-outline-light btn-sm align-self-start"
+                  onClick={(e) => handleVisitClick(e, ad)}
+                >
+                  Visit Link
+                </button>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Navigation buttons */}
+        <button
+          className="ad-nav-btn ad-prev d-none d-md-flex"
+          onClick={() =>
+            setActiveIndex((prev) => {
+              const next = prev === 0 ? ads.length - 1 : prev - 1;
+              trackImpression(ads[next]._id);
+              return next;
+            })
+          }
+          aria-label="Previous"
+        >
+          <ChevronLeft size={24} color="white" />
+        </button>
+
+        <button
+          className="ad-nav-btn ad-next d-none d-md-flex"
+          onClick={() =>
+            setActiveIndex((prev) => {
+              const next = (prev + 1) % ads.length;
+              trackImpression(ads[next]._id);
+              return next;
+            })
+          }
+          aria-label="Next"
+        >
+          <ChevronRight size={24} color="white" />
+        </button>
+
+        {/* Indicators */}
+        <div className="ad-indicators d-flex justify-content-center mt-3">
           {ads.map((_, idx) => (
             <button
               key={idx}
-              type="button"
+              className={`indicator-btn ${idx === activeIndex ? 'active' : ''}`}
               onClick={() => {
                 setActiveIndex(idx);
                 trackImpression(ads[idx]._id);
               }}
-              className={idx === activeIndex ? 'active' : ''}
-              aria-current={idx === activeIndex ? 'true' : undefined}
-              aria-label={`Slide ${idx + 1}`}
+              aria-label={`Go to slide ${idx + 1}`}
             />
           ))}
         </div>
-
-        <div
-          className="carousel-inner h-100 rounded-3 overflow-hidden"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {ads.map((ad, idx) => (
-            <div
-              key={ad._id}
-              className={`carousel-item h-100 ${idx === activeIndex ? 'active' : ''}`}
-            >
-              <div className="h-100 d-flex justify-content-center align-items-center">
-                <div
-                  className="card text-white w-100 h-100 mx-2 border-0 shadow-lg"
-                  style={{
-                    background: `url(${isGoogleDriveLink(ad.media)
-                      ? getGoogleDriveThumbnail(ad.media, isVideoFile(ad.media))
-                      : ad.media
-                      }) center/cover no-repeat`,
-                    borderRadius: '1rem',
-                  }}
-                >
-                  <div
-                    className="card-img-overlay d-flex flex-column justify-content-end p-3"
-                    style={{
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)',
-                    }}
-                  >
-                    <h5 className="card-title text-truncate">{ad.title}</h5>
-                    <p
-                      className="card-text"
-                      style={{
-                        display: '-webkit-box',
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        fontSize: '0.9rem',
-                      }}
-                    >
-                      {ad.content}
-                    </p>
-                    <button
-                      className="btn btn-sm btn-light mt-2 align-self-start"
-                      onClick={(e) => handleVisitClick(e, ad)}
-                    >
-                      Visit Link
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Navigation buttons */}
-        <button
-          className="carousel-control-prev d-none d-md-flex d-lg-flex"
-          type="button"
-          onClick={() =>
-            setActiveIndex(prev => {
-              const newIndex = prev === 0 ? ads.length - 1 : prev - 1;
-              trackImpression(ads[newIndex]._id);
-              return newIndex;
-            })
-          }
-          style={{ width: "50px", height: "50px", marginLeft: "50px", marginTop: "75px" }}
-        >
-          <span className="carousel-control-prev-icon bg-dark rounded-circle p-2" />
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button
-          className="carousel-control-next d-none d-md-flex d-lg-flex"
-          type="button"
-          onClick={() =>
-            setActiveIndex(prev => {
-              const newIndex = (prev + 1) % ads.length;
-              trackImpression(ads[newIndex]._id);
-              return newIndex;
-            })
-          }
-          style={{ width: "50px", height: "50px", marginRight: "50px", marginTop: "75px" }}
-        >
-          <span className="carousel-control-next-icon bg-dark rounded-circle p-2" />
-          <span className="visually-hidden">Next</span>
-        </button>
       </div>
     </div>
   );
