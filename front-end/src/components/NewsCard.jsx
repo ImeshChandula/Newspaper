@@ -46,6 +46,7 @@ const NewsCard = ({ news }) => {
     return (
         <div className="row g-4 bg-white mt-3">
             {news.map((item) => {
+                // eslint-disable-next-line no-unused-vars
                 const { media = "", title, content, _id, date, author } = item;
                 const isYouTube = media.includes("youtube.com") || media.includes("youtu.be");
                 const isDrive = media.includes("drive.google.com");
