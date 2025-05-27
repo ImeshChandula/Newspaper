@@ -264,7 +264,7 @@ const TrackSubmittedAds = () => {
                             style={{
                                 cursor: 'pointer',
                                 objectFit: 'contain',
-                                height: '200px',
+                                height: '250px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
                             }}
@@ -292,7 +292,7 @@ const TrackSubmittedAds = () => {
                                 style={{
                                     cursor: 'pointer',
                                     objectFit: 'contain',
-                                    height: '200px',
+                                    height: '250px',
                                     width: '100%',
                                     backgroundColor: '#f8f9fa'
                                 }}>
@@ -315,7 +315,7 @@ const TrackSubmittedAds = () => {
                             style={{
                                 cursor: 'pointer',
                                 objectFit: 'contain',
-                                height: '200px',
+                                height: '250px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
                             }}
@@ -339,7 +339,7 @@ const TrackSubmittedAds = () => {
                             style={{
                                 cursor: 'pointer',
                                 objectFit: 'contain',
-                                height: '200px',
+                                height: '250px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
                             }}
@@ -366,7 +366,7 @@ const TrackSubmittedAds = () => {
                             style={{
                                 cursor: 'pointer',
                                 objectFit: 'contain',
-                                height: '200px',
+                                height: '250px',
                                 width: '100%',
                                 backgroundColor: '#f8f9fa'
                             }}
