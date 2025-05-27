@@ -4,13 +4,11 @@ import axios from 'axios';
 const AdSection = () => {
   const [ads, setAds] = useState([]);
   const [error, setError] = useState('');
-  const [collapsed, setCollapsed] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const impressionSet = useRef(new Set());
   const carouselRef = useRef(null);
   const token = localStorage.getItem('token');
 
-  // Swipe tracking
   const touchStartX = useRef(null);
   const touchEndX = useRef(null);
 
@@ -18,9 +16,7 @@ const AdSection = () => {
     try {
       const { data } = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL_ADS}/getAllActiveAds`,
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       setAds(data.ads);
     } catch (err) {
@@ -51,24 +47,18 @@ const AdSection = () => {
 
   useEffect(() => {
     fetchAds();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!ads.length) return;
 
-    // Track first ad
-    if (ads[0]) {
-      trackImpression(ads[0]._id);
-    }
+    trackImpression(ads[0]._id);
 
     const autoplayInterval = setInterval(() => {
-      setActiveIndex(prevIndex => {
-        const nextIndex = (prevIndex + 1) % ads.length;
-        if (ads[nextIndex]) {
-          trackImpression(ads[nextIndex]._id);
-        }
-        return nextIndex;
+      setActiveIndex(prev => {
+        const next = (prev + 1) % ads.length;
+        trackImpression(ads[next]._id);
+        return next;
       });
     }, 3000);
 
@@ -90,14 +80,6 @@ const AdSection = () => {
     });
   }, [activeIndex, ads]);
 
-  useEffect(() => {
-    if (ads.length) {
-      const timer = setTimeout(() => setCollapsed(true), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [ads]);
-
-  // Swipe event handlers
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -114,18 +96,16 @@ const AdSection = () => {
 
     if (Math.abs(deltaX) > threshold) {
       if (deltaX > 0) {
-        // Swipe left → next
-        setActiveIndex(prevIndex => {
-          const newIndex = (prevIndex + 1) % ads.length;
-          trackImpression(ads[newIndex]._id);
-          return newIndex;
+        setActiveIndex(prev => {
+          const next = (prev + 1) % ads.length;
+          trackImpression(ads[next]._id);
+          return next;
         });
       } else {
-        // Swipe right → previous
-        setActiveIndex(prevIndex => {
-          const newIndex = prevIndex === 0 ? ads.length - 1 : prevIndex - 1;
-          trackImpression(ads[newIndex]._id);
-          return newIndex;
+        setActiveIndex(prev => {
+          const next = prev === 0 ? ads.length - 1 : prev - 1;
+          trackImpression(ads[next]._id);
+          return next;
         });
       }
     }
@@ -136,16 +116,6 @@ const AdSection = () => {
 
   if (!ads.length) return null;
 
-  if (collapsed) {
-    return (
-      <div className="fixed-bottom mb-3 ms-3">
-        <button className="btn btn-sm btn-primary" onClick={() => setCollapsed(false)}>
-          Show Ads
-        </button>
-      </div>
-    );
-  }
-
   const extractDriveFileId = (url) => {
     const match = url.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]{10,})/);
     return match ? match[1] : null;
@@ -154,28 +124,16 @@ const AdSection = () => {
   const getGoogleDriveThumbnail = (url, isVideo = false) => {
     const fileId = extractDriveFileId(url);
     if (!fileId) return url;
-
-    return isVideo
-      ? `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`
-      : `https://drive.google.com/thumbnail?id=${fileId}`;
+    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
   };
 
   const isGoogleDriveLink = (url) => /drive\.google\.com/.test(url);
-
-  const isVideoFile = (url) =>
-    /\.(mp4|webm|ogg)$/i.test(url) || url.includes('video');
-
+  const isVideoFile = (url) => /\.(mp4|webm|ogg)$/i.test(url) || url.includes('video');
 
   return (
     <div className="container-fluid pt-5 mt-3">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3 className="text-dark mb-0">📢 Sponsored Ads</h3>
-        <button
-          className="btn btn-sm btn-outline-dark"
-          onClick={() => setCollapsed(true)}
-        >
-          Collapse
-        </button>
       </div>
 
       {error && <div className="alert alert-danger">{error}</div>}
@@ -183,10 +141,9 @@ const AdSection = () => {
       <div
         id="adsCarousel"
         className="carousel slide position-relative"
-        style={{ height: '220px' }}
+        style={{ height: '200px' }}
         ref={carouselRef}
       >
-        {/* Indicators */}
         <div className="carousel-indicators mb-0">
           {ads.map((_, idx) => (
             <button
@@ -203,7 +160,6 @@ const AdSection = () => {
           ))}
         </div>
 
-        {/* Carousel Items with swipe support */}
         <div
           className="carousel-inner h-100 rounded-3 overflow-hidden"
           onTouchStart={handleTouchStart}
@@ -259,35 +215,35 @@ const AdSection = () => {
           ))}
         </div>
 
-        {/* Controls */}
+        {/* Navigation buttons */}
         <button
           className="carousel-control-prev d-none d-md-flex d-lg-flex"
           type="button"
           onClick={() =>
-            setActiveIndex((prevIndex) => {
-              const newIndex = prevIndex === 0 ? ads.length - 1 : prevIndex - 1;
+            setActiveIndex(prev => {
+              const newIndex = prev === 0 ? ads.length - 1 : prev - 1;
               trackImpression(ads[newIndex]._id);
               return newIndex;
             })
           }
           style={{ width: "50px", height: "50px", marginLeft: "50px", marginTop: "75px" }}
         >
-          <span className="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true" />
+          <span className="carousel-control-prev-icon bg-dark rounded-circle p-2" />
           <span className="visually-hidden">Previous</span>
         </button>
         <button
           className="carousel-control-next d-none d-md-flex d-lg-flex"
           type="button"
           onClick={() =>
-            setActiveIndex((prevIndex) => {
-              const newIndex = (prevIndex + 1) % ads.length;
+            setActiveIndex(prev => {
+              const newIndex = (prev + 1) % ads.length;
               trackImpression(ads[newIndex]._id);
               return newIndex;
             })
           }
           style={{ width: "50px", height: "50px", marginRight: "50px", marginTop: "75px" }}
         >
-          <span className="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true" />
+          <span className="carousel-control-next-icon bg-dark rounded-circle p-2" />
           <span className="visually-hidden">Next</span>
         </button>
       </div>
