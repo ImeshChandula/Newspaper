@@ -219,7 +219,7 @@ const BreakingNews = () => {
                     </Link>
                   </div>
                   <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-muted bg-white">
-                    <span className="mb-1 mb-md-0">By {item?.author?.username ?? "Unknown"}</span>
+                    {/*<span className="mb-1 mb-md-0">By {item?.author?.username ?? "Unknown"}</span>*/}
                     <span>{formatDate(item.date)}</span>
                   </div>
                 </motion.div>
