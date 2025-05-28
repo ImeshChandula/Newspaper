@@ -127,7 +127,7 @@ const BreakingNews = () => {
   if (news.length === 0) return null;
 
   return (
-    <div className="container pb-0 mb-3">
+    <div className="container pb-0 mb-5">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 mb-md-4">
         <motion.h2
           className="border-bottom pb-2 mb-3 mb-md-0 text-black"
