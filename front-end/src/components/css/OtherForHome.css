@@ -1,0 +1,32 @@
+.horizontal-scroll-wrapper {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  scroll-snap-type: x mandatory;
+}
+
+.news-card-wrapper {
+  flex: 0 0 auto;
+  min-width: 250px;
+  scroll-snap-align: start;
+}
+
+.scroll-section {
+  margin-top: 1rem;
+}
+
+.scroll-inner {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+  padding-bottom: 0.5rem;
+}
+
+.scroll-inner::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-inner::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}

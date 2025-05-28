@@ -62,13 +62,25 @@ const ForeignForHome = () => {
                     </motion.p>
                 ) : (
                     <>
-                        <NewsCardForHome news={news.slice(0, 3)} />
+                        {/* Scrollable Section for small screens */}
+                        <div className="scroll-section d-sm-none">
+                            <div className="scroll-inner d-flex flex-nowrap overflow-auto px-1">
+                                {news.slice(0, 3).map((item) => (
+                                    <div key={item._id} className="me-3" style={{ minWidth: "260px" }}>
+                                        <NewsCardForHome news={[item]} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Stacked layout for medium and up */}
+                        <div className="d-none d-sm-block">
+                            <NewsCardForHome news={news.slice(0, 3)} />
+                        </div>
+
                         {news.length > 3 && (
                             <div className="text-end mt-3">
-                                <button 
-                                    className="btn btn-link" 
-                                    onClick={handleSeeMore}
-                                >
+                                <button className="btn btn-link" onClick={handleSeeMore}>
                                     See More
                                 </button>
                             </div>

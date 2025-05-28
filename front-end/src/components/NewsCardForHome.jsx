@@ -40,7 +40,7 @@ const NewsCardForHome = ({ news }) => {
     };
 
     return (
-        <div className="row g-4 bg-white mt-0">
+        <div className="d-flex flex-row flex-sm-column gap-3 bg-white mt-0">
             {news.map(({ _id, title, content, media, author, date }) => {
                 const isYouTube = media?.includes("youtube.com") || media?.includes("youtu.be");
                 const isDrive = media?.includes("drive.google.com");
@@ -55,10 +55,9 @@ const NewsCardForHome = ({ news }) => {
                 return (
                     <motion.div
                         key={_id}
-                        className="col-12"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="card news-card h-100 shadow-sm border-0"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
                     >
                         <motion.div
                             className="card news-card h-100 shadow-sm border-0"
