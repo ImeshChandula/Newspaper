@@ -4,7 +4,7 @@ import NewsCardForHome from "./NewsCardForHome";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const ForeignForHome = () => {
+const OtherForHome = () => {
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ const ForeignForHome = () => {
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/getForeignNewsAccept`);
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/other/accept`);
                 setNews(response.data);
             } catch (error) {
                 console.error("Failed to fetch news", error);
@@ -25,7 +25,7 @@ const ForeignForHome = () => {
     }, []);
 
     const handleSeeMore = () => {
-        navigate("/foreign-news");
+        navigate("/other-news");
     };
 
     return (
@@ -36,7 +36,7 @@ const ForeignForHome = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
             >
-                🌐 Foreign
+                🗂️ Other
             </motion.h2>
 
             <div className="container">
@@ -80,4 +80,4 @@ const ForeignForHome = () => {
     );
 };
 
-export default ForeignForHome;
+export default OtherForHome;

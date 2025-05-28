@@ -125,7 +125,7 @@ const NewsCard = ({ news }) => {
                                     View More &raquo;
                                 </Link>
                             </div>
-                            <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-muted bg-white">
+                            <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-muted">
                                 {/*<span>By {author?.username || "Unknown"}</span>*/}
                                 <span>{formatDate(date)}</span>
                             </div>
