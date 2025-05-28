@@ -1,7 +1,7 @@
 import React from "react";
 import NewsSection from "../pages/NewsSection";
 import PoliticsforHome from "../components/PoliticsFroHome";
-import SportForHome from "../components/SportForHome";
+import ForeignForHome from "../components/ForeignForHome";
 import BreakingNews from "../components/BreakingNews";
 import "../components/css/Home.css";
 import EducationForHome from "../components/EducationForHome";
@@ -40,7 +40,7 @@ const Home = () => {
           </div>
 
           <div className="col-md-4 mb-4">
-            <SportForHome />
+            <ForeignForHome />
           </div>
         </div>
 

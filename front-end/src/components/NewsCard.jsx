@@ -67,7 +67,7 @@ const NewsCard = ({ news }) => {
                         transition={{ duration: 0.6, ease: "easeOut" }}
                     >
                         <motion.div
-                            className="card news-card h-100 shadow-sm bg-white border border-black"
+                            className="card news-card h-100 shadow-sm border-0"
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
                         >

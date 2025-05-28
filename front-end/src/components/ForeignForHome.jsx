@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NewsCardForHome from "./NewsCardForHome";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
-const SportForHome = () => {
+const ForeignForHome = () => {
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/sports/accept`);
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL_NEWS}/getForeignNewsAccept`);
                 setNews(response.data);
             } catch (error) {
                 console.error("Failed to fetch news", error);
@@ -22,6 +24,10 @@ const SportForHome = () => {
         fetchNews();
     }, []);
 
+    const handleSeeMore = () => {
+        navigate("/foreign-news");
+    };
+
     return (
         <div className="home-page">
             <motion.h2
@@ -30,7 +36,7 @@ const SportForHome = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
             >
-                🏅 Sports
+                🌐 Foreign News
             </motion.h2>
 
             <div className="container">
@@ -55,11 +61,23 @@ const SportForHome = () => {
                         No news available.
                     </motion.p>
                 ) : (
-                    <NewsCardForHome news={news} />
+                    <>
+                        <NewsCardForHome news={news.slice(0, 3)} />
+                        {news.length > 3 && (
+                            <div className="text-end mt-3">
+                                <button 
+                                    className="btn btn-link" 
+                                    onClick={handleSeeMore}
+                                >
+                                    See More
+                                </button>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>
     );
 };
 
-export default SportForHome;
+export default ForeignForHome;

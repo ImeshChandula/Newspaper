@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NewsCardForHome from "./NewsCardForHome";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const EducationForHome = () => {
 
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchNews = async () => {
@@ -23,6 +25,9 @@ const EducationForHome = () => {
         fetchNews();
     }, []);
 
+    const handleSeeMore = () => {
+        navigate("/education");
+    };
 
     return (
         <div className="home-page">
@@ -57,7 +62,19 @@ const EducationForHome = () => {
                         No news available.
                     </motion.p>
                 ) : (
-                    <NewsCardForHome news={news} />
+                    <>
+                        <NewsCardForHome news={news.slice(0, 3)} />
+                        {news.length > 3 && (
+                            <div className="text-end mt-3">
+                                <button 
+                                    className="btn btn-link" 
+                                    onClick={handleSeeMore}
+                                >
+                                    See More
+                                </button>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>
