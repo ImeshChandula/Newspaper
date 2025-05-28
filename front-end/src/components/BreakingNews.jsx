@@ -218,7 +218,7 @@ const BreakingNews = () => {
                       View More &raquo;
                     </Link>
                   </div>
-                  <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-muted bg-white">
+                  <div className="card-footer d-flex flex-column flex-md-row justify-content-between small text-muted">
                     {/*<span className="mb-1 mb-md-0">By {item?.author?.username ?? "Unknown"}</span>*/}
                     <span>{formatDate(item.date)}</span>
                   </div>
