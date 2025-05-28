@@ -46,7 +46,8 @@ body {
 
 .news-image {
     height: 180px;
-    object-fit: contain;
+    background-color: #000000 !important;
+    object-fit: contain !important;
     width: 100%;
 }
 

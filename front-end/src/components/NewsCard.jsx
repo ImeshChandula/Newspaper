@@ -76,6 +76,7 @@ const NewsCard = ({ news }) => {
                                     <motion.img
                                         src={thumbnail}
                                         className="card-img-top news-image"
+                                        style={{objectFit:"contain"}}
                                         alt={title}
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}

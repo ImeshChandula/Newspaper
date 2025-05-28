@@ -48,7 +48,7 @@ const AdSection = () => {
 
   useEffect(() => {
     fetchAds();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const AdSection = () => {
         trackImpression(ads[next]._id);
         return next;
       });
-    }, 4000);
+    }, 10000);
 
     return () => clearInterval(autoplayInterval);
   }, [ads]);
@@ -123,86 +123,72 @@ const AdSection = () => {
       {error && <div className="alert alert-danger">{error}</div>}
 
       <div
-        className="ad-carousel mx-auto"
-        style={{ maxWidth: '1000px', height: '250px' }}
+        className="ad-carousel mx-auto position-relative"
+        style={{ maxWidth: '1000px' }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Slides */}
-        {ads.map((ad, idx) => {
-          const isActive = idx === activeIndex;
-          return (
-            <div
-              key={ad._id}
-              className={`ad-slide ${isActive ? 'active' : ''}`}
-              style={{
-                backgroundImage: `url(${isGoogleDriveLink(ad.media)
-                  ? getGoogleDriveThumbnail(ad.media)
-                  : ad.media
-                  })`,
-              }}
-              aria-hidden={!isActive}
-              role="tabpanel"
+        <div className="ad-carousel-inner">
+          {/* Image Column */}
+          <div className="ad-image-wrapper">
+            {ads.map((ad, idx) => {
+              const isActive = idx === activeIndex;
+              const imageUrl = isGoogleDriveLink(ad.media)
+                ? getGoogleDriveThumbnail(ad.media)
+                : ad.media;
+              return (
+                <img
+                  key={ad._id}
+                  src={imageUrl}
+                  alt={ad.title}
+                  className={`ad-image ${isActive ? 'active' : ''}`}
+                  aria-hidden={!isActive}
+                />
+              );
+            })}
+          </div>
+
+          {/* Details Column */}
+          <div className="ad-details">
+            <h5>{ads[activeIndex].title}</h5>
+            <p>{ads[activeIndex].content}</p>
+            <button
+              className="btn btn-outline-primary btn-sm"
+              onClick={(e) => handleVisitClick(e, ads[activeIndex])}
             >
-              <div className="ad-overlay p-4 d-flex flex-column justify-content-end h-100 rounded">
-                <h5 className="fw-bold text-white text-shadow">{ad.title}</h5>
-                <p
-                  className="text-white text-shadow mb-3"
-                  style={{
-                    lineHeight: '1.2em',
-                    maxHeight: '3.6em',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
-                  }}
-                >
-                  {ad.content}
-                </p>
-                <button
-                  className="btn btn-outline-light btn-sm align-self-start"
-                  onClick={(e) => handleVisitClick(e, ad)}
-                >
-                  Visit Link
-                </button>
-              </div>
-            </div>
-          );
-        })}
+              Visit Link
+            </button>
+          </div>
+        </div>
 
         {/* Navigation buttons */}
         <button
           className="ad-nav-btn ad-prev d-none d-md-flex"
-          onClick={() =>
-            setActiveIndex((prev) => {
-              const next = prev === 0 ? ads.length - 1 : prev - 1;
-              trackImpression(ads[next]._id);
-              return next;
-            })
-          }
+          onClick={() => {
+            const next = activeIndex === 0 ? ads.length - 1 : activeIndex - 1;
+            setActiveIndex(next);
+            trackImpression(ads[next]._id);
+          }}
           aria-label="Previous"
         >
-          <ChevronLeft size={24} color="white" />
+          <ChevronLeft size={24} />
         </button>
 
         <button
           className="ad-nav-btn ad-next d-none d-md-flex"
-          onClick={() =>
-            setActiveIndex((prev) => {
-              const next = (prev + 1) % ads.length;
-              trackImpression(ads[next]._id);
-              return next;
-            })
-          }
+          onClick={() => {
+            const next = (activeIndex + 1) % ads.length;
+            setActiveIndex(next);
+            trackImpression(ads[next]._id);
+          }}
           aria-label="Next"
         >
-          <ChevronRight size={24} color="white" />
+          <ChevronRight size={24} />
         </button>
 
         {/* Indicators */}
-        <div className="ad-indicators d-flex justify-content-center mt-3">
+        <div className="ad-indicators">
           {ads.map((_, idx) => (
             <button
               key={idx}
