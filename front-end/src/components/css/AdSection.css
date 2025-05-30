@@ -1,35 +1,29 @@
-/* CSS (AdSection.css) */
-
 .ad-carousel {
+  max-height: 300px;
   max-width: 1000px;
   border-radius: 1rem;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   background: #fff;
-  /* White background overall */
 }
 
 .ad-carousel-inner {
-  display: flex;
-  height: 250px;
+  height: 100%;
 }
 
 .ad-image-wrapper {
-  flex: 1 1 50%;
-  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-  overflow: hidden;
   position: relative;
+  background: #fff;
+  height: 100%;
 }
 
 .ad-image {
   max-width: 100%;
   max-height: 250px;
-  object-fit: contain !important;
+  object-fit: contain;
   opacity: 0;
   transition: opacity 0.8s ease-in-out;
   position: absolute;
@@ -43,36 +37,12 @@
 }
 
 .ad-details {
-  flex: 1 1 50%;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 1rem;
+  background: #f9f9f9;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: #f9f9f9;
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
-}
-
-.ad-details h5 {
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.ad-details p {
-  flex-grow: 1;
-  color: #333;
-  line-height: 1.4;
-  max-height: 7rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  margin-bottom: 1rem;
-}
-
-.ad-details button {
-  align-self: start;
 }
 
 .ad-nav-btn {
@@ -115,12 +85,13 @@
 }
 
 .indicator-btn {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   background: rgba(0, 0, 0, 0.2);
   border: none;
   cursor: pointer;
   transition: background 0.3s ease;
+  border-radius: 50%;
 }
 
 .indicator-btn.active,
@@ -128,23 +99,19 @@
   background: #000;
 }
 
-/* Responsive tweaks */
+/* Responsive styles */
 @media (max-width: 767.98px) {
   .ad-carousel-inner {
     flex-direction: column;
-    height: auto;
-  }
-
-  .ad-image-wrapper,
-  .ad-details {
-    flex: none;
-    width: 100%;
-    border-radius: 1rem;
   }
 
   .ad-image-wrapper {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
     height: 200px;
+    border-radius: 0;
+  }
+
+  .ad-details {
+    padding: 1rem;
+    text-align: center;
   }
 }

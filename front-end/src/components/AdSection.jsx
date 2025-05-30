@@ -62,7 +62,7 @@ const AdSection = () => {
         trackImpression(ads[next]._id);
         return next;
       });
-    }, 10000);
+    }, 25000);
 
     return () => clearInterval(autoplayInterval);
   }, [ads]);
@@ -129,9 +129,9 @@ const AdSection = () => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="ad-carousel-inner">
+        <div className="ad-carousel-inner row g-0 flex-nowrap flex-md-wrap">
           {/* Image Column */}
-          <div className="ad-image-wrapper">
+          <div className="col-12 col-md-9 ad-image-wrapper">
             {ads.map((ad, idx) => {
               const isActive = idx === activeIndex;
               const imageUrl = isGoogleDriveLink(ad.media)
@@ -150,27 +150,27 @@ const AdSection = () => {
           </div>
 
           {/* Details Column */}
+          <div className="col-12 col-md-3 ad-details text-start">
 
-          <div className="ad-details">
+            <a
+              href={`tel:${ads[activeIndex].phoneNumber}`}
+              className="mt-2 px-2 fw-semibold d-inline-block text-decoration-none text-primary"
+            >
+              {ads[activeIndex].phoneNumber}
+            </a>
 
+            {/* Add more info if needed */}
             {/*
             <h5>{ads[activeIndex].title}</h5>
             <p>{ads[activeIndex].content}</p>
-            */}
-
-            <p>{ads[activeIndex].phoneNumber}</p>
-
-            {/*
-            <button
-              className="btn btn-outline-primary btn-sm"
-              onClick={(e) => handleVisitClick(e, ads[activeIndex])}
-            >
+            <button onClick={(e) => handleVisitClick(e, ads[activeIndex])}
+              className="btn btn-outline-primary btn-sm">
               Visit Link
-            </button> 
+            </button>
             */}
-
           </div>
         </div>
+
 
         {/* Navigation buttons */}
         <button
