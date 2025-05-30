@@ -150,19 +150,26 @@ const AdSection = () => {
           </div>
 
           {/* Details Column */}
-          {/*
+
           <div className="ad-details">
+
+            {/*
             <h5>{ads[activeIndex].title}</h5>
             <p>{ads[activeIndex].content}</p>
+            */}
+
+            <p>{ads[activeIndex].phoneNumber}</p>
+
+            {/*
             <button
               className="btn btn-outline-primary btn-sm"
               onClick={(e) => handleVisitClick(e, ads[activeIndex])}
             >
               Visit Link
-            </button>
-          </div>
-          */}
+            </button> 
+            */}
 
+          </div>
         </div>
 
         {/* Navigation buttons */}
