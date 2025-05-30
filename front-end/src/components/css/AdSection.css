@@ -106,7 +106,7 @@
   }
 
   .ad-image-wrapper {
-    height: 200px;
+    height: fit-content;
     border-radius: 0;
   }
 
