@@ -85,6 +85,7 @@ const UpdateAdManager = () => {
                     content: ad.content || '',
                     media: ad.media || '',
                     link: ad.link || '',
+                    phoneNumber: ad.phoneNumber || '',
                     endDate: ad.endDate ? ad.endDate.substring(0, 10) : '',
                 });
             } catch (err) {
@@ -150,8 +151,9 @@ const UpdateAdManager = () => {
 
                 <form onSubmit={handleSubmit} className="row g-4">
 
+                    {/*
                     <div className="col-md-6">
-                        <label className="form-label">Title</label>
+                        <label className="form-label">📝 Title</label>
                         <input
                             type="text"
                             name="title"
@@ -162,9 +164,10 @@ const UpdateAdManager = () => {
                             placeholder="Enter ad title"
                         />
                     </div>
+                    */}
 
                     <div className="col-md-6">
-                        <label className="form-label">End Date</label>
+                        <label className="form-label">📅 End Date</label>
                         <input
                             type="date"
                             name="endDate"
@@ -174,8 +177,9 @@ const UpdateAdManager = () => {
                         />
                     </div>
 
+                    {/*
                     <div className="col-12">
-                        <label className="form-label">Content</label>
+                        <label className="form-label">🖊️ Content</label>
                         <textarea
                             name="content"
                             className="form-control border border-black"
@@ -186,9 +190,10 @@ const UpdateAdManager = () => {
                             placeholder="Enter ad content or description"
                         ></textarea>
                     </div>
+                    */}
 
                     <div className="col-md-6">
-                        <label className="form-label">Media URL</label>
+                        <label className="form-label">🖼️ Media URL</label>
                         <input
                             type="text"
                             name="media"
@@ -209,7 +214,22 @@ const UpdateAdManager = () => {
                     </div>
 
                     <div className="col-md-6">
-                        <label className="form-label">Ad Link</label>
+                        <label className="form-label">📞 Contact Number</label>
+                        <input
+                            type="tel"
+                            name="phoneNumber"
+                            className="form-control border border-black"
+                            value={form.phoneNumber}
+                            onChange={handleChange}
+                            placeholder="Ex: +14155552671"
+                            pattern="^\+?[1-9]\d{6,14}$"
+                            title="Enter a valid international phone number (e.g., +14155552671)"
+                        />
+                    </div>
+
+                    {/*
+                    <div className="col-md-6">
+                        <label className="form-label">🔗 Ad Link</label>
                         <input
                             type="text"
                             name="link"
@@ -220,6 +240,7 @@ const UpdateAdManager = () => {
                             placeholder="https://your-link.com"
                         />
                     </div>
+                    */}
 
                     <div className="col-12 text-center">
                         <button type="submit" className="btn btn-warning mt-3 me-3">💾 Update Ad</button>

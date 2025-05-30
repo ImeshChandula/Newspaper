@@ -459,36 +459,52 @@ const TrackSubmittedAds = () => {
                                     {ad.media && renderMediaThumbnail(ad.media)}
 
                                     <div className="card-body d-flex flex-column">
-                                        <h5 className="card-title text-black fw-bold">{ad.title}</h5>
+                                        {ad.title && (
+                                            <h5 className="card-title text-black fw-bold">{ad.title}</h5>
+                                        )}
 
-                                        <p className="card-text text-black" style={{
-                                            display: '-webkit-box',
-                                            WebkitLineClamp: 3,
-                                            WebkitBoxOrient: 'vertical',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                        }}>
-                                            {ad.content}
-                                        </p>
-
-                                        <div className="mb-2 small text-black">
-                                            <span className="fw-semibold">🔗 Link:</span>{' '}
-                                            <a
-                                                href={ad.link}
-                                                target="_blank"
-                                                rel="noreferrer"
-                                                className="text-primary text-break"
+                                        {ad.content && (
+                                            <p
+                                                className="card-text text-black"
                                                 style={{
                                                     display: '-webkit-box',
-                                                    WebkitLineClamp: 2,
+                                                    WebkitLineClamp: 3,
                                                     WebkitBoxOrient: 'vertical',
                                                     overflow: 'hidden',
                                                     textOverflow: 'ellipsis',
                                                 }}
                                             >
-                                                {ad.link}
-                                            </a>
-                                        </div>
+                                                {ad.content}
+                                            </p>
+                                        )}
+
+                                        {ad.phoneNumber && (
+                                            <div className="mb-2 small text-black">
+                                                <span className="fw-semibold">📞 Contact: </span>{' '}
+                                                {ad.phoneNumber}
+                                            </div>
+                                        )}
+
+                                        {ad.link && (
+                                            <div className="mb-2 small text-black">
+                                                <span className="fw-semibold">🔗 Link:</span>{' '}
+                                                <a
+                                                    href={ad.link}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="text-primary text-break"
+                                                    style={{
+                                                        display: '-webkit-box',
+                                                        WebkitLineClamp: 2,
+                                                        WebkitBoxOrient: 'vertical',
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                    }}
+                                                >
+                                                    {ad.link}
+                                                </a>
+                                            </div>
+                                        )}
 
                                         <div className="mb-2 small text-black">
                                             <span className="fw-semibold">📅 Start:</span>{' '}

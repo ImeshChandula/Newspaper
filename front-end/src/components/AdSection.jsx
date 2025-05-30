@@ -150,6 +150,7 @@ const AdSection = () => {
           </div>
 
           {/* Details Column */}
+          {/*
           <div className="ad-details">
             <h5>{ads[activeIndex].title}</h5>
             <p>{ads[activeIndex].content}</p>
@@ -160,6 +161,8 @@ const AdSection = () => {
               Visit Link
             </button>
           </div>
+          */}
+
         </div>
 
         {/* Navigation buttons */}

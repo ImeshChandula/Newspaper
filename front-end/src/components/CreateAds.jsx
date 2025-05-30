@@ -7,6 +7,7 @@ const CreateAds = () => {
     content: '',
     media: '',
     link: '',
+    phoneNumber: '',
     endDate: '',
   });
 
@@ -115,6 +116,7 @@ const CreateAds = () => {
         content: '',
         media: '',
         link: '',
+        phoneNumber: '',
         endDate: '',
       });
     } catch (err) {
@@ -134,6 +136,7 @@ const CreateAds = () => {
 
         <form onSubmit={handleSubmit} className="row g-4">
 
+          {/* 
           <div className="col-md-6">
             <label className="form-label">📝 Title</label>
             <input
@@ -146,6 +149,7 @@ const CreateAds = () => {
               placeholder="Enter ad title"
             />
           </div>
+          */}
 
           <div className="col-md-6">
             <label className="form-label">📅 End Date</label>
@@ -158,6 +162,7 @@ const CreateAds = () => {
             />
           </div>
 
+          {/* 
           <div className="col-12">
             <label className="form-label">🖊️ Content</label>
             <textarea
@@ -170,6 +175,7 @@ const CreateAds = () => {
               placeholder="Enter ad description..."
             ></textarea>
           </div>
+          */}
 
           <div className="col-md-6">
             <label className="form-label">🖼️ Media URL</label>
@@ -193,6 +199,21 @@ const CreateAds = () => {
           </div>
 
           <div className="col-md-6">
+            <label className="form-label">📞 Contact Number</label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              className="form-control border border-black"
+              value={form.phoneNumber}
+              onChange={handleChange}
+              placeholder="Ex: +14155552671"
+              pattern="^\+?[1-9]\d{6,14}$"
+              title="Enter a valid international phone number (e.g., +14155552671)"
+            />
+          </div>
+
+          {/* 
+          <div className="col-md-6">
             <label className="form-label">🔗 Ad Link</label>
             <input
               type="text"
@@ -204,6 +225,7 @@ const CreateAds = () => {
               placeholder="https://your-ad-link.com"
             />
           </div>
+          */}
 
           <div className="col-12 text-center">
             <button

@@ -3,9 +3,10 @@
 .ad-carousel {
   max-width: 1000px;
   border-radius: 1rem;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  background: #fff; /* White background overall */
+  background: #fff;
+  /* White background overall */
 }
 
 .ad-carousel-inner {
@@ -28,7 +29,7 @@
 .ad-image {
   max-width: 100%;
   max-height: 250px;
-  object-fit: contain;
+  object-fit: contain !important;
   opacity: 0;
   transition: opacity 0.8s ease-in-out;
   position: absolute;
@@ -78,7 +79,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.15);
+  background: rgba(0, 0, 0, 0.15);
   border: none;
   font-size: 2rem;
   color: #000;
@@ -94,7 +95,7 @@
 }
 
 .ad-nav-btn:hover {
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   color: #fff;
 }
 
@@ -114,9 +115,8 @@
 }
 
 .indicator-btn {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+  width: 5px;
+  height: 5px;
   background: rgba(0, 0, 0, 0.2);
   border: none;
   cursor: pointer;
@@ -134,12 +134,14 @@
     flex-direction: column;
     height: auto;
   }
+
   .ad-image-wrapper,
   .ad-details {
     flex: none;
     width: 100%;
     border-radius: 1rem;
   }
+
   .ad-image-wrapper {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
