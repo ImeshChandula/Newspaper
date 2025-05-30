@@ -284,7 +284,9 @@ const NewsDetail = () => {
                         transition={{ delay: 0.7, duration: 0.4 }}
                     >
                         <span>
-                            <strong>Author:</strong> {newsItem?.author?.username ?? "Unknown"}
+                            {
+                                /* <strong>Author:</strong> {newsItem?.author?.username ?? "Unknown"} */
+                            }
                         </span>
                         <span>
                             <strong>Published:</strong> {new Date(newsItem.date).toLocaleString()}
