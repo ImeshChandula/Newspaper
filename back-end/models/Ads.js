@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 
 const adSchema = new mongoose.Schema({
     // required fields
-    title: { type: String, required: true },
-    content: { type: String, required: true },
-    media: { type: String, required: true }, // Store image URL or path
-    link: { type: String, required: true }, // URL where ad redirects
+    title: { type: String },
+    content: { type: String },
+    media: { type: String }, // Store image URL or path
+    link: { type: String }, // URL where ad redirects
+    phoneNumber: { type: String },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 
     // not required fields
