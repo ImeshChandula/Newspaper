@@ -3,10 +3,10 @@ const Ads = require("../models/Ads");
 //@desc     Create new ad
 const createAd = async (req, res) => {
     try {
-        const { title, content, media, link, endDate } = req.body;
+        const { title, content, media, link, endDate, phoneNumber } = req.body;
 
-        if( !title || !content || !media || !link ){
-            return res.status(400).json({ msg: 'Fill required fields' })
+        if(!media){
+            return res.status(400).json({ msg: 'Media is required' })
         }
 
         const ad = new Ads({
@@ -14,6 +14,7 @@ const createAd = async (req, res) => {
             content,
             media,
             link,
+            phoneNumber,
             author: req.user.id,
             active: true,
             endDate: endDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days from now
@@ -106,6 +107,7 @@ const updateAd = async (req, res) => {
             content: req.body.content || ad.content,
             media: req.body.media || ad.media,
             link: req.body.link || ad.link,
+            phoneNumber: req.body.phoneNumber || ad.phoneNumber,
             author: req.user.id,
             active: req.body.active !== undefined ? req.body.active : ad.active,
             endDate: req.body.endDate || ad.endDate,
